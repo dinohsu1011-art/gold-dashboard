@@ -215,13 +215,22 @@
       <div class="chart-wrap tall" style="height:340px;"><canvas id="summary-realrate"></canvas></div>
     </div>
 
-    <!-- 2 · NEW: period-average CB + Asian physical (full width) -->
+    <!-- 2 · Period-average CB + Asian physical + ETF (tonnes) -->
     <div class="chart-panel" style="margin-bottom:16px;">
-      <div class="panel-title">2 · Who's Buying — CB + Asian Physical Demand by Era (avg tonnes/yr)</div>
+      <div class="panel-title">2 · Who's Buying — CB + Asian Physical + ETF by Era (avg tonnes/yr)</div>
       <div class="panel-sub">
-        Sovereign (central-bank) <em>plus</em> Asian retail (China + India bar+coin) demand, averaged across 5-year periods. The <strong style="color:#D4AF37;">2022–2025 step-change</strong> is the marginal buyer: CBs ~2× their pre-2022 norm, and Asian retail also ratcheted higher. These are the buyers that replaced Western ETF positioning. <a href="#" onclick="document.querySelector('.tab[data-tab=flows]').click(); return false;" style="color:#D4AF37;">→ Post-2022</a>
+        Sovereign (CB) + Asian retail (China + India bar+coin) + global ETF, averaged across 5-year blocks. The <strong style="color:#D4AF37;">2022–2025 step-change</strong> is the marginal buyer: CBs ~2× pre-2022 norm, Asian retail ratcheted higher, and ETFs flipped from 2022–24 outflows back to net inflow in 2025. <a href="#" onclick="document.querySelector('.tab[data-tab=flows]').click(); return false;" style="color:#D4AF37;">→ Post-2022</a>
       </div>
       <div class="chart-wrap tall" style="height:320px;"><canvas id="summary-era-buyers"></canvas></div>
+    </div>
+
+    <!-- 2b · same buyers in USD equivalent -->
+    <div class="chart-panel" style="margin-bottom:16px;">
+      <div class="panel-title">2b · Who's Buying — Same Buyers in USD ($B/yr, era average)</div>
+      <div class="panel-sub">
+        Same three buckets translated into dollars at each era's average gold price. Price-weighted, the 2022–25 bucket dwarfs everything prior: sovereign + retail + ETF ran ~<strong style="color:#D4AF37;">$137B/yr</strong> on average (vs ~$48B/yr in 2010–19) — this is the <em>capital</em> view of the regime break, not just ounces.
+      </div>
+      <div class="chart-wrap tall" style="height:320px;"><canvas id="summary-era-buyers-usd"></canvas></div>
     </div>
 
     <!-- 3 · THE REGIME BREAK (full width) -->
@@ -251,9 +260,18 @@
       </div>
     </div>
 
-    <!-- 6 supply/demand full width -->
+    <!-- 6 · China housing vs gold + China capital flow overlay -->
     <div class="chart-panel" style="margin-top:16px;">
-      <div class="panel-title">6 · Where the Flow Goes — Annual Supply vs Demand</div>
+      <div class="panel-title">6 · The Rotation Source — China Housing vs Gold + China Capital Flow</div>
+      <div class="panel-sub">
+        China real housing price index (BIS) vs gold. Correlation was <strong>+0.73</strong> pre-2022 (housing up, gold up — both rode the debasement trade) and <strong style="color:#E74C3C;">−0.95</strong> post-2022 (housing collapsed, gold ripped). The bars show <strong style="color:#27AE60;">China physical + ETF capital flow ($B/qtr)</strong> — the household rotation <em>out of</em> broken housing wealth <em>into</em> gold. <a href="#" onclick="document.querySelector('.tab[data-tab=flows]').click(); return false;" style="color:#D4AF37;">→ Post-2022</a>
+      </div>
+      <div class="chart-wrap tall" style="height:340px;"><canvas id="summary-housing-gold"></canvas></div>
+    </div>
+
+    <!-- 7 supply/demand full width -->
+    <div class="chart-panel" style="margin-top:16px;">
+      <div class="panel-title">7 · Where the Flow Goes — Annual Supply vs Demand</div>
       <div class="panel-sub">
         Supply = Demand by WGC accounting identity; the story is the <em>mix shift</em>. CB bar grew from ~500t to ~1,000t/yr; OTC swelled into the residual bucket. 2025 total demand cracked 5,000t for the first time.
       </div>
@@ -2566,7 +2584,7 @@
 
 
   // ── F2 ASIAN ROTATION CHARTS :: START ─────────────────────────────────
-  const F2_DATA = {
+  const F2_DATA = window.F2_DATA = {
     asia_3m: [{"x":"2014-03-31","y":-0.39},{"x":"2014-04-30","y":-0.72},{"x":"2014-05-31","y":-0.67},{"x":"2014-06-30","y":-0.52},{"x":"2014-07-31","y":-0.06},{"x":"2014-08-31","y":-0.27},{"x":"2014-09-30","y":-0.23},{"x":"2014-10-31","y":-0.0},{"x":"2014-11-30","y":0.05},{"x":"2014-12-31","y":-0.01},{"x":"2015-01-31","y":-0.5},{"x":"2015-02-28","y":-0.41},{"x":"2015-03-31","y":0.25},{"x":"2015-04-30","y":0.58},{"x":"2015-05-31","y":0.33},{"x":"2015-06-30","y":-0.05},{"x":"2015-07-31","y":0.06},{"x":"2015-08-31","y":1.13},{"x":"2015-09-30","y":0.82},{"x":"2015-10-31","y":0.62},{"x":"2015-11-30","y":0.29},{"x":"2015-12-31","y":1.25},{"x":"2016-01-31","y":1.74},{"x":"2016-02-29","y":3.14},{"x":"2016-03-31","y":4.32},{"x":"2016-04-30","y":3.57},{"x":"2016-05-31","y":2.92},{"x":"2016-06-30","y":1.67},{"x":"2016-07-31","y":5.23},{"x":"2016-08-31","y":3.97},{"x":"2016-09-30","y":3.42},{"x":"2016-10-31","y":2.24},{"x":"2016-11-30","y":1.89},{"x":"2016-12-31","y":3.98},{"x":"2017-01-31","y":2.16},{"x":"2017-02-28","y":2.49},{"x":"2017-03-31","y":-2.25},{"x":"2017-04-30","y":-4.12},{"x":"2017-05-31","y":-4.92},{"x":"2017-06-30","y":-0.88},{"x":"2017-07-31","y":0.88},{"x":"2017-08-31","y":1.0},{"x":"2017-09-30","y":-3.08},{"x":"2017-10-31","y":-3.03},{"x":"2017-11-30","y":-2.3},{"x":"2017-12-31","y":4.86},{"x":"2018-01-31","y":4.4},{"x":"2018-02-28","y":6.74},{"x":"2018-03-31","y":-2.09},{"x":"2018-04-30","y":-1.01},{"x":"2018-05-31","y":3.4},{"x":"2018-06-30","y":5.65},{"x":"2018-07-31","y":3.23},{"x":"2018-08-31","y":-3.15},{"x":"2018-09-30","y":-3.83},{"x":"2018-10-31","y":-4.33},{"x":"2018-11-30","y":-4.16},{"x":"2018-12-31","y":-1.51},{"x":"2019-01-31","y":0.65},{"x":"2019-02-28","y":-1.06},{"x":"2019-03-31","y":-1.6},{"x":"2019-04-30","y":-2.46},{"x":"2019-05-31","y":-2.71},{"x":"2019-06-30","y":-1.5},{"x":"2019-07-31","y":-0.3},{"x":"2019-08-31","y":4.43},{"x":"2019-09-30","y":4.66},{"x":"2019-10-31","y":4.24},{"x":"2019-11-30","y":0.06},{"x":"2019-12-31","y":-1.6},{"x":"2020-01-31","y":-1.74},{"x":"2020-02-29","y":1.76},{"x":"2020-03-31","y":4.62},{"x":"2020-04-30","y":7.75},{"x":"2020-05-31","y":6.58},{"x":"2020-06-30","y":2.83},{"x":"2020-07-31","y":1.81},{"x":"2020-08-31","y":3.06},{"x":"2020-09-30","y":6.66},{"x":"2020-10-31","y":4.72},{"x":"2020-11-30","y":1.23},{"x":"2020-12-31","y":-1.58},{"x":"2021-01-31","y":-1.38},{"x":"2021-02-28","y":2.73},{"x":"2021-03-31","y":5.93},{"x":"2021-04-30","y":5.67},{"x":"2021-05-31","y":1.12},{"x":"2021-06-30","y":-0.59},{"x":"2021-07-31","y":-0.05},{"x":"2021-08-31","y":1.37},{"x":"2021-09-30","y":1.38},{"x":"2021-10-31","y":1.62},{"x":"2021-11-30","y":-0.31},{"x":"2021-12-31","y":1.63},{"x":"2022-01-31","y":-2.31},{"x":"2022-02-28","y":-3.08},{"x":"2022-03-31","y":-4.92},{"x":"2022-04-30","y":-1.91},{"x":"2022-05-31","y":0.13},{"x":"2022-06-30","y":-0.37},{"x":"2022-07-31","y":2.65},{"x":"2022-08-31","y":0.55},{"x":"2022-09-30","y":0.18},{"x":"2022-10-31","y":-4.13},{"x":"2022-11-30","y":-2.11},{"x":"2022-12-31","y":-1.84},{"x":"2023-01-31","y":-1.54},{"x":"2023-02-28","y":-1.05},{"x":"2023-03-31","y":-0.21},{"x":"2023-04-30","y":1.17},{"x":"2023-05-31","y":1.24},{"x":"2023-06-30","y":0.52},{"x":"2023-07-31","y":1.1},{"x":"2023-08-31","y":3.27},{"x":"2023-09-30","y":4.51},{"x":"2023-10-31","y":4.3},{"x":"2023-11-30","y":2.33},{"x":"2023-12-31","y":1.84},{"x":"2024-01-31","y":2.54},{"x":"2024-02-29","y":3.38},{"x":"2024-03-31","y":3.43},{"x":"2024-04-30","y":8.77},{"x":"2024-05-31","y":9.43},{"x":"2024-06-30","y":10.71},{"x":"2024-07-31","y":5.83},{"x":"2024-08-31","y":4.3},{"x":"2024-09-30","y":2.6},{"x":"2024-10-31","y":9.04},{"x":"2024-11-30","y":8.31},{"x":"2024-12-31","y":10.66},{"x":"2025-01-31","y":2.88},{"x":"2025-02-28","y":12.14},{"x":"2025-03-31","y":12.55},{"x":"2025-04-30","y":35.47},{"x":"2025-05-31","y":25.18},{"x":"2025-06-30","y":23.48},{"x":"2025-07-31","y":0.48},{"x":"2025-08-31","y":0.64},{"x":"2025-09-30","y":5.77},{"x":"2025-10-31","y":21.07},{"x":"2025-11-30","y":31.34},{"x":"2025-12-31","y":30.42},{"x":"2026-01-31","y":35.74},{"x":"2026-02-28","y":30.58},{"x":"2026-03-31","y":27.84}],
     west_3m: [{"x":"2014-03-31","y":-1.69},{"x":"2014-04-30","y":3.19},{"x":"2014-05-31","y":-3.85},{"x":"2014-06-30","y":-7.79},{"x":"2014-07-31","y":-0.33},{"x":"2014-08-31","y":0.65},{"x":"2014-09-30","y":-14.6},{"x":"2014-10-31","y":-27.33},{"x":"2014-11-30","y":-35.99},{"x":"2014-12-31","y":-26.19},{"x":"2015-01-31","y":4.12},{"x":"2015-02-28","y":22.69},{"x":"2015-03-31","y":10.47},{"x":"2015-04-30","y":-6.83},{"x":"2015-05-31","y":-21.08},{"x":"2015-06-30","y":-5.43},{"x":"2015-07-31","y":-32.63},{"x":"2015-08-31","y":-24.26},{"x":"2015-09-30","y":-23.2},{"x":"2015-10-31","y":3.8},{"x":"2015-11-30","y":-14.45},{"x":"2015-12-31","y":-23.21},{"x":"2016-01-31","y":-7.87},{"x":"2016-02-29","y":75.89},{"x":"2016-03-31","y":109.03},{"x":"2016-04-30","y":93.18},{"x":"2016-05-31","y":56.6},{"x":"2016-06-30","y":76.47},{"x":"2016-07-31","y":96.72},{"x":"2016-08-31","y":73.69},{"x":"2016-09-30","y":44.44},{"x":"2016-10-31","y":27.65},{"x":"2016-11-30","y":-17.21},{"x":"2016-12-31","y":-63.99},{"x":"2017-01-31","y":-63.74},{"x":"2017-02-28","y":2.19},{"x":"2017-03-31","y":37.62},{"x":"2017-04-30","y":40.77},{"x":"2017-05-31","y":16.74},{"x":"2017-06-30","y":21.8},{"x":"2017-07-31","y":-3.73},{"x":"2017-08-31","y":4.48},{"x":"2017-09-30","y":14.21},{"x":"2017-10-31","y":31.33},{"x":"2017-11-30","y":23.42},{"x":"2017-12-31","y":18.15},{"x":"2018-01-31","y":27.75},{"x":"2018-02-28","y":17.88},{"x":"2018-03-31","y":12.4},{"x":"2018-04-30","y":23.51},{"x":"2018-05-31","y":27.38},{"x":"2018-06-30","y":6.1},{"x":"2018-07-31","y":-26.54},{"x":"2018-08-31","y":-38.89},{"x":"2018-09-30","y":-29.86},{"x":"2018-10-31","y":-11.19},{"x":"2018-11-30","y":8.03},{"x":"2018-12-31","y":40.22},{"x":"2019-01-31","y":58.36},{"x":"2019-02-28","y":41.99},{"x":"2019-03-31","y":15.93},{"x":"2019-04-30","y":-28.65},{"x":"2019-05-31","y":-16.88},{"x":"2019-06-30","y":26.21},{"x":"2019-07-31","y":63.32},{"x":"2019-08-31","y":99.6},{"x":"2019-09-30","y":80.22},{"x":"2019-10-31","y":75.74},{"x":"2019-11-30","y":27.57},{"x":"2019-12-31","y":8.65},{"x":"2020-01-31","y":15.85},{"x":"2020-02-29","y":52.15},{"x":"2020-03-31","y":93.7},{"x":"2020-04-30","y":129.41},{"x":"2020-05-31","y":152.87},{"x":"2020-06-30","y":138.65},{"x":"2020-07-31","y":135.82},{"x":"2020-08-31","y":95.82},{"x":"2020-09-30","y":85.94},{"x":"2020-10-31","y":40.26},{"x":"2020-11-30","y":-5.32},{"x":"2020-12-31","y":-38.76},{"x":"2021-01-31","y":-41.97},{"x":"2021-02-28","y":-36.14},{"x":"2021-03-31","y":-65.14},{"x":"2021-04-30","y":-75.34},{"x":"2021-05-31","y":-23.0},{"x":"2021-06-30","y":14.8},{"x":"2021-07-31","y":23.78},{"x":"2021-08-31","y":-6.22},{"x":"2021-09-30","y":-11.28},{"x":"2021-10-31","y":-24.12},{"x":"2021-11-30","y":-11.82},{"x":"2021-12-31","y":-9.41},{"x":"2022-01-31","y":18.24},{"x":"2022-02-28","y":29.86},{"x":"2022-03-31","y":94.93},{"x":"2022-04-30","y":87.67},{"x":"2022-05-31","y":55.84},{"x":"2022-06-30","y":-15.74},{"x":"2022-07-31","y":-57.06},{"x":"2022-08-31","y":-58.16},{"x":"2022-09-30","y":-81.01},{"x":"2022-10-31","y":-69.06},{"x":"2022-11-30","y":-59.9},{"x":"2022-12-31","y":-27.66},{"x":"2023-01-31","y":-17.72},{"x":"2023-02-28","y":-21.56},{"x":"2023-03-31","y":-9.89},{"x":"2023-04-30","y":2.99},{"x":"2023-05-31","y":21.21},{"x":"2023-06-30","y":-6.42},{"x":"2023-07-31","y":-22.9},{"x":"2023-08-31","y":-46.74},{"x":"2023-09-30","y":-50.24},{"x":"2023-10-31","y":-51.53},{"x":"2023-11-30","y":-37.38},{"x":"2023-12-31","y":-20.82},{"x":"2024-01-31","y":-25.79},{"x":"2024-02-29","y":-39.67},{"x":"2024-03-31","y":-40.79},{"x":"2024-04-30","y":-39.89},{"x":"2024-05-31","y":-21.63},{"x":"2024-06-30","y":-12.66},{"x":"2024-07-31","y":18.44},{"x":"2024-08-31","y":25.69},{"x":"2024-09-30","y":27.29},{"x":"2024-10-31","y":19.66},{"x":"2024-11-30","y":2.76},{"x":"2024-12-31","y":-3.77},{"x":"2025-01-31","y":0.83},{"x":"2025-02-28","y":34.12},{"x":"2025-03-31","y":62.89},{"x":"2025-04-30","y":66.37},{"x":"2025-05-31","y":36.95},{"x":"2025-06-30","y":32.37},{"x":"2025-07-31","y":25.64},{"x":"2025-08-31","y":49.75},{"x":"2025-09-30","y":69.51},{"x":"2025-10-31","y":65.02},{"x":"2025-11-30","y":50.63},{"x":"2025-12-31","y":27.25},{"x":"2026-01-31","y":42.69},{"x":"2026-02-28","y":42.56},{"x":"2026-03-31","y":-7.75}],
     gold_m_2014: [{"x":"2014-01-31","y":1249.71},{"x":"2014-02-28","y":1306.59},{"x":"2014-03-31","y":1343.77},{"x":"2014-04-30","y":1304.88},{"x":"2014-05-31","y":1292.19},{"x":"2014-06-30","y":1285.64},{"x":"2014-07-31","y":1317.59},{"x":"2014-08-31","y":1299.89},{"x":"2014-09-30","y":1239.2},{"x":"2014-10-31","y":1227.78},{"x":"2014-11-30","y":1182.37},{"x":"2014-12-31","y":1209.35},{"x":"2015-01-31","y":1259.01},{"x":"2015-02-28","y":1236.49},{"x":"2015-03-31","y":1186.41},{"x":"2015-04-30","y":1206.95},{"x":"2015-05-31","y":1201.74},{"x":"2015-06-30","y":1186.53},{"x":"2015-07-31","y":1134.43},{"x":"2015-08-31","y":1125.07},{"x":"2015-09-30","y":1129.8},{"x":"2015-10-31","y":1164.22},{"x":"2015-11-30","y":1091.51},{"x":"2015-12-31","y":1076.93},{"x":"2016-01-31","y":1103.68},{"x":"2016-02-29","y":1209.4},{"x":"2016-03-31","y":1255.16},{"x":"2016-04-30","y":1249.48},{"x":"2016-05-31","y":1267.33},{"x":"2016-06-30","y":1284.33},{"x":"2016-07-31","y":1344.34},{"x":"2016-08-31","y":1344.55},{"x":"2016-09-30","y":1328.92},{"x":"2016-10-31","y":1271.25},{"x":"2016-11-30","y":1245.91},{"x":"2016-12-31","y":1156.88},{"x":"2017-01-31","y":1196.94},{"x":"2017-02-28","y":1238.63},{"x":"2017-03-31","y":1235.13},{"x":"2017-04-30","y":1273.35},{"x":"2017-05-31","y":1249.02},{"x":"2017-06-30","y":1265.53},{"x":"2017-07-31","y":1238.79},{"x":"2017-08-31","y":1288.04},{"x":"2017-09-30","y":1317.65},{"x":"2017-10-31","y":1282.4},{"x":"2017-11-30","y":1283.4},{"x":"2017-12-31","y":1269.73},{"x":"2018-01-31","y":1332.97},{"x":"2018-02-28","y":1338.32},{"x":"2018-03-31","y":1327.99},{"x":"2018-04-30","y":1339.86},{"x":"2018-05-31","y":1305.07},{"x":"2018-06-30","y":1285.18},{"x":"2018-07-31","y":1238.97},{"x":"2018-08-31","y":1205.07},{"x":"2018-09-30","y":1198.48},{"x":"2018-10-31","y":1218.04},{"x":"2018-11-30","y":1222.05},{"x":"2018-12-31","y":1255.83},{"x":"2019-01-31","y":1293.69},{"x":"2019-02-28","y":1322.25},{"x":"2019-03-31","y":1301.6},{"x":"2019-04-30","y":1288.26},{"x":"2019-05-31","y":1284.15},{"x":"2019-06-30","y":1365.75},{"x":"2019-07-31","y":1419.86},{"x":"2019-08-31","y":1510.21},{"x":"2019-09-30","y":1515.86},{"x":"2019-10-31","y":1499.13},{"x":"2019-11-30","y":1474.83},{"x":"2019-12-31","y":1484.61},{"x":"2020-01-31","y":1566.36},{"x":"2020-02-29","y":1605.85},{"x":"2020-03-31","y":1620.46},{"x":"2020-04-30","y":1712.46},{"x":"2020-05-31","y":1728.07},{"x":"2020-06-30","y":1745.86},{"x":"2020-07-31","y":1853.33},{"x":"2020-08-31","y":1984.54},{"x":"2020-09-30","y":1930.39},{"x":"2020-10-31","y":1908.01},{"x":"2020-11-30","y":1878.88},{"x":"2020-12-31","y":1868.33},{"x":"2021-01-31","y":1877.78},{"x":"2021-02-28","y":1821.33},{"x":"2021-03-31","y":1728.02},{"x":"2021-04-30","y":1765.76},{"x":"2021-05-31","y":1854.03},{"x":"2021-06-30","y":1845.84},{"x":"2021-07-31","y":1811.73},{"x":"2021-08-31","y":1793.04},{"x":"2021-09-30","y":1784.25},{"x":"2021-10-31","y":1784.3},{"x":"2021-11-30","y":1826.87},{"x":"2021-12-31","y":1797.27},{"x":"2022-01-31","y":1820.76},{"x":"2022-02-28","y":1868.06},{"x":"2022-03-31","y":1961.44},{"x":"2022-04-30","y":1945.37},{"x":"2022-05-31","y":1855.01},{"x":"2022-06-30","y":1846.22},{"x":"2022-07-31","y":1738.81},{"x":"2022-08-31","y":1770.35},{"x":"2022-09-30","y":1686.11},{"x":"2022-10-31","y":1674.58},{"x":"2022-11-30","y":1731.69},{"x":"2022-12-31","y":1806.37},{"x":"2023-01-31","y":1905.13},{"x":"2023-02-28","y":1864.69},{"x":"2023-03-31","y":1922.44},{"x":"2023-04-30","y":2011.39},{"x":"2023-05-31","y":2000.82},{"x":"2023-06-30","y":1950.53},{"x":"2023-07-31","y":1954.0},{"x":"2023-08-31","y":1924.57},{"x":"2023-09-30","y":1918.06},{"x":"2023-10-31","y":1921.1},{"x":"2023-11-30","y":1990.3},{"x":"2023-12-31","y":2048.78},{"x":"2024-01-31","y":2037.7},{"x":"2024-02-29","y":2032.87},{"x":"2024-03-31","y":2170.09},{"x":"2024-04-30","y":2349.23},{"x":"2024-05-31","y":2360.87},{"x":"2024-06-30","y":2337.11},{"x":"2024-07-31","y":2401.85},{"x":"2024-08-31","y":2482.24},{"x":"2024-09-30","y":2580.39},{"x":"2024-10-31","y":2697.3},{"x":"2024-11-30","y":2665.12},{"x":"2024-12-31","y":2654.73},{"x":"2025-01-31","y":2731.88},{"x":"2025-02-28","y":2915.55},{"x":"2025-03-31","y":2995.54},{"x":"2025-04-30","y":3251.09},{"x":"2025-05-31","y":3308.99},{"x":"2025-06-30","y":3371.56},{"x":"2025-07-31","y":3354.68},{"x":"2025-08-31","y":3384.52},{"x":"2025-09-30","y":3693.09},{"x":"2025-10-31","y":4089.06},{"x":"2025-11-30","y":4103.99},{"x":"2025-12-31","y":4336.14},{"x":"2026-01-31","y":4789.97},{"x":"2026-02-28","y":5072.21},{"x":"2026-03-31","y":4916.6},{"x":"2026-04-30","y":4785.99}],
@@ -3382,10 +3400,9 @@
         backgroundColor: 'rgba(231,76,60,0.85)', color: 'white',
         font: { size: 9, weight: '600' }, padding: 3 } };
 
-    // 2 · Era averages — CB + Asian physical (tonnes/yr) ─────────────
-    const cEra = document.getElementById('summary-era-buyers');
-    if (cEra && window.BARCOIN) {
-      // Build annual Asian physical = sum(china_q + india_q) grouped by year
+    // 2 · Era averages — CB + Asian physical + ETF (tonnes/yr) + 2b USD ──
+    if (window.BARCOIN && window.SD) {
+      // Asian physical by year (China + India bar+coin, quarters summed to annual)
       const asianByYear = {};
       const addQ = (arr) => arr.forEach(p => {
         const yr = new Date(p.x).getUTCFullYear();
@@ -3393,10 +3410,16 @@
       });
       addQ(window.BARCOIN.china_q);
       addQ(window.BARCOIN.india_q);
-      // CB annual from data.cb_annual
+      // CB by year
       const cbByYear = {};
       data.cb_annual.forEach(p => { cbByYear[Number(p.x)] = p.y; });
-      // Define blocks (data starts 2010)
+      // ETF + gold price by year (from SD)
+      const etfByYear = {}, priceByYear = {};
+      window.SD.years.forEach((y,i) => {
+        etfByYear[y]   = window.SD.etf[i];
+        priceByYear[y] = window.SD.price[i];
+      });
+      // Blocks
       const blocks = [
         { label: '2010–2014',            years: [2010,2011,2012,2013,2014] },
         { label: '2015–2019',            years: [2015,2016,2017,2018,2019] },
@@ -3404,52 +3427,78 @@
         { label: '2022–2025 (post-reg.)',years: [2022,2023,2024,2025] },
       ];
       const avg = (vals) => vals.reduce((a,b)=>a+b,0) / vals.length;
-      const labels = blocks.map(b => b.label);
-      const cbAvg   = blocks.map(b => avg(b.years.map(y => cbByYear[y] ?? 0)));
+      const labels  = blocks.map(b => b.label);
+      const cbAvg   = blocks.map(b => avg(b.years.map(y => cbByYear[y]    ?? 0)));
       const asiaAvg = blocks.map(b => avg(b.years.map(y => asianByYear[y] ?? 0)));
-      const totAvg  = cbAvg.map((v,i) => v + asiaAvg[i]);
-      // Colour: highlight current regime block
-      const cbColors   = blocks.map((b,i) => i === blocks.length - 1 ? COLORS.gold : 'rgba(212,175,55,0.45)');
-      const asiaColors = blocks.map((b,i) => i === blocks.length - 1 ? COLORS.green : 'rgba(39,174,96,0.45)');
-      new Chart(cEra, {
-        type: 'bar',
-        data: { labels, datasets: [
-          { label: 'Central Banks (avg t/yr)', data: cbAvg,
-            backgroundColor: cbColors, borderColor: 'white', borderWidth: 0.4,
-            stack: 's', order: 2 },
-          { label: 'Asian physical — China + India bar+coin (avg t/yr)', data: asiaAvg,
-            backgroundColor: asiaColors, borderColor: 'white', borderWidth: 0.4,
-            stack: 's', order: 2 },
-        ] },
-        options: {
-          responsive: true, maintainAspectRatio: false,
-          interaction: { mode: 'index', intersect: false },
-          plugins: {
-            legend: { labels: { color: '#BDC3C7', font: { size: 11 }, boxWidth: 14 } },
-            tooltip: { callbacks: {
-              label: (ctx) => `${ctx.dataset.label}: ${ctx.parsed.y.toFixed(0)} t/yr`,
-              footer: (items) => {
-                if (items.length < 2) return '';
-                const sum = items.reduce((s,i)=> s + i.parsed.y, 0);
-                return `Combined: ${sum.toFixed(0)} t/yr`;
-              }
-            } },
-            annotation: { annotations: Object.fromEntries(totAvg.map((v,i) => [
-              'tot'+i, { type: 'label', xValue: i, yValue: v + 40,
-                content: `${v.toFixed(0)}t`, color: '#ECF0F1',
-                font: { size: 11, weight: '700' },
-                backgroundColor: 'rgba(15,25,35,0.65)', padding: 4, borderRadius: 3 }
-            ])) }
-          },
-          scales: {
-            x: { stacked: true, grid: { color: 'rgba(127,140,141,0.12)' },
-                 ticks: { color: '#BDC3C7', font: { size: 11 } } },
-            y: { stacked: true, beginAtZero: true,
-                 title: { display: true, text: 'Avg tonnes / year', color: '#BDC3C7' },
-                 ticks: { color: '#BDC3C7' }, grid: { color: 'rgba(127,140,141,0.15)' } }
+      const etfAvg  = blocks.map(b => avg(b.years.map(y => etfByYear[y]   ?? 0)));
+      const totAvg  = cbAvg.map((v,i) => v + asiaAvg[i] + etfAvg[i]);
+      // Per-year USD: tonnes × 32,150.75 oz/t × price / 1e9
+      const OZ = 32150.75;
+      const tToB = (t, y) => (t * OZ * (priceByYear[y] ?? 0)) / 1e9;
+      const cbUSD   = blocks.map(b => avg(b.years.map(y => tToB(cbByYear[y]    ?? 0, y))));
+      const asiaUSD = blocks.map(b => avg(b.years.map(y => tToB(asianByYear[y] ?? 0, y))));
+      const etfUSD  = blocks.map(b => avg(b.years.map(y => tToB(etfByYear[y]   ?? 0, y))));
+      const totUSD  = cbUSD.map((v,i) => v + asiaUSD[i] + etfUSD[i]);
+      // Highlight current regime block
+      const hi = blocks.length - 1;
+      const shade = (solid, muted) => blocks.map((_,i) => i === hi ? solid : muted);
+      const cbColors   = shade(COLORS.gold,  'rgba(212,175,55,0.45)');
+      const asiaColors = shade(COLORS.green, 'rgba(39,174,96,0.45)');
+      const etfColors  = shade(COLORS.blue,  'rgba(52,152,219,0.45)');
+
+      const labelAbove = (vals) => Object.fromEntries(vals.map((v,i) => [
+        'tot'+i, { type: 'label', xValue: i,
+          yValue: v >= 0 ? v + (Math.max(...vals.map(Math.abs)) * 0.05)
+                         : v - (Math.max(...vals.map(Math.abs)) * 0.05),
+          content: v >= 100 ? `${v.toFixed(0)}` : `${v.toFixed(1)}`,
+          color: '#ECF0F1', font: { size: 11, weight: '700' },
+          backgroundColor: 'rgba(15,25,35,0.65)', padding: 4, borderRadius: 3 }
+      ]));
+
+      const makeEraChart = (canvasId, cb, asia, etf, totals, yTitle, unit) => {
+        const ctx = document.getElementById(canvasId);
+        if (!ctx) return;
+        new Chart(ctx, {
+          type: 'bar',
+          data: { labels, datasets: [
+            { label: `Central Banks (avg ${unit})`, data: cb,
+              backgroundColor: cbColors, borderColor: 'white', borderWidth: 0.4,
+              stack: 's', order: 3 },
+            { label: `Asian physical — China + India bar+coin (avg ${unit})`, data: asia,
+              backgroundColor: asiaColors, borderColor: 'white', borderWidth: 0.4,
+              stack: 's', order: 3 },
+            { label: `Global ETF flows (avg ${unit}; net)`, data: etf,
+              backgroundColor: etfColors, borderColor: 'white', borderWidth: 0.4,
+              stack: 's', order: 3 },
+          ] },
+          options: {
+            responsive: true, maintainAspectRatio: false,
+            interaction: { mode: 'index', intersect: false },
+            plugins: {
+              legend: { labels: { color: '#BDC3C7', font: { size: 11 }, boxWidth: 14 } },
+              tooltip: { callbacks: {
+                label: (c) => `${c.dataset.label}: ${c.parsed.y >= 0 ? '+' : ''}${c.parsed.y.toFixed(1)}`,
+                footer: (items) => {
+                  if (items.length < 2) return '';
+                  const sum = items.reduce((s,i)=> s + i.parsed.y, 0);
+                  return `Combined: ${sum.toFixed(1)} ${unit}`;
+                }
+              } },
+              annotation: { annotations: labelAbove(totals) }
+            },
+            scales: {
+              x: { stacked: true, grid: { color: 'rgba(127,140,141,0.12)' },
+                   ticks: { color: '#BDC3C7', font: { size: 11 } } },
+              y: { stacked: true,
+                   title: { display: true, text: yTitle, color: '#BDC3C7' },
+                   ticks: { color: '#BDC3C7' }, grid: { color: 'rgba(127,140,141,0.15)' } }
+            }
           }
-        }
-      });
+        });
+      };
+
+      makeEraChart('summary-era-buyers',     cbAvg, asiaAvg, etfAvg, totAvg, 'Avg tonnes / year',  't/yr');
+      makeEraChart('summary-era-buyers-usd', cbUSD, asiaUSD, etfUSD, totUSD, 'Avg $B / year',       '$B/yr');
     }
 
     // 2 · Regime break — annual CB demand bars + gold overlay ─────
@@ -3589,6 +3638,81 @@
             y1: { position: 'right', grid: { drawOnChartArea: false },
                   title: { display: true, text: 'Gold $/oz', color: COLORS.gold },
                   ticks: { color: COLORS.gold } }
+          }
+        }
+      });
+    }
+
+    // 6 · China housing vs gold + China capital flow (quarterly $B) ──
+    const cHG = document.getElementById('summary-housing-gold');
+    if (cHG && window.F2_DATA && window.BARCOIN) {
+      // Quarterly China capital flow in $B = china bar+coin USD + china ETF USD
+      // We have china_usd (bar+coin) directly. For ETF, use BARCOIN.asia_etf proxy
+      // Simpler: use bar+coin china_usd + half of west/asia ETF is noisy; instead,
+      // expose just China bar+coin $B (retail only) for clarity.
+      const bcUSD = window.BARCOIN.china_usd; // quarterly $B
+      // Aggregate Asian ETF (proxy for China ETF share) from F2 data (monthly tonnes)
+      // Convert Asian ETF monthly flows (from F2_DATA if available) to $B quarterly
+      // F2_DATA.asia_3m is rolling 3M sum; use the monthly levels if present.
+      // Simpler: build china_etf proxy = asia_3m-based quarterly tonnes × price / 1e9, approximated as (3M sum at q-end).
+      // Gold price quarterly (from PBOC_IMPLIED.gold_q already available for 2015+; use goldByQtr where older)
+      const gQ = {};
+      window.F2_DATA.gold_q_2010.forEach(p => { gQ[p.x] = p.y; });
+      // asia_3m is rolling 3m sum of Asian ETF flows in tonnes (monthly). At quarter-ends, this ≈ the quarter's total flow.
+      const qEndRe = /-(03-31|06-30|09-30|12-31)$/;
+      const OZ = 32150.75;
+      const asiaEtfQB = window.F2_DATA.asia_3m
+        .filter(p => qEndRe.test(p.x) && gQ[p.x] != null)
+        .map(p => ({ x: p.x, y: (p.y * OZ * gQ[p.x]) / 1e9 }));
+      // Total China capital flow bars (qtr) = bar+coin $B + Asian ETF $B (proxy)
+      const etfMap = Object.fromEntries(asiaEtfQB.map(p => [p.x, p.y]));
+      const combinedQB = bcUSD.map(p => ({ x: p.x, y: p.y + (etfMap[p.x] || 0) }));
+      // Housing and gold series from F2_DATA
+      new Chart(cHG, {
+        type: 'bar',
+        data: { datasets: [
+          { type: 'bar', label: 'China retail capital flow ($B/qtr, bar+coin + ETF)',
+            data: combinedQB, yAxisID: 'y2',
+            backgroundColor: combinedQB.map(p => p.y >= 0 ? 'rgba(39,174,96,0.55)' : 'rgba(231,76,60,0.45)'),
+            borderColor: 'rgba(255,255,255,0.15)', borderWidth: 0.3, order: 3 },
+          { type: 'line', label: 'China real housing price index (BIS)',
+            data: window.F2_DATA.housing_q, yAxisID: 'y',
+            borderColor: '#E74C3C', backgroundColor: 'transparent',
+            borderWidth: 2, pointRadius: 0, tension: 0.3, order: 1 },
+          { type: 'line', label: 'Gold ($/oz)', data: window.F2_DATA.gold_q_2010,
+            yAxisID: 'y1', borderColor: COLORS.gold, backgroundColor: 'transparent',
+            borderWidth: 1.7, pointRadius: 0, tension: 0.15, order: 2 }
+        ] },
+        options: {
+          responsive: true, maintainAspectRatio: false,
+          interaction: { mode: 'index', intersect: false },
+          plugins: {
+            legend: { labels: { color: '#BDC3C7', font: { size: 10.5 }, boxWidth: 14 } },
+            annotation: { annotations: { pivot: PIVOT } },
+            tooltip: { callbacks: {
+              title: (items) => items[0].parsed.x ? new Date(items[0].parsed.x).toISOString().slice(0,10) : '',
+              label: (c) => {
+                const v = c.parsed.y;
+                if (c.dataset.yAxisID === 'y2') return `China flow: ${v >= 0 ? '+' : ''}$${v.toFixed(1)}B`;
+                if (c.dataset.yAxisID === 'y1') return `Gold: $${v.toFixed(0)}`;
+                return `Housing: ${v.toFixed(1)}`;
+              }
+            } }
+          },
+          scales: {
+            x: { type: 'time', time: { unit: 'year' },
+                 grid: { color: 'rgba(127,140,141,0.12)' }, ticks: { color: '#BDC3C7' } },
+            y: { position: 'left',
+                 title: { display: true, text: 'Housing Index (BIS)', color: '#E74C3C' },
+                 ticks: { color: '#E74C3C' }, grid: { color: 'rgba(127,140,141,0.15)' } },
+            y1: { position: 'right',
+                  title: { display: true, text: 'Gold ($/oz)', color: COLORS.gold },
+                  ticks: { color: COLORS.gold }, grid: { drawOnChartArea: false } },
+            y2: { position: 'right', display: false, stacked: false, beginAtZero: true,
+                  offset: true, grid: { drawOnChartArea: false },
+                  // Let the bars sit visually in lower ⅓ — scale so max reaches ~40% of chart area
+                  suggestedMax: Math.max(...combinedQB.map(p => Math.abs(p.y))) * 2.8,
+                  suggestedMin: -Math.max(...combinedQB.map(p => Math.abs(p.y))) * 2.8 }
           }
         }
       });
