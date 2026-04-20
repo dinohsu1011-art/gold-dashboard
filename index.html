@@ -249,9 +249,9 @@
 
     <!-- 6 · China housing vs gold + China capital flow overlay -->
     <div class="chart-panel" style="margin-top:16px;">
-      <div class="panel-title">6 · The Rotation Source — China Housing vs Gold + China Capital Flow</div>
+      <div class="panel-title">6 · The Rotation Source — China Housing &amp; Equities vs Gold + Capital Flow</div>
       <div class="panel-sub">
-        China real housing price index (BIS) vs gold. Correlation was <strong>+0.73</strong> pre-2022 (housing up, gold up — both rode the debasement trade) and <strong style="color:#E74C3C;">−0.95</strong> post-2022 (housing collapsed, gold ripped). The bars show <strong style="color:#27AE60;">China physical + ETF capital flow ($B/qtr)</strong> — the household rotation <em>out of</em> broken housing wealth <em>into</em> gold. <a href="#" onclick="document.querySelector('.tab[data-tab=flows]').click(); return false;" style="color:#D4AF37;">→ Post-2022</a>
+        China real housing price index (BIS) and <strong style="color:#8E44AD;">CSI 300 equity index</strong> vs gold. Housing ↔ gold correlation was <strong>+0.73</strong> pre-2022 and <strong style="color:#E74C3C;">−0.95</strong> post-2022; CSI 300 is ~−33% off its 2021 peak in real terms. Both domestic wealth stores broke — the bars show <strong style="color:#27AE60;">China physical + ETF capital flow ($B/qtr)</strong>, the household rotation <em>out of</em> broken alternatives <em>into</em> gold. <a href="#" onclick="document.querySelector('.tab[data-tab=flows]').click(); return false;" style="color:#D4AF37;">→ Post-2022</a>
       </div>
       <div class="chart-wrap tall" style="height:340px;"><canvas id="summary-housing-gold"></canvas></div>
     </div>
@@ -3550,6 +3550,9 @@
     }
 
     // 6 · China housing vs gold + China capital flow (quarterly $B) ──
+    // CSI 300 quarterly levels (index, ~2012-present)
+    const CSI300_Q = [{"x":"2012-06-30","y":1990},{"x":"2012-09-30","y":1871},{"x":"2012-12-31","y":2020},{"x":"2013-03-31","y":1990},{"x":"2013-06-30","y":1783},{"x":"2013-09-30","y":1974},{"x":"2013-12-31","y":1901},{"x":"2014-03-31","y":1751},{"x":"2014-06-30","y":1782},{"x":"2014-09-30","y":2037},{"x":"2014-12-31","y":2923},{"x":"2015-03-31","y":3332},{"x":"2015-06-30","y":3707},{"x":"2015-09-30","y":2663},{"x":"2015-12-31","y":3123},{"x":"2016-03-31","y":2695},{"x":"2016-06-30","y":2655},{"x":"2016-09-30","y":2790},{"x":"2016-12-31","y":2820},{"x":"2017-03-31","y":2948},{"x":"2017-06-30","y":3145},{"x":"2017-09-30","y":3331},{"x":"2017-12-31","y":3479},{"x":"2018-03-31","y":3361},{"x":"2018-06-30","y":3051},{"x":"2018-09-30","y":3026},{"x":"2018-12-31","y":2639},{"x":"2019-03-31","y":3400},{"x":"2019-06-30","y":3392},{"x":"2019-09-30","y":3400},{"x":"2019-12-31","y":3657},{"x":"2020-03-31","y":3276},{"x":"2020-06-30","y":3730},{"x":"2020-09-30","y":4148},{"x":"2020-12-31","y":4721},{"x":"2021-03-31","y":4569},{"x":"2021-06-30","y":4755},{"x":"2021-09-30","y":4465},{"x":"2021-12-31","y":4531},{"x":"2022-03-31","y":3875},{"x":"2022-06-30","y":4142},{"x":"2022-09-30","y":3554},{"x":"2022-12-31","y":3618},{"x":"2023-03-31","y":3779},{"x":"2023-06-30","y":3623},{"x":"2023-09-30","y":3513},{"x":"2023-12-31","y":3265},{"x":"2024-03-31","y":3361},{"x":"2024-06-30","y":3324},{"x":"2024-09-30","y":4035},{"x":"2024-12-31","y":3834},{"x":"2025-03-31","y":3797},{"x":"2025-06-30","y":3881},{"x":"2025-09-30","y":4621},{"x":"2025-12-31","y":4633},{"x":"2026-03-31","y":4463}];
+
     const cHG = document.getElementById('summary-housing-gold');
     if (cHG && window.F2_DATA && window.BARCOIN) {
       // Quarterly China capital flow in $B = china bar+coin USD + china ETF USD
@@ -3587,7 +3590,10 @@
             borderWidth: 2, pointRadius: 0, tension: 0.3, order: 1 },
           { type: 'line', label: 'Gold ($/oz)', data: window.F2_DATA.gold_q_2010,
             yAxisID: 'y1', borderColor: COLORS.gold, backgroundColor: 'transparent',
-            borderWidth: 1.7, pointRadius: 0, tension: 0.15, order: 2 }
+            borderWidth: 1.7, pointRadius: 0, tension: 0.15, order: 2 },
+          { type: 'line', label: 'CSI 300 (index)', data: CSI300_Q,
+            yAxisID: 'y3', borderColor: '#8E44AD', backgroundColor: 'transparent',
+            borderWidth: 1.5, borderDash: [4,3], pointRadius: 0, tension: 0.2, order: 2 }
         ] },
         options: {
           responsive: true, maintainAspectRatio: false,
@@ -3601,6 +3607,7 @@
                 const v = c.parsed.y;
                 if (c.dataset.yAxisID === 'y2') return `China flow: ${v >= 0 ? '+' : ''}$${v.toFixed(1)}B`;
                 if (c.dataset.yAxisID === 'y1') return `Gold: $${v.toFixed(0)}`;
+                if (c.dataset.yAxisID === 'y3') return `CSI 300: ${v.toFixed(0)}`;
                 return `Housing: ${v.toFixed(1)}`;
               }
             } }
@@ -3618,7 +3625,8 @@
                   offset: true, grid: { drawOnChartArea: false },
                   // Let the bars sit visually in lower ⅓ — scale so max reaches ~40% of chart area
                   suggestedMax: Math.max(...combinedQB.map(p => Math.abs(p.y))) * 2.8,
-                  suggestedMin: -Math.max(...combinedQB.map(p => Math.abs(p.y))) * 2.8 }
+                  suggestedMin: -Math.max(...combinedQB.map(p => Math.abs(p.y))) * 2.8 },
+            y3: { position: 'right', display: false, grid: { drawOnChartArea: false } }
           }
         }
       });
