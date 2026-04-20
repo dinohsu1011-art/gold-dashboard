@@ -6,11 +6,30 @@
 <script src="vendor/chart.umd.min.js"></script>
 <script src="vendor/chartjs-adapter-date-fns.bundle.min.js"></script>
 <style>
+  :root {
+    --bg: #F5F6F8;
+    --panel: #FFFFFF;
+    --text: #1A1A1A;
+    --text-2: #555B63;
+    --text-muted: #8A929B;
+    --border: #E1E4E8;
+    --border-hover: #C7CBD1;
+    --grid: #ECEEF1;
+    --row-hover: #F0F2F5;
+    --highlight-row: #FFF8E1;
+    --tooltip-bg: #FFFFFF;
+    --gold: #D4AF37;
+    --gold-text: #B8941F;
+    --green: #27AE60;
+    --red: #C0392B;
+    --amber: #F39C12;
+    --shadow: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+  }
   * { box-sizing: border-box; }
   body {
     margin: 0; padding: 0;
-    background: #0F1923;
-    color: #E0E0E0;
+    background: var(--bg);
+    color: var(--text);
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
     min-height: 100vh;
   }
@@ -18,18 +37,18 @@
   /* Header */
   .header {
     display: flex; justify-content: space-between; align-items: center;
-    padding-bottom: 20px; border-bottom: 1px solid #2C3E50; margin-bottom: 24px;
+    padding-bottom: 20px; border-bottom: 1px solid var(--border); margin-bottom: 24px;
   }
   .header-left h1 {
-    margin: 0; font-size: 26px; letter-spacing: 1.5px; color: white;
+    margin: 0; font-size: 26px; letter-spacing: 1.5px; color: var(--text);
   }
-  .header-left .sub { margin-top: 6px; font-size: 13px; color: #BDC3C7; }
+  .header-left .sub { margin-top: 6px; font-size: 13px; color: var(--text-2); }
   .header-right { display: flex; align-items: center; gap: 24px; }
   .gold-badge {
     text-align: right;
   }
-  .gold-badge .price { font-size: 22px; font-weight: 700; color: #D4AF37; }
-  .gold-badge .ytd { font-size: 12px; color: #D4AF37; opacity: 0.8; }
+  .gold-badge .price { font-size: 22px; font-weight: 700; color: var(--gold-text); }
+  .gold-badge .ytd { font-size: 12px; color: var(--gold-text); opacity: 0.85; }
   .composite-box {
     width: 120px; height: 90px; border-radius: 12px;
     display: flex; flex-direction: column; justify-content: center; align-items: center;
@@ -45,11 +64,11 @@
     grid-template-columns: repeat(5, 1fr); gap: 12px; margin-bottom: 24px;
   }
   .card {
-    background: #161F2B; border: 1px solid #2C3E50; border-radius: 10px;
-    padding: 16px; transition: all 0.15s ease;
+    background: var(--panel); border: 1px solid var(--border); border-radius: 10px;
+    padding: 16px; transition: all 0.15s ease; box-shadow: var(--shadow);
   }
-  .card:hover { transform: translateY(-2px); border-color: #3D5470; }
-  .card .title { font-size: 13px; font-weight: 600; color: white; margin-bottom: 2px; }
+  .card:hover { transform: translateY(-2px); border-color: var(--border-hover); }
+  .card .title { font-size: 13px; font-weight: 600; color: var(--text); margin-bottom: 2px; }
   .card .status { font-size: 11px; font-weight: 700; margin-bottom: 10px; letter-spacing: 0.5px; }
   .status.bullish { color: #27AE60; }
   .status.neutral { color: #F39C12; }
@@ -59,47 +78,47 @@
   }
   .light {
     width: 18px; height: 18px; border-radius: 50%;
-    background: #2C3E50; transition: all 0.2s;
+    background: var(--border); transition: all 0.2s;
   }
   .light.red.active { background: #C0392B; box-shadow: 0 0 8px rgba(192,57,43,0.5); }
   .light.amber.active { background: #F39C12; box-shadow: 0 0 8px rgba(243,156,18,0.5); }
   .light.green.active { background: #27AE60; box-shadow: 0 0 8px rgba(39,174,96,0.5); }
   .spark { height: 60px; margin: 6px 0 10px 0; }
-  .card .data { font-size: 11px; color: #BDC3C7; margin-top: 4px; }
-  .card .change { font-size: 10.5px; color: #7F8C8D; margin-top: 2px; }
-  .card .regime { font-size: 10px; margin-top: 8px; font-style: italic; padding-top: 8px; border-top: 1px dashed #2C3E50; }
+  .card .data { font-size: 11px; color: var(--text-2); margin-top: 4px; }
+  .card .change { font-size: 10.5px; color: var(--text-muted); margin-top: 2px; }
+  .card .regime { font-size: 10px; margin-top: 8px; font-style: italic; padding-top: 8px; border-top: 1px dashed var(--border); }
   .regime.pos { color: #27AE60; }
   .regime.neg { color: #C0392B; }
   .regime.flat { color: #F39C12; }
   /* Main tabs */
   .tabs {
-    display: flex; gap: 4px; margin-bottom: 18px; border-bottom: 1px solid #2C3E50;
+    display: flex; gap: 4px; margin-bottom: 18px; border-bottom: 1px solid var(--border);
   }
   .tab {
-    padding: 10px 18px; cursor: pointer; color: #7F8C8D;
+    padding: 10px 18px; cursor: pointer; color: var(--text-muted);
     border-bottom: 2px solid transparent;
     font-size: 13px; font-weight: 500;
     transition: all 0.15s;
   }
-  .tab:hover { color: #BDC3C7; }
-  .tab.active { color: #D4AF37; border-bottom-color: #D4AF37; }
+  .tab:hover { color: var(--text-2); }
+  .tab.active { color: var(--gold-text); border-bottom-color: var(--gold); }
   /* Factor filter (inside Model tab) */
   .factor-filter {
     display: flex; gap: 6px; margin-bottom: 14px; align-items: center;
-    padding: 8px 12px; background: #0F1923; border: 1px solid #2C3E50; border-radius: 6px;
+    padding: 8px 12px; background: var(--panel); border: 1px solid var(--border); border-radius: 6px;
   }
   .factor-filter .ff-label {
-    font-size: 11px; color: #7F8C8D; text-transform: uppercase; letter-spacing: 0.5px;
+    font-size: 11px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px;
     margin-right: 6px;
   }
   .factor-pill {
-    padding: 5px 12px; cursor: pointer; color: #BDC3C7;
-    background: transparent; border: 1px solid #34495E; border-radius: 14px;
+    padding: 5px 12px; cursor: pointer; color: var(--text-2);
+    background: transparent; border: 1px solid var(--border); border-radius: 14px;
     font-size: 12px; font-weight: 500; transition: all 0.15s;
   }
-  .factor-pill:hover { color: #E0E0E0; border-color: #7F8C8D; }
+  .factor-pill:hover { color: var(--text); border-color: var(--border-hover); }
   .factor-pill.active {
-    color: #0F1923; background: #D4AF37; border-color: #D4AF37; font-weight: 600;
+    color: #FFFFFF; background: var(--gold); border-color: var(--gold); font-weight: 600;
   }
   /* Tab content */
   .tab-content { display: none; }
@@ -109,14 +128,14 @@
     display: grid; grid-template-columns: 1fr 1fr; gap: 16px;
   }
   .chart-panel {
-    background: #161F2B; border: 1px solid #2C3E50; border-radius: 10px;
-    padding: 16px;
+    background: var(--panel); border: 1px solid var(--border); border-radius: 10px;
+    padding: 16px; box-shadow: var(--shadow);
   }
   .chart-panel .panel-title {
-    font-size: 13px; font-weight: 600; color: white; margin-bottom: 4px;
+    font-size: 13px; font-weight: 600; color: var(--text); margin-bottom: 4px;
   }
   .chart-panel .panel-sub {
-    font-size: 11px; color: #7F8C8D; margin-bottom: 10px;
+    font-size: 11px; color: var(--text-muted); margin-bottom: 10px;
   }
   .chart-wrap { position: relative; height: 280px; }
   .chart-wrap.tall { height: 360px; }
@@ -125,32 +144,34 @@
     width: 100%; border-collapse: collapse; font-size: 12px;
   }
   .table th, .table td {
-    padding: 8px 10px; text-align: left; border-bottom: 1px solid #2C3E50;
+    padding: 8px 10px; text-align: left; border-bottom: 1px solid var(--border);
   }
-  .table th { color: #BDC3C7; font-weight: 600; font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; }
-  .table td { color: #E0E0E0; }
-  .table tr:hover { background: #1A2535; }
+  .table th { color: var(--text-2); font-weight: 600; font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; }
+  .table td { color: var(--text); }
+  .table tr:hover { background: var(--row-hover); }
   .edge-pos { color: #27AE60; font-weight: 700; }
   .edge-neg { color: #C0392B; font-weight: 700; }
-  .highlight-row { background: #1F3040; }
+  .highlight-row { background: var(--highlight-row); }
   /* Footer */
   .footer {
-    margin-top: 32px; padding-top: 16px; border-top: 1px solid #2C3E50;
-    font-size: 10.5px; color: #7F8C8D;
+    margin-top: 32px; padding-top: 16px; border-top: 1px solid var(--border);
+    font-size: 10.5px; color: var(--text-muted);
   }
   .thesis-box {
-    background: #161F2B; border-left: 3px solid #D4AF37;
+    background: #FBFBFC; border-left: 3px solid var(--gold);
     padding: 14px 18px; margin-bottom: 20px; border-radius: 6px;
-    font-size: 13px; line-height: 1.55; color: #BDC3C7;
+    font-size: 13px; line-height: 1.55; color: var(--text-2);
+    box-shadow: var(--shadow);
   }
-  .thesis-box strong { color: white; }
+  .thesis-box strong { color: var(--text); }
   .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
   .stat-mini {
-    background: #161F2B; border: 1px solid #2C3E50; border-radius: 8px; padding: 14px;
+    background: var(--panel); border: 1px solid var(--border); border-radius: 8px; padding: 14px;
+    box-shadow: var(--shadow);
   }
-  .stat-mini .stat-label { font-size: 10px; color: #7F8C8D; text-transform: uppercase; letter-spacing: 1px; }
-  .stat-mini .stat-value { font-size: 22px; font-weight: 700; margin-top: 6px; color: white; }
-  .stat-mini .stat-sub { font-size: 11px; color: #BDC3C7; margin-top: 4px; }
+  .stat-mini .stat-label { font-size: 10px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; }
+  .stat-mini .stat-value { font-size: 22px; font-weight: 700; margin-top: 6px; color: var(--text); }
+  .stat-mini .stat-sub { font-size: 11px; color: var(--text-2); margin-top: 4px; }
   .stat-mini.up .stat-value { color: #27AE60; }
   .stat-mini.down .stat-value { color: #C0392B; }
 </style>
@@ -186,9 +207,9 @@
   <div class="tab-content active" id="tab-charts">
 
     <!-- Thesis preamble -->
-    <div class="chart-panel" style="background:linear-gradient(135deg,#1A2332 0%,#0F1923 100%); border-left:4px solid #D4AF37; margin-bottom:16px;">
-      <div style="font-size:15px; font-weight:700; color:white; margin-bottom:8px;">The Thesis in Six Charts</div>
-      <div style="font-size:12.5px; color:#BDC3C7; line-height:1.75;">
+    <div class="chart-panel" style="background:linear-gradient(135deg,#FDFDFD 0%,#F0F2F5 100%); border-left:4px solid #D4AF37; margin-bottom:16px;">
+      <div style="font-size:15px; font-weight:700; color:#1A1A1A; margin-bottom:8px;">The Thesis in Six Charts</div>
+      <div style="font-size:12.5px; color:#555B63; line-height:1.75;">
         Since <strong style="color:#D4AF37;">Feb 2022</strong> (G7 freezes $300B of Russian FX reserves), gold's price-setting mechanism changed. The classical driver — <strong>real yields / DXY</strong> — decoupled. A new regime of <strong style="color:#E74C3C;">sovereign accumulation</strong> (F1 · PBoC + non-aligned CBs) and <strong style="color:#27AE60;">Chinese retail rotation</strong> (F2 · housing / equity refugees into bar+coin) took over. The six charts below tell that story; each links to its deep-dive tab.
       </div>
     </div>
@@ -276,7 +297,7 @@
       <div class="factor-pill" data-factor="overview">Overview</div>
       <div class="factor-pill" data-factor="f1">F1 — PBoC (locked)</div>
       <div class="factor-pill" data-factor="f2">F2 — Retail Rotation</div>
-      <div style="font-size:11px; color:#7F8C8D; margin-left:6px; align-self:center;">F3 GPR &amp; F5 Cycle moved to <strong>Historical</strong> tab (no longer predictive post-2022)</div>
+      <div style="font-size:11px; color:#8A929B; margin-left:6px; align-self:center;">F3 GPR &amp; F5 Cycle moved to <strong>Historical</strong> tab (no longer predictive post-2022)</div>
     </div>
 
     <div class="chart-grid" data-factor="overview">
@@ -287,7 +308,7 @@
           <thead><tr><th>Signal</th><th>N</th><th>P(gold↑)</th><th>Null</th><th>Edge</th></tr></thead>
           <tbody id="backtest-body"></tbody>
         </table>
-        <div style="margin-top:12px; font-size:11px; color:#7F8C8D; font-style:italic;">
+        <div style="margin-top:12px; font-size:11px; color:#8A929B; font-style:italic;">
           * The counter-intuitive edge at composite ≤ −3 reflects gold's safe-haven bid into stress events (n=16).
         </div>
       </div>
@@ -298,7 +319,7 @@
           <thead><tr><th>Factor</th><th>Pre-2022</th><th>Post-2022</th><th>Δ</th></tr></thead>
           <tbody id="regime-body"></tbody>
         </table>
-        <div style="margin-top:12px; font-size:11px; color:#BDC3C7;">
+        <div style="margin-top:12px; font-size:11px; color:#555B63;">
           → <strong>Thesis confirmed:</strong> Eastern/CB &amp; geopolitical factors gained predictive power post-2022;
           traditional Western rate-cycle signal degraded.
         </div>
@@ -327,21 +348,21 @@
       </table>
 
       <!-- Visual: progression of hit rate through each step -->
-      <div style="margin-top:20px; padding-top:16px; border-top:1px dashed #2C3E50;">
-        <div style="font-size:13px; font-weight:600; color:white; margin-bottom:4px;">
+      <div style="margin-top:20px; padding-top:16px; border-top:1px dashed #E1E4E8;">
+        <div style="font-size:13px; font-weight:600; color:#1A1A1A; margin-bottom:4px;">
           How each rule moves the needle
         </div>
-        <div style="font-size:11px; color:#7F8C8D; margin-bottom:10px;">
+        <div style="font-size:11px; color:#8A929B; margin-bottom:10px;">
           Each bar is a step from the table above. Red dashed line is the coin-flip baseline.
           Gold bar is the rule we locked in.
         </div>
         <div style="height:260px;"><canvas id="chart-pboc-iter"></canvas></div>
       </div>
 
-      <div style="margin-top:20px; font-size:12px; color:#BDC3C7; line-height:1.6;">
-        <strong style="color:white;">Bottom line:</strong> the LOCKED rule passed every robustness check (see full verification testing below). The "must be big" filter did not — it was a local peak, not a real feature of the data.
+      <div style="margin-top:20px; font-size:12px; color:#555B63; line-height:1.6;">
+        <strong style="color:#1A1A1A;">Bottom line:</strong> the LOCKED rule passed every robustness check (see full verification testing below). The "must be big" filter did not — it was a local peak, not a real feature of the data.
       </div>
-      <div style="margin-top:10px; font-size:12px; color:#7F8C8D; font-style:italic;">
+      <div style="margin-top:10px; font-size:12px; color:#8A929B; font-style:italic;">
         <strong>One important caveat:</strong> this signal works best when the market doesn't have an obvious direction. Pre-2022, when gold was range-bound, it added +27pp of edge. Post-2022, in a structural bull market, it still works but partly overlaps with the uptrend itself. Think of it as a <strong>confirmation / intensity</strong> indicator, not a turning-point caller.
       </div>
     </div>
@@ -354,8 +375,8 @@
         <strong style="color:#E74C3C;">Solid red</strong> = monthly IFS/SAFE declared PBoC additions (Aug 2015 – Mar 2026). <strong style="color:#D4AF37;">Translucent gold</strong> = implied off-book China — the 65% Nieuwenhuijs central attribution of the quarterly WGC-minus-IFS residual, distributed evenly across each quarter's three months for visualization. <em>Jun–Jul 2015 excluded (604t one-shot catch-up announcement of 2009-15 accumulation; distorts scale).</em> Gold price on right axis.
       </div>
       <div class="chart-wrap tall" style="margin-top:10px; height:340px;"><canvas id="chart-pboc-monthly"></canvas></div>
-      <div style="margin-top:10px; font-size:12px; color:#BDC3C7; line-height:1.6;">
-        <strong style="color:white;">Read:</strong>
+      <div style="margin-top:10px; font-size:12px; color:#555B63; line-height:1.6;">
+        <strong style="color:#1A1A1A;">Read:</strong>
         Post-2022 declared cumulative = <strong>365t</strong>; same period implied off-book cumulative = <strong>~1,341t</strong> (3.7× declared). Implied bars disappear in Q1 2026 because WGC hasn't published Q1'26 CB demand yet — only the declared series is current.
       </div>
     </div>
@@ -369,10 +390,10 @@
         <strong>Why this matters:</strong> Declared PBoC buying 2022-25 totals <strong>358t</strong>, but customs data implies China actually accumulated <strong>~2,000t</strong> (5.7× declared). PBoC announces in installments when politically convenient; the actual buying is continuous and ~3× larger. Our F1 signal fires on the announcement series, not the actual flows — so it's a <em>disclosure-timing</em> indicator, not a true flow indicator.
       </div>
       <div class="chart-wrap tall" style="margin-top:10px; height:360px;"><canvas id="chart-pboc-implied"></canvas></div>
-      <div style="margin-top:10px; font-size:12px; color:#BDC3C7; line-height:1.6;">
-        <strong style="color:white;">Read:</strong>
+      <div style="margin-top:10px; font-size:12px; color:#555B63; line-height:1.6;">
+        <strong style="color:#1A1A1A;">Read:</strong>
         Q3 2022 = the structural break — first quarter where the residual blows past declared by 4×. Continues for 12 straight quarters through Q4 2025. If the central estimate holds, the post-2022 buildup in the gold price has been supported by ~5× more Chinese buying than public data suggests.
-        <em style="color:#7F8C8D;">Caveat: 65% central attribution comes from triangulating Nieuwenhuijs (60-80%), sell-side analyst notes (40-70%), and the Saudi "frozen disclosure" deduction. No official source confirms country attribution; by definition the residual is unreported.</em>
+        <em style="color:#8A929B;">Caveat: 65% central attribution comes from triangulating Nieuwenhuijs (60-80%), sell-side analyst notes (40-70%), and the Saudi "frozen disclosure" deduction. No official source confirms country attribution; by definition the residual is unreported.</em>
       </div>
     </div>
 
@@ -398,7 +419,7 @@
             <tr style="background:rgba(39,174,96,0.08);">
               <td><strong>F1.1</strong></td>
               <td>PBoC alone (baseline)
-                <div style="color:#7F8C8D; font-style:italic; font-size:11px; margin-top:3px;">Tests: the locked signal as-is (2015-start sample). How: apply rule to PBoC monthly IFS changes; this is the reference HR every other test is compared against.</div>
+                <div style="color:#8A929B; font-style:italic; font-size:11px; margin-top:3px;">Tests: the locked signal as-is (2015-start sample). How: apply rule to PBoC monthly IFS changes; this is the reference HR every other test is compared against.</div>
               </td>
               <td>57</td>
               <td><strong style="color:#27AE60;">0.632</strong></td>
@@ -408,7 +429,7 @@
             <tr>
               <td>F1.2</td>
               <td>IFS sum ex-PBoC (monthly)
-                <div style="color:#7F8C8D; font-style:italic; font-size:11px; margin-top:3px;">Tests: is the signal really about <em>all</em> central banks and PBoC is just the biggest contributor? How: sum every IFS reporter <em>except</em> PBoC into one monthly series, run the identical rule. If HR ≈ PBoC's, PBoC is a bellwether.</div>
+                <div style="color:#8A929B; font-style:italic; font-size:11px; margin-top:3px;">Tests: is the signal really about <em>all</em> central banks and PBoC is just the biggest contributor? How: sum every IFS reporter <em>except</em> PBoC into one monthly series, run the identical rule. If HR ≈ PBoC's, PBoC is a bellwether.</div>
               </td>
               <td>110</td>
               <td>0.564</td>
@@ -418,7 +439,7 @@
             <tr>
               <td>F1.4</td>
               <td>Unreported residual (WGC − IFS, quarterly)
-                <div style="color:#7F8C8D; font-style:italic; font-size:11px; margin-top:3px;">Tests: is the true signal <em>hidden</em> CB buying (off-book China + Saudi + others) rather than disclosed PBoC flows? How: compute WGC quarterly CB total minus IFS quarterly sum; run quarterly-cadence analog of the rule (window=2Q, streak≥2Q, lag=1Q); forward-fill to monthly to score against gold_dir_1m.</div>
+                <div style="color:#8A929B; font-style:italic; font-size:11px; margin-top:3px;">Tests: is the true signal <em>hidden</em> CB buying (off-book China + Saudi + others) rather than disclosed PBoC flows? How: compute WGC quarterly CB total minus IFS quarterly sum; run quarterly-cadence analog of the rule (window=2Q, streak≥2Q, lag=1Q); forward-fill to monthly to score against gold_dir_1m.</div>
               </td>
               <td>91</td>
               <td>0.549</td>
@@ -428,7 +449,7 @@
             <tr>
               <td>F1.5</td>
               <td>WGC total ex-PBoC (quarterly)
-                <div style="color:#7F8C8D; font-style:italic; font-size:11px; margin-top:3px;">Tests: same question as F1.2 but on the <em>broader</em> WGC basis (which includes the unreported residual) — in case IFS alone is missing too much of global CB demand. How: WGC quarterly total minus PBoC quarterly, run the quarterly rule.</div>
+                <div style="color:#8A929B; font-style:italic; font-size:11px; margin-top:3px;">Tests: same question as F1.2 but on the <em>broader</em> WGC basis (which includes the unreported residual) — in case IFS alone is missing too much of global CB demand. How: WGC quarterly total minus PBoC quarterly, run the quarterly rule.</div>
               </td>
               <td>127</td>
               <td>0.543</td>
@@ -438,15 +459,15 @@
           </tbody>
         </table>
       </div>
-      <div style="margin-top:14px; padding:14px; background:#0F1923; border:1px solid #34495E; border-radius:4px;">
-        <div style="font-size:12px; color:#BDC3C7; line-height:1.7;">
-          <strong style="color:white;">Individual countries (F1.3)</strong> — does <em>any single</em> non-PBoC CB replicate the signal?
-          <div style="color:#7F8C8D; font-style:italic; font-size:11px; margin:4px 0 8px 0;">Tests: is there a different "one CB" (not PBoC) whose monthly flows run the same rule and produce a comparable HR? How: apply the locked rule one country at a time to Russia, Poland, Turkey*, India, Singapore, Qatar, Czech Rep. (the WGC-named reporters).</div>
+      <div style="margin-top:14px; padding:14px; background:#FFFFFF; border:1px solid #E1E4E8; border-radius:4px;">
+        <div style="font-size:12px; color:#555B63; line-height:1.7;">
+          <strong style="color:#1A1A1A;">Individual countries (F1.3)</strong> — does <em>any single</em> non-PBoC CB replicate the signal?
+          <div style="color:#8A929B; font-style:italic; font-size:11px; margin:4px 0 8px 0;">Tests: is there a different "one CB" (not PBoC) whose monthly flows run the same rule and produce a comparable HR? How: apply the locked rule one country at a time to Russia, Poland, Turkey*, India, Singapore, Qatar, Czech Rep. (the WGC-named reporters).</div>
           Czech 0.611 (+7.4pp, N=54) · Turkey 0.591 (+5.4pp) · Qatar 0.577 (+4.0pp) · India 0.559 · Poland 0.548 · Russia 0.535 · Singapore 0.500.
           <strong>No non-PBoC country comes close to PBoC's 0.632.</strong> Czech is closest but N is smaller and the signal is mostly post-2021.
         </div>
-        <div style="margin-top:12px; font-size:12px; color:#BDC3C7; line-height:1.7;">
-          <strong style="color:white;">Verdict: MIXED — PBoC has genuine uniqueness, but not for the reason first framed.</strong><br/>
+        <div style="margin-top:12px; font-size:12px; color:#555B63; line-height:1.7;">
+          <strong style="color:#1A1A1A;">Verdict: MIXED — PBoC has genuine uniqueness, but not for the reason first framed.</strong><br/>
           Δ(PBoC − ex-PBoC) = <strong style="color:#27AE60;">+6.8pp</strong>. PBoC isn't a bellwether (ex-PBoC cohort provides no edge). But it's also not driving via tonnage — declared PBoC is only ~15% of global CB demand post-2022.<br/><br/>
           <strong>What's actually unique about PBoC:</strong> it has genuine <em>on/off states</em> — multi-year pauses followed by restarts. Ex-PBoC CB buying is nearly monotonic post-2015, so sign(diff) rarely flips — the N_bear column shows ex-PBoC almost never fires bearish. PBoC's value is information about <strong>disclosure timing</strong>, not about tonnage or even actual flows (see chart above: true China buying is ~5× declared).<br/><br/>
           <strong>Reframed:</strong> F1 is a <em>signal about when Chinese authorities choose to publicly lean in</em>, which tends to coincide with broader sovereign gold-sentiment turns.
@@ -463,8 +484,8 @@
       </div>
 
       <!-- The knobs -->
-      <div style="margin-top:14px; padding:14px; background:#0F1923; border:1px solid #34495E; border-radius:4px;">
-        <div style="font-size:13px; font-weight:600; color:white; margin-bottom:8px;">The knobs of the locked rule</div>
+      <div style="margin-top:14px; padding:14px; background:#FFFFFF; border:1px solid #E1E4E8; border-radius:4px;">
+        <div style="font-size:13px; font-weight:600; color:#1A1A1A; margin-bottom:8px;">The knobs of the locked rule</div>
         <table class="table" style="font-size:11.5px;">
           <thead>
             <tr>
@@ -507,7 +528,7 @@
             </tr>
           </tbody>
         </table>
-        <div style="margin-top:10px; font-size:11.5px; color:#BDC3C7; line-height:1.6;">
+        <div style="margin-top:10px; font-size:11.5px; color:#555B63; line-height:1.6;">
           Each test below targets one of these dials. The goal is to show the settings weren't cherry-picked: turn any knob and the signal should degrade gracefully, not collapse.
         </div>
       </div>
@@ -518,9 +539,9 @@
       </div>
 
       <!-- 1. Coincident (was 2) -->
-      <div style="margin-top:10px; padding:14px; background:#0F1923; border-left:3px solid #27AE60; border-radius:4px;">
-        <div style="font-size:13px; font-weight:600; color:white;">① Coincident check — is the LEAD knob earning its keep?</div>
-        <div style="font-size:12px; color:#BDC3C7; margin-top:6px; line-height:1.6;">
+      <div style="margin-top:10px; padding:14px; background:#FFFFFF; border-left:3px solid #27AE60; border-radius:4px;">
+        <div style="font-size:13px; font-weight:600; color:#1A1A1A;">① Coincident check — is the LEAD knob earning its keep?</div>
+        <div style="font-size:12px; color:#555B63; margin-top:6px; line-height:1.6;">
           <strong>Knob under test:</strong> LEAD (why +2M and not 0M?).<br>
           <strong>The worry:</strong> maybe PBoC buys at the same time gold is going up — so the "signal" is just coincident, not forecasting anything. In that case, lag 0 would match lag +2 and the +2M "lead" is cosmetic.<br>
           <strong>The test:</strong> compare hit rate at lag 0 (same month) vs. lag +2 (two months ahead), broken by period.
@@ -539,16 +560,16 @@
             <tbody id="coin-body"></tbody>
           </table>
         </div>
-        <div style="font-size:12px; color:#BDC3C7; margin-top:10px; line-height:1.6;">
+        <div style="font-size:12px; color:#555B63; margin-top:10px; line-height:1.6;">
           <strong>Reading the table:</strong> in every period, the 2-month-ahead HR is higher than the same-month HR. If the signal were purely coincident we'd expect lag 0 to match lag +2. Instead, the 2-month forecast adds +10-12pp over same-month.
           <br><span style="color:#27AE60;">✓ PASSED — the 2-month lead is a real forecast, not reporting.</span>
         </div>
       </div>
 
       <!-- 2. Reverse causation (was 1) -->
-      <div style="margin-top:12px; padding:14px; background:#0F1923; border-left:3px solid #27AE60; border-radius:4px;">
-        <div style="font-size:13px; font-weight:600; color:white;">② Reverse causation check — is the arrow PBoC → gold, or gold → PBoC?</div>
-        <div style="font-size:12px; color:#BDC3C7; margin-top:6px; line-height:1.6;">
+      <div style="margin-top:12px; padding:14px; background:#FFFFFF; border-left:3px solid #27AE60; border-radius:4px;">
+        <div style="font-size:13px; font-weight:600; color:#1A1A1A;">② Reverse causation check — is the arrow PBoC → gold, or gold → PBoC?</div>
+        <div style="font-size:12px; color:#555B63; margin-top:6px; line-height:1.6;">
           <strong>Knob under test:</strong> LEAD (direction of causation).<br>
           <strong>The worry:</strong> maybe gold rallies first, and then PBoC buys into the rally. If so, PBoC wouldn't be predicting anything — it'd just be following.<br>
           <strong>The test:</strong> flip the test. Sweep lags from −6 to +6 and check whether <em>gold direction</em> at time t predicts <em>PBoC direction</em> at time t+k. If gold led PBoC, forward lags should be elevated.
@@ -567,16 +588,16 @@
             <tbody id="rev-body"></tbody>
           </table>
         </div>
-        <div style="font-size:12px; color:#BDC3C7; margin-top:10px; line-height:1.6;">
+        <div style="font-size:12px; color:#555B63; margin-top:10px; line-height:1.6;">
           <strong>Reading the table:</strong> forward lags (+1 to +6) test "does gold today lead PBoC in the future?" Those HRs drop from 0.66 to 0.59 as lag grows — gold is <em>not</em> leading PBoC forward. Negative lags are naturally elevated (they're just the same correlation read backwards).
           <br><span style="color:#27AE60;">✓ PASSED — the causal arrow points PBoC → gold, not the reverse.</span>
         </div>
       </div>
 
       <!-- 3. Announcement leakage (NEW) -->
-      <div style="margin-top:12px; padding:14px; background:#0F1923; border-left:3px solid #27AE60; border-radius:4px;">
-        <div style="font-size:13px; font-weight:600; color:white;">③ Announcement leakage — does price move <em>before</em> the SAFE release?</div>
-        <div style="font-size:12px; color:#BDC3C7; margin-top:6px; line-height:1.6;">
+      <div style="margin-top:12px; padding:14px; background:#FFFFFF; border-left:3px solid #27AE60; border-radius:4px;">
+        <div style="font-size:13px; font-weight:600; color:#1A1A1A;">③ Announcement leakage — does price move <em>before</em> the SAFE release?</div>
+        <div style="font-size:12px; color:#555B63; margin-top:6px; line-height:1.6;">
           <strong>Knob under test:</strong> LEAD (is the forecast real-time actionable?).<br>
           <strong>The worry:</strong> PBoC may be delaying its announcements. SAFE publishes monthly reserves ~7 days after month-end, but what if the market already knows PBoC is buying — via LBMA flows, shipping data, Shanghai premia — and gold has <em>already moved</em> before the number is released? Then our "forecast" is just us catching up to something the market already priced in.<br>
           <strong>The test:</strong> run a full lag sweep with the locked signal against gold. If there's leakage, gold should move at <em>negative</em> lags (before the signal is observed). If there's a real forecast, HR should be flat pre-announcement and ramp up post-announcement.
@@ -595,7 +616,7 @@
             <tbody id="leak-body"></tbody>
           </table>
         </div>
-        <div style="font-size:12px; color:#BDC3C7; margin-top:10px; line-height:1.6;">
+        <div style="font-size:12px; color:#555B63; margin-top:10px; line-height:1.6;">
           <strong>Reading the table:</strong> negative lags (gold <em>before</em> signal) cluster at 56-60% — essentially baseline. Lag 0 is 60%. Then HR <em>ramps</em>: +1M = 65.1%, <strong>+2M = 69.4% (peak)</strong>, fading after. That's the signature of a real forecast: information unfolds into price <em>after</em> the data is observed. If the market had front-run the announcement we'd see a flat or declining profile post-0 — instead it climbs +9pp.
           <br><span style="color:#27AE60;">✓ PASSED — no evidence of announcement leakage. Price moves after the signal, not before.</span>
         </div>
@@ -607,9 +628,9 @@
       </div>
 
       <!-- 4. Momentum baseline (was 3) -->
-      <div style="margin-top:10px; padding:14px; background:#0F1923; border-left:3px solid #27AE60; border-radius:4px;">
-        <div style="font-size:13px; font-weight:600; color:white;">④ Momentum baseline — could gold's own price momentum explain this?</div>
-        <div style="font-size:12px; color:#BDC3C7; margin-top:6px; line-height:1.6;">
+      <div style="margin-top:10px; padding:14px; background:#FFFFFF; border-left:3px solid #27AE60; border-radius:4px;">
+        <div style="font-size:13px; font-weight:600; color:#1A1A1A;">④ Momentum baseline — could gold's own price momentum explain this?</div>
+        <div style="font-size:12px; color:#555B63; margin-top:6px; line-height:1.6;">
           <strong>Knob under test:</strong> WHO (does PBoC add information on top of price alone?).<br>
           <strong>The worry:</strong> gold trends. Maybe any trend-following signal would look good at +2M, and PBoC is just a laundered version of gold's own momentum.<br>
           <strong>The test:</strong> build 5 different momentum signals from gold price itself and compare their +2M hit rates to PBoC's.
@@ -628,7 +649,7 @@
             <tbody id="mom-body"></tbody>
           </table>
         </div>
-        <div style="font-size:12px; color:#BDC3C7; margin-top:10px; line-height:1.6;">
+        <div style="font-size:12px; color:#555B63; margin-top:10px; line-height:1.6;">
           <strong>Reading the table:</strong> every gold-momentum signal peaks at <em>negative</em> lags (gold today matches gold 2 months ago — that's autocorrelation). At the <em>forward</em> +2M lag that we care about, all gold-only signals collapse to 52-55%. PBoC sits at 69.4% — a <strong>~15pp gap</strong>. Gold momentum cannot explain the signal.
           <br><span style="color:#27AE60;">✓ PASSED — PBoC carries information that price momentum alone doesn't.</span>
         </div>
@@ -640,16 +661,16 @@
       </div>
 
       <!-- 5. Sensitivity (was 4) -->
-      <div style="margin-top:10px; padding:14px; background:#0F1923; border-left:3px solid #F39C12; border-radius:4px;">
-        <div style="font-size:13px; font-weight:600; color:white;">⑤ Streak × Magnitude sensitivity — are those two gates cherry-picked?</div>
-        <div style="font-size:12px; color:#BDC3C7; margin-top:6px; line-height:1.6;">
+      <div style="margin-top:10px; padding:14px; background:#FFFFFF; border-left:3px solid #F39C12; border-radius:4px;">
+        <div style="font-size:13px; font-weight:600; color:#1A1A1A;">⑤ Streak × Magnitude sensitivity — are those two gates cherry-picked?</div>
+        <div style="font-size:12px; color:#555B63; margin-top:6px; line-height:1.6;">
           <strong>Knobs under test:</strong> PERSISTENCE (streak) and MAGNITUDE (tonnes threshold, since dropped).<br>
           <strong>The worry:</strong> we tested many combinations of streak length and magnitude threshold. If only one exact combo works and the rest flop, we just got lucky on one cell.<br>
           <strong>The test:</strong> hold the WINDOW fixed at diff(3) and sweep both gates. A real signal should be a <em>ridge</em> (stable across nearby settings), not a <em>spike</em> (one lucky cell).<br>
           <strong>Note:</strong> this sweep doesn't touch the diff WINDOW — that's the separate test in ⑥.
         </div>
         <div style="margin-top:14px; overflow-x:auto;">
-          <div style="font-size:11.5px; color:#BDC3C7; margin-bottom:6px;">
+          <div style="font-size:11.5px; color:#555B63; margin-bottom:6px;">
             Hit rate at +2M lag across all combinations of streak length and magnitude threshold:
           </div>
           <table class="table" style="font-size:11px;" id="sens-table">
@@ -661,14 +682,14 @@
             </thead>
             <tbody id="sens-body"></tbody>
           </table>
-          <div style="font-size:11px; color:#7F8C8D; margin-top:8px; line-height:1.6;">
-            <strong style="color:white;">What the heatmap shows:</strong>
+          <div style="font-size:11px; color:#8A929B; margin-top:8px; line-height:1.6;">
+            <strong style="color:#1A1A1A;">What the heatmap shows:</strong>
           </div>
-          <ul style="font-size:11.5px; color:#BDC3C7; margin:4px 0 0 0; padding-left:20px; line-height:1.7;">
-            <li><strong style="color:white;">Streak ≥ 3 is a stable ridge.</strong> At streak ≥ 3, every magnitude from 0-10t clusters between 68% and 72% — the PERSISTENCE knob works across a wide range of nearby settings.</li>
-            <li><strong style="color:white;">Mag ≥ 5t is a spike.</strong> HR peaks at exactly 5t (71.7%), then degrades both above and below. If "bigger flows = better signal" were real, HR should rise monotonically. Instead it falls off — noise, not signal.</li>
-            <li><strong style="color:white;">The neighborhood average is 67%, not 72%.</strong> Across the 9 cells around the tuned peak (streak 2-4, mag 0-10t), mean HR = 67.0% with std 3.2pp. The 71.7% is ~1.5σ above local mean.</li>
-            <li><strong style="color:white;">Past streak ≥ 3, performance degrades.</strong> Streak ≥ 4 drops to ~66%, streak ≥ 5 to ~65%. More persistence kills N without improving HR.</li>
+          <ul style="font-size:11.5px; color:#555B63; margin:4px 0 0 0; padding-left:20px; line-height:1.7;">
+            <li><strong style="color:#1A1A1A;">Streak ≥ 3 is a stable ridge.</strong> At streak ≥ 3, every magnitude from 0-10t clusters between 68% and 72% — the PERSISTENCE knob works across a wide range of nearby settings.</li>
+            <li><strong style="color:#1A1A1A;">Mag ≥ 5t is a spike.</strong> HR peaks at exactly 5t (71.7%), then degrades both above and below. If "bigger flows = better signal" were real, HR should rise monotonically. Instead it falls off — noise, not signal.</li>
+            <li><strong style="color:#1A1A1A;">The neighborhood average is 67%, not 72%.</strong> Across the 9 cells around the tuned peak (streak 2-4, mag 0-10t), mean HR = 67.0% with std 3.2pp. The 71.7% is ~1.5σ above local mean.</li>
+            <li><strong style="color:#1A1A1A;">Past streak ≥ 3, performance degrades.</strong> Streak ≥ 4 drops to ~66%, streak ≥ 5 to ~65%. More persistence kills N without improving HR.</li>
           </ul>
           <div style="margin-top:10px; font-size:11.5px; color:#F39C12; line-height:1.6;">
             <strong>Verdict:</strong> keep PERSISTENCE ≥ 3 (real ridge, +4pp genuine edge). Drop MAGNITUDE ≥ 5t (cherry-picked spike, ~2pp luck). This is why the LOCKED rule has only one filter, not two.
@@ -677,9 +698,9 @@
       </div>
 
       <!-- 6. Diff window -->
-      <div style="margin-top:12px; padding:14px; background:#0F1923; border-left:3px solid #27AE60; border-radius:4px;">
-        <div style="font-size:13px; font-weight:600; color:white;">⑥ Diff window sensitivity — is "3-month" the only window that works?</div>
-        <div style="font-size:12px; color:#BDC3C7; margin-top:6px; line-height:1.6;">
+      <div style="margin-top:12px; padding:14px; background:#FFFFFF; border-left:3px solid #27AE60; border-radius:4px;">
+        <div style="font-size:13px; font-weight:600; color:#1A1A1A;">⑥ Diff window sensitivity — is "3-month" the only window that works?</div>
+        <div style="font-size:12px; color:#555B63; margin-top:6px; line-height:1.6;">
           <strong>Knob under test:</strong> WINDOW (why 3-month diff, not 1M, 6M, or 12M?).<br>
           <strong>The worry:</strong> the rule uses <code style="color:#e0e0e0;">PBoC.diff(3)</code>. If only diff(3) produces a decent HR and diff(2) or diff(4) collapse, the "3" is just a lucky lookback.<br>
           <strong>The test:</strong> hold streak ≥ 3 fixed, no magnitude gate, and sweep the diff window from 1 to 12 months. Re-measure HR at +2M for each.
@@ -701,13 +722,13 @@
           </table>
         </div>
 
-        <div style="margin-top:12px; font-size:11.5px; color:#BDC3C7; line-height:1.7;">
-          <strong style="color:white;">What the sweep shows:</strong>
+        <div style="margin-top:12px; font-size:11.5px; color:#555B63; line-height:1.7;">
+          <strong style="color:#1A1A1A;">What the sweep shows:</strong>
           <ul style="margin:4px 0 0 0; padding-left:20px;">
-            <li><strong style="color:white;">The peak has real shape — it's not random noise.</strong> HR goes 60.0% (diff 1) → 65.3% (diff 2) → <strong>69.4% (diff 3)</strong> → 61.1% (diff 4). If diff(3) were a lucky single-window spike, we'd expect its neighbors to look like the 59-61% noise floor. Instead diff(2) cushions it at 65.3% (+9pp alpha). There's a genuine hump around the 2-3 month window.</li>
-            <li><strong style="color:white;">Immediate neighborhood (diff 2/3/4) mean = 65.3%.</strong> Narrower than the streak ridge (which averaged 67%), but still well above base rate and above the diff(5-12) noise floor.</li>
-            <li><strong style="color:white;">Pre-2022 is where the sharpness comes from.</strong> Pre-2022 diff(3) = 73.3% vs ~53-59% at other windows. Post-2022 all diff windows sit at 65-68% — the bull regime is driving most of the post-2022 HR regardless of window choice.</li>
-            <li><strong style="color:white;">Two adjacent windows clear 65%, not one random cell.</strong> The signature of a real narrow ridge, not a cherry-picked spike.</li>
+            <li><strong style="color:#1A1A1A;">The peak has real shape — it's not random noise.</strong> HR goes 60.0% (diff 1) → 65.3% (diff 2) → <strong>69.4% (diff 3)</strong> → 61.1% (diff 4). If diff(3) were a lucky single-window spike, we'd expect its neighbors to look like the 59-61% noise floor. Instead diff(2) cushions it at 65.3% (+9pp alpha). There's a genuine hump around the 2-3 month window.</li>
+            <li><strong style="color:#1A1A1A;">Immediate neighborhood (diff 2/3/4) mean = 65.3%.</strong> Narrower than the streak ridge (which averaged 67%), but still well above base rate and above the diff(5-12) noise floor.</li>
+            <li><strong style="color:#1A1A1A;">Pre-2022 is where the sharpness comes from.</strong> Pre-2022 diff(3) = 73.3% vs ~53-59% at other windows. Post-2022 all diff windows sit at 65-68% — the bull regime is driving most of the post-2022 HR regardless of window choice.</li>
+            <li><strong style="color:#1A1A1A;">Two adjacent windows clear 65%, not one random cell.</strong> The signature of a real narrow ridge, not a cherry-picked spike.</li>
           </ul>
         </div>
 
@@ -722,9 +743,9 @@
       </div>
 
       <!-- 7. Regime decomposition (was 5) -->
-      <div style="margin-top:10px; padding:14px; background:#0F1923; border-left:3px solid #F39C12; border-radius:4px;">
-        <div style="font-size:13px; font-weight:600; color:white;">⑦ Regime decomposition — is the signal confounded with the bull market?</div>
-        <div style="font-size:12px; color:#BDC3C7; margin-top:6px; line-height:1.6;">
+      <div style="margin-top:10px; padding:14px; background:#FFFFFF; border-left:3px solid #F39C12; border-radius:4px;">
+        <div style="font-size:13px; font-weight:600; color:#1A1A1A;">⑦ Regime decomposition — is the signal confounded with the bull market?</div>
+        <div style="font-size:12px; color:#555B63; margin-top:6px; line-height:1.6;">
           <strong>The worry:</strong> post-2022 is a massive gold bull market. Maybe the signal "works" just because gold is up most of the time and the signal fires bullish most of the time.<br>
           <strong>The test:</strong> split pre-2022 (range-bound) vs. post-2022 (bull) and look at HR, base rate, alpha, and distinct firing events.
         </div>
@@ -746,7 +767,7 @@
           </table>
         </div>
 
-        <div style="margin-top:14px; font-size:12px; color:#BDC3C7; line-height:1.6;">
+        <div style="margin-top:14px; font-size:12px; color:#555B63; line-height:1.6;">
           <strong>Post-2022 year-by-year breakdown:</strong>
         </div>
         <div style="margin-top:6px; overflow-x:auto;">
@@ -765,7 +786,7 @@
           </table>
         </div>
 
-        <div style="font-size:12px; color:#BDC3C7; margin-top:12px; line-height:1.6;">
+        <div style="font-size:12px; color:#555B63; margin-top:12px; line-height:1.6;">
           <strong>Reading the tables:</strong>
           <ul style="margin:4px 0 0 0; padding-left:20px; line-height:1.7;">
             <li><strong>Alpha is huge pre-2022 (+27pp):</strong> when the market didn't have an obvious direction, PBoC's signal was extremely informative. Three distinct firing events, each preceding a gold rally.</li>
@@ -781,9 +802,9 @@
       </div>
 
       <!-- Summary verdict -->
-      <div style="margin-top:18px; padding:14px; background:linear-gradient(180deg, #1A2E1F 0%, #0F1923 100%); border:1px solid #27AE60; border-radius:6px;">
+      <div style="margin-top:18px; padding:14px; background:linear-gradient(180deg, #F0FBF4 0%, #E8F5ED 100%); border:1px solid #27AE60; border-radius:6px;">
         <div style="font-size:13px; font-weight:600; color:#27AE60; margin-bottom:6px;">All 7 checks passed — signal is real, with one honest caveat.</div>
-        <div style="font-size:12px; color:#E0E0E0; line-height:1.6;">
+        <div style="font-size:12px; color:#1A1A1A; line-height:1.6;">
           The LOCKED rule (<code style="color:#fff;">sign(PBoC.diff(3))</code> gated on streak ≥ 3) passed every knob-level test: the +2M LEAD beats same-month coincident by +10pp, the arrow points PBoC → gold, price does not front-run the SAFE announcement, gold-only momentum can't replicate the signal, the PERSISTENCE knob sits on a stable ridge, and the WINDOW knob is a genuine hump (diff 2 also clears +9pp). The one honest caveat: alpha is concentrated pre-2022 (+27pp) and shrinks post-2022 (+7pp), so the signal partly rides the bull trend in the later period. Net: a real, usable regime/intensity factor — best treated as confirmation rather than a precision turning-point forecaster.
         </div>
       </div>
@@ -791,75 +812,75 @@
     <!-- F2 RETAIL ROTATION :: START -->
     <div class="chart-panel" style="margin-top:16px;" data-factor="f2">
       <div class="panel-title">F2 — Retail Hard-Asset Rotation: Post-2022 Marginal Buyer Shift</div>
-      <div class="panel-sub" style="color:#BDC3C7;">
+      <div class="panel-sub" style="color:#555B63;">
         Retail debasement hedge — complement to F1 (sovereign PBoC buying). Western ETF positioning drove gold 2003–2021. Post-2022 the marginal buyer flipped to Asian households rotating out of broken domestic alternatives (housing −23%, equities −33%) into physical gold — a supply sink with 10–30yr holding periods.
       </div>
 
       <!-- Stats row -->
       <div style="display:grid; grid-template-columns:repeat(4,1fr); gap:10px; margin-top:12px;">
-        <div style="padding:12px; background:#0F1923; border:1px solid #2C3E50; border-radius:6px;">
-          <div style="font-size:11px; color:#7F8C8D; text-transform:uppercase; letter-spacing:0.5px;">China housing drawdown</div>
+        <div style="padding:12px; background:#FFFFFF; border:1px solid #E1E4E8; border-radius:6px;">
+          <div style="font-size:11px; color:#8A929B; text-transform:uppercase; letter-spacing:0.5px;">China housing drawdown</div>
           <div style="font-size:24px; font-weight:700; color:#E74C3C;">−23%</div>
-          <div style="font-size:11px; color:#BDC3C7;">from 2020-21 peak · still falling</div>
+          <div style="font-size:11px; color:#555B63;">from 2020-21 peak · still falling</div>
         </div>
-        <div style="padding:12px; background:#0F1923; border:1px solid #2C3E50; border-radius:6px;">
-          <div style="font-size:11px; color:#7F8C8D; text-transform:uppercase; letter-spacing:0.5px;">Asian ETF flow 2025</div>
+        <div style="padding:12px; background:#FFFFFF; border:1px solid #E1E4E8; border-radius:6px;">
+          <div style="font-size:11px; color:#8A929B; text-transform:uppercase; letter-spacing:0.5px;">Asian ETF flow 2025</div>
           <div style="font-size:24px; font-weight:700; color:#27AE60;">+20t/mo</div>
-          <div style="font-size:11px; color:#BDC3C7;">vs +0.47t/mo pre-2022 (42× surge)</div>
+          <div style="font-size:11px; color:#555B63;">vs +0.47t/mo pre-2022 (42× surge)</div>
         </div>
-        <div style="padding:12px; background:#0F1923; border:1px solid #2C3E50; border-radius:6px;">
-          <div style="font-size:11px; color:#7F8C8D; text-transform:uppercase; letter-spacing:0.5px;">Float absorbed since 2020</div>
+        <div style="padding:12px; background:#FFFFFF; border:1px solid #E1E4E8; border-radius:6px;">
+          <div style="font-size:11px; color:#8A929B; text-transform:uppercase; letter-spacing:0.5px;">Float absorbed since 2020</div>
           <div style="font-size:24px; font-weight:700; color:#D4AF37;">15.1%</div>
-          <div style="font-size:11px; color:#BDC3C7;">7,100t gross bar+coin demand since 2020 vs ~47kt float (upper bound — incl. churn)</div>
+          <div style="font-size:11px; color:#555B63;">7,100t gross bar+coin demand since 2020 vs ~47kt float (upper bound — incl. churn)</div>
         </div>
-        <div style="padding:12px; background:#0F1923; border:1px solid #2C3E50; border-radius:6px;">
-          <div style="font-size:11px; color:#7F8C8D; text-transform:uppercase; letter-spacing:0.5px;">Housing vs gold post-2022</div>
+        <div style="padding:12px; background:#FFFFFF; border:1px solid #E1E4E8; border-radius:6px;">
+          <div style="font-size:11px; color:#8A929B; text-transform:uppercase; letter-spacing:0.5px;">Housing vs gold post-2022</div>
           <div style="font-size:24px; font-weight:700; color:#C0392B;">r=−0.95</div>
-          <div style="font-size:11px; color:#BDC3C7;">was +0.73 pre-2022 (sign flipped)</div>
+          <div style="font-size:11px; color:#555B63;">was +0.73 pre-2022 (sign flipped)</div>
         </div>
       </div>
 
       <!-- Chart 1: Asian ETF flows vs Gold -->
       <div style="margin-top:16px;">
-        <div style="font-size:13px; font-weight:600; color:#E0E0E0; margin-bottom:4px;">[F2b] Asian ETF Flow Momentum (3M rolling avg, tonnes) vs Gold Price</div>
+        <div style="font-size:13px; font-weight:600; color:#1A1A1A; margin-bottom:4px;">[F2b] Asian ETF Flow Momentum (3M rolling avg, tonnes) vs Gold Price</div>
         <div class="chart-wrap tall"><canvas id="chart-f2-asia-etf"></canvas></div>
       </div>
 
       <!-- Chart 2: Conveyor — cumulative flows -->
       <div style="margin-top:16px;">
-        <div style="font-size:13px; font-weight:600; color:#E0E0E0; margin-bottom:4px;">[Conveyor] Cumulative ETF Flows Since 2020 — Western Outflow Absorbed by Asia</div>
+        <div style="font-size:13px; font-weight:600; color:#1A1A1A; margin-bottom:4px;">[Conveyor] Cumulative ETF Flows Since 2020 — Western Outflow Absorbed by Asia</div>
         <div class="chart-wrap tall"><canvas id="chart-f2-conveyor"></canvas></div>
       </div>
 
       <!-- Chart 3a: Quarterly bar+coin demand by region (tonnes) -->
       <div style="margin-top:16px;">
-        <div style="font-size:13px; font-weight:600; color:#E0E0E0; margin-bottom:4px;">[F2c] Quarterly Physical Bar+Coin Demand by Region (tonnes) vs Gold Price</div>
-        <div style="font-size:11px; color:#7F8C8D; margin-bottom:6px;">Stacked: China + India + Rest-of-World. Physical = supply sink (10–30yr holds, 0 negative quarters in 64 for China) vs ETF whip. Post-2022 the sink deepens even as price rises — demand curve shifted out, not just pulled up the old curve.</div>
+        <div style="font-size:13px; font-weight:600; color:#1A1A1A; margin-bottom:4px;">[F2c] Quarterly Physical Bar+Coin Demand by Region (tonnes) vs Gold Price</div>
+        <div style="font-size:11px; color:#8A929B; margin-bottom:6px;">Stacked: China + India + Rest-of-World. Physical = supply sink (10–30yr holds, 0 negative quarters in 64 for China) vs ETF whip. Post-2022 the sink deepens even as price rises — demand curve shifted out, not just pulled up the old curve.</div>
         <div class="chart-wrap tall"><canvas id="chart-f2-barcoin-tonnes"></canvas></div>
       </div>
 
       <!-- Chart 3b: China bar+coin in USD -->
       <div style="margin-top:16px;">
-        <div style="font-size:13px; font-weight:600; color:#E0E0E0; margin-bottom:4px;">[F2c USD] Quarterly Global Bar+Coin Investment by Region — USD Equivalent ($B, stacked)</div>
-        <div style="font-size:11px; color:#7F8C8D; margin-bottom:6px;">Stacked: China + India + Rest-of-World (tonnes × 32,150.75 oz/t × LBMA price). China alone ran $3–4B/qtr baseline → $8–16B/qtr in 2025 (<strong style="color:#27AE60;">4.19× baseline</strong>, 1.56× volume × 2.66× price). Global total blew through $55B in Q4 2025 — every region scaling at once.</div>
+        <div style="font-size:13px; font-weight:600; color:#1A1A1A; margin-bottom:4px;">[F2c USD] Quarterly Global Bar+Coin Investment by Region — USD Equivalent ($B, stacked)</div>
+        <div style="font-size:11px; color:#8A929B; margin-bottom:6px;">Stacked: China + India + Rest-of-World (tonnes × 32,150.75 oz/t × LBMA price). China alone ran $3–4B/qtr baseline → $8–16B/qtr in 2025 (<strong style="color:#27AE60;">4.19× baseline</strong>, 1.56× volume × 2.66× price). Global total blew through $55B in Q4 2025 — every region scaling at once.</div>
         <div class="chart-wrap tall"><canvas id="chart-f2-barcoin-china-usd"></canvas></div>
       </div>
 
       <!-- Chart 3c: Cumulative bar+coin since 2020 -->
       <div style="margin-top:16px;">
-        <div style="font-size:13px; font-weight:600; color:#E0E0E0; margin-bottom:4px;">[F2c] Cumulative Bar+Coin Demand Since 2020 — Regional Physical Sink</div>
-        <div style="font-size:11px; color:#7F8C8D; margin-bottom:6px;">China 1,750t + India 1,195t + Rest-of-World 4,155t ≈ <strong style="color:#D4AF37;">7,101t</strong> gross physical absorbed since 2020 (~15% of ~47kt float, upper bound incl. churn). Monotonic — zero reversal quarters across all three buckets.</div>
+        <div style="font-size:13px; font-weight:600; color:#1A1A1A; margin-bottom:4px;">[F2c] Cumulative Bar+Coin Demand Since 2020 — Regional Physical Sink</div>
+        <div style="font-size:11px; color:#8A929B; margin-bottom:6px;">China 1,750t + India 1,195t + Rest-of-World 4,155t ≈ <strong style="color:#D4AF37;">7,101t</strong> gross physical absorbed since 2020 (~15% of ~47kt float, upper bound incl. churn). Monotonic — zero reversal quarters across all three buckets.</div>
         <div class="chart-wrap tall"><canvas id="chart-f2-barcoin-cum"></canvas></div>
       </div>
 
       <!-- [Housing vs Gold chart moved to Post-2022 tab] -->
 
       <!-- Regime breakdown table -->
-      <div style="margin-top:16px; padding:14px; background:#0F1923; border:1px solid #2C3E50; border-radius:6px;">
-        <div style="font-size:13px; font-weight:600; color:#E0E0E0; margin-bottom:8px;">F2 Sub-Signal Regime Breakdown (3M forward gold HR when signal active)</div>
-        <table style="width:100%; border-collapse:collapse; font-size:12px; color:#BDC3C7;">
+      <div style="margin-top:16px; padding:14px; background:#FFFFFF; border:1px solid #E1E4E8; border-radius:6px;">
+        <div style="font-size:13px; font-weight:600; color:#1A1A1A; margin-bottom:8px;">F2 Sub-Signal Regime Breakdown (3M forward gold HR when signal active)</div>
+        <table style="width:100%; border-collapse:collapse; font-size:12px; color:#555B63;">
           <thead>
-            <tr style="border-bottom:1px solid #2C3E50; color:#7F8C8D;">
+            <tr style="border-bottom:1px solid #E1E4E8; color:#8A929B;">
               <th style="text-align:left; padding:6px 8px;">Signal</th>
               <th style="text-align:center; padding:6px 8px;">Full HR</th>
               <th style="text-align:center; padding:6px 8px;">Pre-2022 HR</th>
@@ -891,7 +912,7 @@
               <td style="text-align:center;">0.548</td>
               <td style="text-align:center;">0.756</td>
               <td style="text-align:center;">45</td>
-              <td style="text-align:center; color:#7F8C8D;">+0.001</td>
+              <td style="text-align:center; color:#8A929B;">+0.001</td>
             </tr>
             <tr style="border-bottom:1px solid #1a2a3a;">
               <td style="padding:6px 8px;">Western ETF outflow</td>
@@ -902,7 +923,7 @@
               <td style="text-align:center; color:#27AE60;">+0.078</td>
             </tr>
             <tr>
-              <td style="padding:6px 8px;">Asia bar+coin QoQ &gt; 0 <span style="font-size:10px; color:#7F8C8D;">(qtly→monthly)</span></td>
+              <td style="padding:6px 8px;">Asia bar+coin QoQ &gt; 0 <span style="font-size:10px; color:#8A929B;">(qtly→monthly)</span></td>
               <td style="text-align:center;">0.722</td>
               <td style="text-align:center;">0.595</td>
               <td style="text-align:center; color:#27AE60; font-weight:600;">0.900</td>
@@ -911,37 +932,37 @@
             </tr>
           </tbody>
         </table>
-        <div style="margin-top:8px; font-size:11px; color:#7F8C8D;">Note: Post-2022 base rate is elevated (0.755, N=49) due to the bull trend. Asian ETF momentum and Western outflow add real alpha (+6–8pp) above that elevated base; Housing QoQ&lt;0 tracks the base rate — it characterises the regime but doesn&rsquo;t forecast turns. Same pattern as F1. Small-N caveat on Western outflow (N=24).</div>
+        <div style="margin-top:8px; font-size:11px; color:#8A929B;">Note: Post-2022 base rate is elevated (0.755, N=49) due to the bull trend. Asian ETF momentum and Western outflow add real alpha (+6–8pp) above that elevated base; Housing QoQ&lt;0 tracks the base rate — it characterises the regime but doesn&rsquo;t forecast turns. Same pattern as F1. Small-N caveat on Western outflow (N=24).</div>
       </div>
 
       <!-- When sub-signals are active (shaded regions over gold price) -->
-      <div style="margin-top:16px; padding:14px; background:#0F1923; border:1px solid #2C3E50; border-radius:6px;">
-        <div style="font-size:13px; font-weight:600; color:#E0E0E0; margin-bottom:4px;">When each sub-signal is ACTIVE (green-shaded months) vs Gold Price</div>
-        <div style="font-size:11px; color:#7F8C8D; margin-bottom:10px;">Active = signal condition met that month. Post-2022 (dashed pivot) note the dominance &mdash; signals cluster through the regime.</div>
+      <div style="margin-top:16px; padding:14px; background:#FFFFFF; border:1px solid #E1E4E8; border-radius:6px;">
+        <div style="font-size:13px; font-weight:600; color:#1A1A1A; margin-bottom:4px;">When each sub-signal is ACTIVE (green-shaded months) vs Gold Price</div>
+        <div style="font-size:11px; color:#8A929B; margin-bottom:10px;">Active = signal condition met that month. Post-2022 (dashed pivot) note the dominance &mdash; signals cluster through the regime.</div>
         <div style="display:grid; grid-template-columns:1fr; gap:14px;">
           <div>
-            <div style="font-size:12px; font-weight:600; color:#BDC3C7; margin-bottom:4px;">Asian ETF 3M momentum &gt; 0 &nbsp;·&nbsp; <span style="color:#27AE60;">Post-2022 HR 0.816 (α +6.1pp)</span></div>
+            <div style="font-size:12px; font-weight:600; color:#555B63; margin-bottom:4px;">Asian ETF 3M momentum &gt; 0 &nbsp;·&nbsp; <span style="color:#27AE60;">Post-2022 HR 0.816 (α +6.1pp)</span></div>
             <div style="height:140px;"><canvas id="chart-f2-active-asia"></canvas></div>
           </div>
           <div>
-            <div style="font-size:12px; font-weight:600; color:#BDC3C7; margin-bottom:4px;">Western ETF outflow (3M &lt; 0) &nbsp;·&nbsp; <span style="color:#27AE60;">Post-2022 HR 0.833 (α +7.8pp)</span></div>
+            <div style="font-size:12px; font-weight:600; color:#555B63; margin-bottom:4px;">Western ETF outflow (3M &lt; 0) &nbsp;·&nbsp; <span style="color:#27AE60;">Post-2022 HR 0.833 (α +7.8pp)</span></div>
             <div style="height:140px;"><canvas id="chart-f2-active-west"></canvas></div>
           </div>
           <div>
-            <div style="font-size:12px; font-weight:600; color:#BDC3C7; margin-bottom:4px;">Housing QoQ declining &nbsp;·&nbsp; <span style="color:#7F8C8D;">Post-2022 HR 0.756 (≈ base, regime marker)</span></div>
+            <div style="font-size:12px; font-weight:600; color:#555B63; margin-bottom:4px;">Housing QoQ declining &nbsp;·&nbsp; <span style="color:#8A929B;">Post-2022 HR 0.756 (≈ base, regime marker)</span></div>
             <div style="height:140px;"><canvas id="chart-f2-active-housing"></canvas></div>
           </div>
           <div>
-            <div style="font-size:12px; font-weight:600; color:#BDC3C7; margin-bottom:4px;">Asia bar+coin QoQ &gt; 0 (China + India qtly→monthly) &nbsp;·&nbsp; <span style="color:#27AE60;">Post-2022 HR 0.900 (α +12.9pp)</span></div>
+            <div style="font-size:12px; font-weight:600; color:#555B63; margin-bottom:4px;">Asia bar+coin QoQ &gt; 0 (China + India qtly→monthly) &nbsp;·&nbsp; <span style="color:#27AE60;">Post-2022 HR 0.900 (α +12.9pp)</span></div>
             <div style="height:140px;"><canvas id="chart-f2-active-barcoin"></canvas></div>
           </div>
         </div>
       </div>
 
       <!-- Thesis summary -->
-      <div style="margin-top:12px; padding:14px; background:#0F1923; border-left:3px solid #D4AF37; border-radius:4px;">
-        <div style="font-size:13px; font-weight:600; color:#E0E0E0; margin-bottom:6px;">The Thesis — Retail Debasement Hedge (complement to F1's sovereign PBoC bid)</div>
-        <div style="font-size:12px; color:#E0E0E0; line-height:1.7;">
+      <div style="margin-top:12px; padding:14px; background:#FFFFFF; border-left:3px solid #D4AF37; border-radius:4px;">
+        <div style="font-size:13px; font-weight:600; color:#1A1A1A; margin-bottom:6px;">The Thesis — Retail Debasement Hedge (complement to F1's sovereign PBoC bid)</div>
+        <div style="font-size:12px; color:#1A1A1A; line-height:1.7;">
           F1 tracks <em>sovereign</em> balance-sheet debasement (central banks accumulating gold). F2 tracks the <em>retail</em> expression of the same regime — Chinese households rotating into hard assets as domestic alternatives broke (housing −23%, CSI 300 ETF 510300.SS −33% / underlying ~−45%). Western ETF outflows 2022–24 were absorbed by Asian physical buying — a supply sink with 10–30yr holding periods vs ETF 500–600% annual turnover.
           <br><br>
           <strong style="color:#D4AF37;">Capital rotation signal (USD-led):</strong> China bar+coin investment ran 1.00× baseline in 2020 → 2.24× in 2024 → <strong style="color:#27AE60;">4.19× in 2025</strong>. Decomposition: 1.56× volume × 2.66× price = demand curve shifted out despite a price headwind (structural, not opportunistic). Cumulative 2022–25: ~$103B bar+coin + ~$19B ETF = $122B Chinese retail gold capture, ≈1.0% of the ~$11.8T housing wealth destroyed. Bar+coin: 0 negative quarters in 64 (durable); ETF: 24 sign flips in 65 (whippy).
@@ -967,8 +988,8 @@
         <strong>Pre-2022 baseline:</strong> ~500t/yr (range 254–656). <strong>Post-2022:</strong> four consecutive years above <strong style="color:#D4AF37;">850t</strong> (2022: 1,080 · 2023: 1,051 · 2024: 1,092 · 2025: 863). The step-change coincides with the Feb 2022 G7/EU freeze of ~$300B of Russian FX reserves — a wake-up call for every non-aligned sovereign that <em>USD reserves can be switched off</em>. Gold is the only reserve asset with no counterparty risk.
       </div>
       <div class="chart-wrap tall" style="height:360px; margin-top:10px;"><canvas id="chart-regime-cb"></canvas></div>
-      <div style="margin-top:12px; padding:12px; background:#0F1923; border-left:3px solid #D4AF37; border-radius:4px; font-size:12px; color:#BDC3C7; line-height:1.7;">
-        <strong style="color:white;">Event timeline driving the shift:</strong><br>
+      <div style="margin-top:12px; padding:12px; background:#FFFFFF; border-left:3px solid #D4AF37; border-radius:4px; font-size:12px; color:#555B63; line-height:1.7;">
+        <strong style="color:#1A1A1A;">Event timeline driving the shift:</strong><br>
         • <strong>Feb 24 2022</strong> — Russia invades Ukraine<br>
         • <strong>Feb 26 2022</strong> — G7/EU freeze Russian CBR reserves (~$300B in USD/EUR assets) · <em>precedent set: reserve currencies can be weaponized</em><br>
         • <strong>Mar 2022</strong> — SWIFT disconnection of major Russian banks<br>
@@ -988,13 +1009,13 @@
       <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap:12px; margin-top:14px;">
 
         <!-- China -->
-        <div style="background:#0F1923; border:1px solid #2C3E50; border-left:4px solid #E74C3C; border-radius:6px; padding:14px;">
+        <div style="background:#FFFFFF; border:1px solid #E1E4E8; border-left:4px solid #E74C3C; border-radius:6px; padding:14px;">
           <div style="display:flex; align-items:center; gap:8px; margin-bottom:10px;">
             <span style="font-size:18px;">🇨🇳</span>
             <span style="font-size:14px; font-weight:700; color:#E74C3C;">China</span>
-            <span style="margin-left:auto; font-size:10px; color:#7F8C8D; text-transform:uppercase; letter-spacing:0.5px;">5 levers · most codified</span>
+            <span style="margin-left:auto; font-size:10px; color:#8A929B; text-transform:uppercase; letter-spacing:0.5px;">5 levers · most codified</span>
           </div>
-          <ul style="list-style:none; padding:0; margin:0; font-size:12px; color:#E0E0E0; line-height:1.65;">
+          <ul style="list-style:none; padding:0; margin:0; font-size:12px; color:#1A1A1A; line-height:1.65;">
             <li style="margin-bottom:9px;">
               <a href="https://www.reuters.com/world/china/china-allow-insurers-invest-gold-boost-medium-long-term-funds-2025-02-07/" target="_blank" rel="noopener" title="Reuters: China to allow insurers to invest in gold" style="display:inline-block; font-size:10px; background:#E74C3C; color:white; padding:1px 6px; border-radius:3px; margin-right:6px; font-weight:600; text-decoration:none;">Mar 2025 ↗</a>
               <strong>CBIRC Directive 2025-03 — Insurance gold mandate.</strong>
@@ -1020,13 +1041,13 @@
         </div>
 
         <!-- India -->
-        <div style="background:#0F1923; border:1px solid #2C3E50; border-left:4px solid #F39C12; border-radius:6px; padding:14px;">
+        <div style="background:#FFFFFF; border:1px solid #E1E4E8; border-left:4px solid #F39C12; border-radius:6px; padding:14px;">
           <div style="display:flex; align-items:center; gap:8px; margin-bottom:10px;">
             <span style="font-size:18px;">🇮🇳</span>
             <span style="font-size:14px; font-weight:700; color:#F39C12;">India</span>
-            <span style="margin-left:auto; font-size:10px; color:#7F8C8D; text-transform:uppercase; letter-spacing:0.5px;">policy pivot: suppress → encourage</span>
+            <span style="margin-left:auto; font-size:10px; color:#8A929B; text-transform:uppercase; letter-spacing:0.5px;">policy pivot: suppress → encourage</span>
           </div>
-          <ul style="list-style:none; padding:0; margin:0; font-size:12px; color:#E0E0E0; line-height:1.65;">
+          <ul style="list-style:none; padding:0; margin:0; font-size:12px; color:#1A1A1A; line-height:1.65;">
             <li style="margin-bottom:9px;">
               <a href="https://www.reuters.com/world/india/india-cuts-customs-duty-gold-silver-6-2024-07-23/" target="_blank" rel="noopener" title="Reuters: India cuts customs duty on gold and silver to 6% (Budget 2024)" style="display:inline-block; font-size:10px; background:#F39C12; color:white; padding:1px 6px; border-radius:3px; margin-right:6px; font-weight:600; text-decoration:none;">Jul 2024 ↗</a>
               <strong>Import duty slashed 15% → 6%</strong> (doré: 14.35% → 5.35%), lowest since 2013. Imports +221% Jul→Aug 2024. <em>10-year policy reversal</em> — from suppressing imports (CAD concerns) to encouraging them.
@@ -1047,13 +1068,13 @@
         </div>
 
         <!-- Russia -->
-        <div style="background:#0F1923; border:1px solid #2C3E50; border-left:4px solid #922B21; border-radius:6px; padding:14px;">
+        <div style="background:#FFFFFF; border:1px solid #E1E4E8; border-left:4px solid #922B21; border-radius:6px; padding:14px;">
           <div style="display:flex; align-items:center; gap:8px; margin-bottom:10px;">
             <span style="font-size:18px;">🇷🇺</span>
             <span style="font-size:14px; font-weight:700; color:#C0392B;">Russia</span>
-            <span style="margin-left:auto; font-size:10px; color:#7F8C8D; text-transform:uppercase; letter-spacing:0.5px;">the precedent</span>
+            <span style="margin-left:auto; font-size:10px; color:#8A929B; text-transform:uppercase; letter-spacing:0.5px;">the precedent</span>
           </div>
-          <ul style="list-style:none; padding:0; margin:0; font-size:12px; color:#E0E0E0; line-height:1.65;">
+          <ul style="list-style:none; padding:0; margin:0; font-size:12px; color:#1A1A1A; line-height:1.65;">
             <li style="margin-bottom:9px;">
               <a href="https://home.treasury.gov/news/press-releases/jy0612" target="_blank" rel="noopener" title="US Treasury: Sanctions on Russian Central Bank (Feb 28, 2022)" style="display:inline-block; font-size:10px; background:#922B21; color:white; padding:1px 6px; border-radius:3px; margin-right:6px; font-weight:600; text-decoration:none;">Feb 2022 ↗</a>
               <strong>~$300B reserves frozen</strong> by G7/EU → every non-aligned CB watches the switch-off and concludes USD reserves carry tail risk. <em>This is the trigger event for the entire post-2022 regime.</em>
@@ -1070,13 +1091,13 @@
         </div>
 
         <!-- Turkey -->
-        <div style="background:#0F1923; border:1px solid #2C3E50; border-left:4px solid #E67E22; border-radius:6px; padding:14px;">
+        <div style="background:#FFFFFF; border:1px solid #E1E4E8; border-left:4px solid #E67E22; border-radius:6px; padding:14px;">
           <div style="display:flex; align-items:center; gap:8px; margin-bottom:10px;">
             <span style="font-size:18px;">🇹🇷</span>
             <span style="font-size:14px; font-weight:700; color:#E67E22;">Turkey</span>
-            <span style="margin-left:auto; font-size:10px; color:#7F8C8D; text-transform:uppercase; letter-spacing:0.5px;">accumulation + repatriation</span>
+            <span style="margin-left:auto; font-size:10px; color:#8A929B; text-transform:uppercase; letter-spacing:0.5px;">accumulation + repatriation</span>
           </div>
-          <ul style="list-style:none; padding:0; margin:0; font-size:12px; color:#E0E0E0; line-height:1.65;">
+          <ul style="list-style:none; padding:0; margin:0; font-size:12px; color:#1A1A1A; line-height:1.65;">
             <li style="margin-bottom:9px;">
               <a href="https://www.gold.org/goldhub/research/gold-demand-trends/gold-demand-trends-full-year-2022/central-banks" target="_blank" rel="noopener" title="WGC GDT Full Year 2022 — Central Banks (Turkey +148t)" style="display:inline-block; font-size:10px; background:#E67E22; color:white; padding:1px 6px; border-radius:3px; margin-right:6px; font-weight:600; text-decoration:none;">2022 ↗</a>
               <strong>+148t in one year</strong> → total 542t by YE 2022. Another +30t by Q1 2023.
@@ -1093,13 +1114,13 @@
         </div>
 
         <!-- Gulf / Saudi -->
-        <div style="background:#0F1923; border:1px solid #2C3E50; border-left:4px solid #1F618D; border-radius:6px; padding:14px;">
+        <div style="background:#FFFFFF; border:1px solid #E1E4E8; border-left:4px solid #1F618D; border-radius:6px; padding:14px;">
           <div style="display:flex; align-items:center; gap:8px; margin-bottom:10px;">
             <span style="font-size:18px;">🇸🇦</span>
             <span style="font-size:14px; font-weight:700; color:#3498DB;">Gulf / Saudi Arabia</span>
-            <span style="margin-left:auto; font-size:10px; color:#7F8C8D; text-transform:uppercase; letter-spacing:0.5px;">off-book + settlement shift</span>
+            <span style="margin-left:auto; font-size:10px; color:#8A929B; text-transform:uppercase; letter-spacing:0.5px;">off-book + settlement shift</span>
           </div>
-          <ul style="list-style:none; padding:0; margin:0; font-size:12px; color:#E0E0E0; line-height:1.65;">
+          <ul style="list-style:none; padding:0; margin:0; font-size:12px; color:#1A1A1A; line-height:1.65;">
             <li style="margin-bottom:9px;">
               <a href="https://www.wsj.com/articles/saudi-arabia-considers-accepting-yuan-instead-of-dollars-for-chinese-oil-sales-11647351541" target="_blank" rel="noopener" title="WSJ: Saudi Arabia considers accepting yuan for Chinese oil sales" style="display:inline-block; font-size:10px; background:#1F618D; color:white; padding:1px 6px; border-radius:3px; margin-right:6px; font-weight:600; text-decoration:none;">2022–25 ↗</a>
               <strong>Yuan-denominated oil contracts</strong> explored with China. GCC broadening ability to transact outside USD rails while staying inside US security architecture.
@@ -1112,13 +1133,13 @@
         </div>
 
         <!-- Singapore / Qatar / Czech -->
-        <div style="background:#0F1923; border:1px solid #2C3E50; border-left:4px solid #16A085; border-radius:6px; padding:14px;">
+        <div style="background:#FFFFFF; border:1px solid #E1E4E8; border-left:4px solid #16A085; border-radius:6px; padding:14px;">
           <div style="display:flex; align-items:center; gap:8px; margin-bottom:10px;">
             <span style="font-size:18px;">🇸🇬 🇶🇦 🇨🇿</span>
             <span style="font-size:14px; font-weight:700; color:#16A085;">Singapore · Qatar · Czech</span>
-            <span style="margin-left:auto; font-size:10px; color:#7F8C8D; text-transform:uppercase; letter-spacing:0.5px;">diversification targets</span>
+            <span style="margin-left:auto; font-size:10px; color:#8A929B; text-transform:uppercase; letter-spacing:0.5px;">diversification targets</span>
           </div>
-          <ul style="list-style:none; padding:0; margin:0; font-size:12px; color:#E0E0E0; line-height:1.65;">
+          <ul style="list-style:none; padding:0; margin:0; font-size:12px; color:#1A1A1A; line-height:1.65;">
             <li style="margin-bottom:9px;">
               <a href="https://www.gold.org/goldhub/data/monthly-central-bank-statistics" target="_blank" rel="noopener" title="WGC Monthly Central Bank Statistics — MAS Singapore disclosures" style="display:inline-block; font-size:10px; background:#16A085; color:white; padding:1px 6px; border-radius:3px; margin-right:6px; font-weight:600; text-decoration:none;">2021, 2023 ↗</a>
               <strong>MAS (Singapore)</strong> disclosed large tranches; quiet institutional accumulator.
@@ -1136,8 +1157,8 @@
 
       </div>
 
-      <div style="margin-top:14px; padding:12px; background:rgba(212,175,55,0.06); border-left:3px solid #D4AF37; border-radius:4px; font-size:12px; color:#BDC3C7; line-height:1.7;">
-        <strong style="color:white;">Why this is the floor, not the ceiling:</strong>
+      <div style="margin-top:14px; padding:12px; background:rgba(212,175,55,0.15); border-left:3px solid #D4AF37; border-radius:4px; font-size:12px; color:#555B63; line-height:1.7;">
+        <strong style="color:#1A1A1A;">Why this is the floor, not the ceiling:</strong>
         (1) <strong>Mandated institutional demand</strong> — China insurers alone = ~250t/yr baked-in through 2028; (2) <strong>Removed retail friction</strong> — India duty cut + China household campaign can't reverse without political cost; (3) <strong>Weaponization-proofing</strong> — Russian precedent permanently repriced USD-reserve risk for every non-aligned sovereign; (4) <strong>Parallel pricing infrastructure</strong> — SGE expansion and yuan-oil contracts are <em>infrastructure</em>, not positioning. Exit requires explicit walk-back of any of these levers. None currently signalled.
       </div>
     </div>
@@ -1195,7 +1216,7 @@
     <div class="chart-grid" style="margin-top:16px;">
       <div class="chart-panel" style="grid-column: 1 / -1;">
         <div class="panel-title">Quarterly CB Buying — By Country (2015–present, stacked tonnes)</div>
-        <div class="panel-sub">Top-8 individually tracked buyers (China PBoC, Poland, Turkey*, India, Russia, Singapore, Qatar, Czech) + <strong>Other Disclosed</strong> (all remaining IFS reporters, incl. net sellers) + <strong style="color:#D4AF37;">Unreported residual = WGC global CB total − Σ(IFS reporters)</strong>. IFS data is true monthly (not interpolated). The <strong>Unreported</strong> bucket has averaged ~650t/yr post-2022 (~62% of global CB demand) — widely believed to include off-book PBoC, Saudi, and sanctions-adjacent sovereigns. Turkey uses the WGC swap-adjusted series. Gold price overlay (right). <em style="color:#7F8C8D;">Q2'15 Unreported clipped to 0 — PBoC's 604t one-shot declaration created a −490t WGC-vs-IFS accounting artifact (reclassification, not real selling).</em></div>
+        <div class="panel-sub">Top-8 individually tracked buyers (China PBoC, Poland, Turkey*, India, Russia, Singapore, Qatar, Czech) + <strong>Other Disclosed</strong> (all remaining IFS reporters, incl. net sellers) + <strong style="color:#D4AF37;">Unreported residual = WGC global CB total − Σ(IFS reporters)</strong>. IFS data is true monthly (not interpolated). The <strong>Unreported</strong> bucket has averaged ~650t/yr post-2022 (~62% of global CB demand) — widely believed to include off-book PBoC, Saudi, and sanctions-adjacent sovereigns. Turkey uses the WGC swap-adjusted series. Gold price overlay (right). <em style="color:#8A929B;">Q2'15 Unreported clipped to 0 — PBoC's 604t one-shot declaration created a −490t WGC-vs-IFS accounting artifact (reclassification, not real selling).</em></div>
         <div class="chart-wrap tall"><canvas id="chart-cb-by-country"></canvas></div>
       </div>
     </div>
@@ -1221,24 +1242,24 @@
         <div class="panel-sub">FRED DFII10 &mdash; 10-year US TIPS yield (monthly mean, series starts 2003). <strong>Real-yield axis is inverted</strong> so lines move together when the classical relationship holds (lower real yield → higher gold). Pre-2022: tight co-movement. Post-2022: real yields surged from −1% to +2% while gold ripped to new highs — the decouple is the thesis.</div>
         <div class="chart-wrap tall"><canvas id="chart-t10y2y-full"></canvas></div>
         <!-- Real-rates breakdown tucked under the rates chart -->
-        <div style="margin-top:14px; padding:12px; background:#0F1923; border:1px solid #2C3E50; border-radius:6px;">
-          <div style="font-size:13px; font-weight:700; color:#E0E0E0; margin-bottom:4px;">Background: The Real-Rates Link Broke in 2022 (why old F2 failed)</div>
-          <div style="font-size:11px; color:#BDC3C7; margin-bottom:10px;">Gold's classical driver for 20 years was inverse real yields. Post-2022 that relationship inverted — new marginal buyer doesn't care about TIPS.</div>
+        <div style="margin-top:14px; padding:12px; background:#FFFFFF; border:1px solid #E1E4E8; border-radius:6px;">
+          <div style="font-size:13px; font-weight:700; color:#1A1A1A; margin-bottom:4px;">Background: The Real-Rates Link Broke in 2022 (why old F2 failed)</div>
+          <div style="font-size:11px; color:#555B63; margin-bottom:10px;">Gold's classical driver for 20 years was inverse real yields. Post-2022 that relationship inverted — new marginal buyer doesn't care about TIPS.</div>
           <div style="display:grid; grid-template-columns: 1fr 1fr 1fr; gap:8px;">
-            <div style="padding:10px; background:#15202E; border:1px solid #2C3E50; border-radius:4px;">
-              <div style="font-size:10px; color:#7F8C8D; text-transform:uppercase; letter-spacing:0.5px;">Pre-2022 · level corr</div>
+            <div style="padding:10px; background:#15202E; border:1px solid #E1E4E8; border-radius:4px;">
+              <div style="font-size:10px; color:#8A929B; text-transform:uppercase; letter-spacing:0.5px;">Pre-2022 · level corr</div>
               <div style="font-size:20px; font-weight:700; color:#27AE60;">+0.84</div>
-              <div style="font-size:10px; color:#BDC3C7;">log(gold) vs −real yield, 2003–2021 (N=228)</div>
+              <div style="font-size:10px; color:#555B63;">log(gold) vs −real yield, 2003–2021 (N=228)</div>
             </div>
-            <div style="padding:10px; background:#15202E; border:1px solid #2C3E50; border-radius:4px;">
-              <div style="font-size:10px; color:#7F8C8D; text-transform:uppercase; letter-spacing:0.5px;">Post-2022 · level corr</div>
+            <div style="padding:10px; background:#15202E; border:1px solid #E1E4E8; border-radius:4px;">
+              <div style="font-size:10px; color:#8A929B; text-transform:uppercase; letter-spacing:0.5px;">Post-2022 · level corr</div>
               <div style="font-size:20px; font-weight:700; color:#C0392B;">−0.46</div>
-              <div style="font-size:10px; color:#BDC3C7;">2022-01 → 2026-04 (N=52) — sign flipped</div>
+              <div style="font-size:10px; color:#555B63;">2022-01 → 2026-04 (N=52) — sign flipped</div>
             </div>
-            <div style="padding:10px; background:#15202E; border:1px solid #2C3E50; border-radius:4px;">
-              <div style="font-size:10px; color:#7F8C8D; text-transform:uppercase; letter-spacing:0.5px;">Latest real yield</div>
-              <div style="font-size:20px; font-weight:700; color:#E0E0E0;">+1.95%</div>
-              <div style="font-size:10px; color:#BDC3C7;">Apr 2026 · vs pre-2022 low of −1.07% (Aug '21) — yields high, gold at ATH</div>
+            <div style="padding:10px; background:#15202E; border:1px solid #E1E4E8; border-radius:4px;">
+              <div style="font-size:10px; color:#8A929B; text-transform:uppercase; letter-spacing:0.5px;">Latest real yield</div>
+              <div style="font-size:20px; font-weight:700; color:#1A1A1A;">+1.95%</div>
+              <div style="font-size:10px; color:#555B63;">Apr 2026 · vs pre-2022 low of −1.07% (Aug '21) — yields high, gold at ATH</div>
             </div>
           </div>
         </div>
@@ -1257,60 +1278,60 @@
 
     <div style="margin-top:24px; padding:14px 16px; background:#1a1410; border:1px solid #4a3420; border-radius:6px;">
       <div style="font-size:13px; font-weight:600; color:#E67E22; margin-bottom:4px;">⚠ Deprecated factors — kept for historical context</div>
-      <div style="font-size:12px; color:#BDC3C7; line-height:1.6;">F3 GPR and F5 Cycle were part of the original 5-factor model but lost predictive power post-2022 as the regime shifted to structural CB / retail-rotation demand. GPR spikes now get sold (tariff shock pattern); CLI recovery signals no longer lead because the Fed response loop is swamped by sovereign accumulation. Retained below for transparency, not for live signalling.</div>
+      <div style="font-size:12px; color:#555B63; line-height:1.6;">F3 GPR and F5 Cycle were part of the original 5-factor model but lost predictive power post-2022 as the regime shifted to structural CB / retail-rotation demand. GPR spikes now get sold (tariff shock pattern); CLI recovery signals no longer lead because the Fed response loop is swamped by sovereign accumulation. Retained below for transparency, not for live signalling.</div>
     </div>
 
     <!-- F3 GPR :: START -->
     <div class="chart-panel" style="margin-top:16px;" data-factor="f3">
       <div class="panel-title">F3 — Geopolitical Risk Premium: Non-Linear, Spikes Are Bearish</div>
-      <div class="panel-sub" style="color:#BDC3C7;">
+      <div class="panel-sub" style="color:#555B63;">
         GPR rising ≠ gold up. Big spikes are sell-the-news events (−13 to −23pp alpha). The sweet spot is moderate sustained anxiety (GPR 85–96), not panic. Current level is at 98th pct — spike territory.
       </div>
 
       <!-- Stats row -->
       <div style="display:grid; grid-template-columns:repeat(4,1fr); gap:10px; margin-top:12px;">
-        <div style="padding:12px; background:#0F1923; border:1px solid #2C3E50; border-radius:6px;">
-          <div style="font-size:11px; color:#7F8C8D; text-transform:uppercase; letter-spacing:0.5px;">Current GPR (Apr 2026)</div>
+        <div style="padding:12px; background:#FFFFFF; border:1px solid #E1E4E8; border-radius:6px;">
+          <div style="font-size:11px; color:#8A929B; text-transform:uppercase; letter-spacing:0.5px;">Current GPR (Apr 2026)</div>
           <div style="font-size:24px; font-weight:700; color:#E67E22;">277.5</div>
-          <div style="font-size:11px; color:#BDC3C7;">98th pct of all months 2000–2026</div>
+          <div style="font-size:11px; color:#555B63;">98th pct of all months 2000–2026</div>
         </div>
-        <div style="padding:12px; background:#0F1923; border:1px solid #2C3E50; border-radius:6px;">
-          <div style="font-size:11px; color:#7F8C8D; text-transform:uppercase; letter-spacing:0.5px;">3M change</div>
+        <div style="padding:12px; background:#FFFFFF; border:1px solid #E1E4E8; border-radius:6px;">
+          <div style="font-size:11px; color:#8A929B; text-transform:uppercase; letter-spacing:0.5px;">3M change</div>
           <div style="font-size:24px; font-weight:700; color:#C0392B;">+110 pts</div>
-          <div style="font-size:11px; color:#BDC3C7;">spike territory (chg3 > +30 = sell signal)</div>
+          <div style="font-size:11px; color:#555B63;">spike territory (chg3 > +30 = sell signal)</div>
         </div>
-        <div style="padding:12px; background:#0F1923; border:1px solid #2C3E50; border-radius:6px;">
-          <div style="font-size:11px; color:#7F8C8D; text-transform:uppercase; letter-spacing:0.5px;">Mild drop signal α</div>
+        <div style="padding:12px; background:#FFFFFF; border:1px solid #E1E4E8; border-radius:6px;">
+          <div style="font-size:11px; color:#8A929B; text-transform:uppercase; letter-spacing:0.5px;">Mild drop signal α</div>
           <div style="font-size:24px; font-weight:700; color:#27AE60;">+7.4pp</div>
-          <div style="font-size:11px; color:#BDC3C7;">GPR 3M mild drop (−18 to −6): best signal</div>
+          <div style="font-size:11px; color:#555B63;">GPR 3M mild drop (−18 to −6): best signal</div>
         </div>
-        <div style="padding:12px; background:#0F1923; border:1px solid #2C3E50; border-radius:6px;">
-          <div style="font-size:11px; color:#7F8C8D; text-transform:uppercase; letter-spacing:0.5px;">Big spike α (chg3 > +30)</div>
+        <div style="padding:12px; background:#FFFFFF; border:1px solid #E1E4E8; border-radius:6px;">
+          <div style="font-size:11px; color:#8A929B; text-transform:uppercase; letter-spacing:0.5px;">Big spike α (chg3 > +30)</div>
           <div style="font-size:24px; font-weight:700; color:#C0392B;">−13.3pp</div>
-          <div style="font-size:11px; color:#BDC3C7;">N=37 spike months · gold avg −0.8%/mo</div>
+          <div style="font-size:11px; color:#555B63;">N=37 spike months · gold avg −0.8%/mo</div>
         </div>
       </div>
 
       <!-- Chart 1: GPR timeline with spike highlighting -->
       <div style="margin-top:16px;">
-        <div style="font-size:13px; font-weight:600; color:#E0E0E0; margin-bottom:4px;">GPR Level vs Gold Price — Spike Months Flagged in Red (3M chg > +30)</div>
-        <div style="font-size:11px; color:#7F8C8D; margin-bottom:6px;">Red dots = months where GPR rose >30pts over 3M. Historically followed by gold underperformance (43% hit rate vs 57% null). Current tariff shock = same pattern.</div>
+        <div style="font-size:13px; font-weight:600; color:#1A1A1A; margin-bottom:4px;">GPR Level vs Gold Price — Spike Months Flagged in Red (3M chg > +30)</div>
+        <div style="font-size:11px; color:#8A929B; margin-bottom:6px;">Red dots = months where GPR rose >30pts over 3M. Historically followed by gold underperformance (43% hit rate vs 57% null). Current tariff shock = same pattern.</div>
         <div class="chart-wrap tall"><canvas id="chart-f3-gpr-spike"></canvas></div>
       </div>
 
       <!-- Chart 2: Alpha by GPR decile -->
       <div style="margin-top:16px;">
-        <div style="font-size:13px; font-weight:600; color:#E0E0E0; margin-bottom:4px;">Gold 1M Hit Rate Alpha by GPR Level Decile (vs 56.5% null)</div>
-        <div style="font-size:11px; color:#7F8C8D; margin-bottom:6px;">D4/D5 (GPR 85–96) is the sweet spot (+10pp alpha). High-extreme GPR (D10) recovers slightly but is partly the post-2022 bull trend. "More fear = more gold" is too simple.</div>
+        <div style="font-size:13px; font-weight:600; color:#1A1A1A; margin-bottom:4px;">Gold 1M Hit Rate Alpha by GPR Level Decile (vs 56.5% null)</div>
+        <div style="font-size:11px; color:#8A929B; margin-bottom:6px;">D4/D5 (GPR 85–96) is the sweet spot (+10pp alpha). High-extreme GPR (D10) recovers slightly but is partly the post-2022 bull trend. "More fear = more gold" is too simple.</div>
         <div class="chart-wrap tall"><canvas id="chart-f3-decile-alpha"></canvas></div>
       </div>
 
       <!-- Hit rate table -->
-      <div style="margin-top:16px; padding:14px; background:#0F1923; border:1px solid #2C3E50; border-radius:6px;">
-        <div style="font-size:13px; font-weight:600; color:#E0E0E0; margin-bottom:8px;">GPR Signal Hit-Rate Summary (1M forward gold, full sample 2000–2026)</div>
-        <table style="width:100%; border-collapse:collapse; font-size:12px; color:#BDC3C7;">
+      <div style="margin-top:16px; padding:14px; background:#FFFFFF; border:1px solid #E1E4E8; border-radius:6px;">
+        <div style="font-size:13px; font-weight:600; color:#1A1A1A; margin-bottom:8px;">GPR Signal Hit-Rate Summary (1M forward gold, full sample 2000–2026)</div>
+        <table style="width:100%; border-collapse:collapse; font-size:12px; color:#555B63;">
           <thead>
-            <tr style="border-bottom:1px solid #2C3E50; color:#7F8C8D;">
+            <tr style="border-bottom:1px solid #E1E4E8; color:#8A929B;">
               <th style="text-align:left; padding:6px 8px;">Condition</th>
               <th style="text-align:center; padding:6px 8px;">N</th>
               <th style="text-align:center; padding:6px 8px;">Gold up 1M</th>
@@ -1319,65 +1340,65 @@
             </tr>
           </thead>
           <tbody>
-            <tr style="border-bottom:1px solid #1a2a3a;"><td style="padding:6px 8px;">Base rate (all months)</td><td style="text-align:center;">309</td><td style="text-align:center;">56.5%</td><td style="text-align:center;">—</td><td style="padding:6px 8px; color:#7F8C8D;">null</td></tr>
+            <tr style="border-bottom:1px solid #1a2a3a;"><td style="padding:6px 8px;">Base rate (all months)</td><td style="text-align:center;">309</td><td style="text-align:center;">56.5%</td><td style="text-align:center;">—</td><td style="padding:6px 8px; color:#8A929B;">null</td></tr>
             <tr style="border-bottom:1px solid #1a2a3a;"><td style="padding:6px 8px;">GPR D4/D5 sweet spot (85–96)</td><td style="text-align:center;">61</td><td style="text-align:center; color:#27AE60; font-weight:600;">67.2%</td><td style="text-align:center; color:#27AE60;">+10.7pp</td><td style="padding:6px 8px; color:#27AE60;">Moderate anxiety</td></tr>
             <tr style="border-bottom:1px solid #1a2a3a;"><td style="padding:6px 8px;">GPR 3M mild drop (−18 to −6)</td><td style="text-align:center;">61</td><td style="text-align:center; color:#27AE60; font-weight:600;">63.9%</td><td style="text-align:center; color:#27AE60;">+7.4pp</td><td style="padding:6px 8px; color:#27AE60;">GPR cooling</td></tr>
             <tr style="border-bottom:1px solid #1a2a3a;"><td style="padding:6px 8px;">GPR 3M big spike (&gt; +30)</td><td style="text-align:center;">37</td><td style="text-align:center; color:#C0392B; font-weight:600;">43.2%</td><td style="text-align:center; color:#C0392B;">−13.3pp</td><td style="padding:6px 8px; color:#C0392B;">Sell the news</td></tr>
             <tr><td style="padding:6px 8px;">GPR 3M very big spike (&gt; +50)</td><td style="text-align:center;">18</td><td style="text-align:center; color:#C0392B; font-weight:600;">33.3%</td><td style="text-align:center; color:#C0392B;">−23.2pp</td><td style="padding:6px 8px; color:#C0392B;">Strong sell</td></tr>
           </tbody>
         </table>
-        <div style="margin-top:8px; font-size:11px; color:#7F8C8D;">Full-sample 2000–2026. GPR spikes are mean-reverting — the event premium fades within 1–3M. 9/11, Iraq war, Ukraine invasion, and the 2026 tariff shock all follow this pattern. Once fear is priced, the bid fades. F3 is the weakest factor — use as context, not a timing signal.</div>
+        <div style="margin-top:8px; font-size:11px; color:#8A929B;">Full-sample 2000–2026. GPR spikes are mean-reverting — the event premium fades within 1–3M. 9/11, Iraq war, Ukraine invasion, and the 2026 tariff shock all follow this pattern. Once fear is priced, the bid fades. F3 is the weakest factor — use as context, not a timing signal.</div>
       </div>
     </div>
     <!-- F3 GPR :: END -->
 
     <!-- F5 CYCLE :: START -->
     <div class="chart-panel" style="margin-top:16px;" data-factor="f5">
-      <div style="font-size:13px; color:#BDC3C7; margin-bottom:12px; line-height:1.6;">
+      <div style="font-size:13px; color:#555B63; margin-bottom:12px; line-height:1.6;">
         The OECD Composite Leading Indicator (CLI) is a pre-built blend of 10+ economic components designed to lead GDP by 6–9 months. Below 100 = below-trend growth. Signal fires when CLI is <strong>below 100 AND rising over 6M</strong> — trough/recovery zone. Gold tends to rally <strong>~5 months later</strong> as the Fed responds. Current CLI (Feb 2026): 100.85 — above trend, no signal.
       </div>
 
       <!-- Stat cards -->
       <div style="display:flex; gap:12px; flex-wrap:wrap; margin-bottom:16px;">
         <div style="background:#0d1f2d; border:1px solid #1e3a50; border-radius:6px; padding:12px 16px; min-width:140px;">
-          <div style="font-size:11px; color:#7F8C8D; text-transform:uppercase; letter-spacing:0.5px;">Signal: CLI trough +5M</div>
+          <div style="font-size:11px; color:#8A929B; text-transform:uppercase; letter-spacing:0.5px;">Signal: CLI trough +5M</div>
           <div style="font-size:22px; font-weight:700; color:#27AE60; margin:4px 0;">70.1%</div>
-          <div style="font-size:11px; color:#BDC3C7;">hit rate (N=77)</div>
+          <div style="font-size:11px; color:#555B63;">hit rate (N=77)</div>
         </div>
         <div style="background:#0d1f2d; border:1px solid #1e3a50; border-radius:6px; padding:12px 16px; min-width:140px;">
-          <div style="font-size:11px; color:#7F8C8D; text-transform:uppercase; letter-spacing:0.5px;">Alpha vs null</div>
+          <div style="font-size:11px; color:#8A929B; text-transform:uppercase; letter-spacing:0.5px;">Alpha vs null</div>
           <div style="font-size:22px; font-weight:700; color:#27AE60; margin:4px 0;">+15.0pp</div>
-          <div style="font-size:11px; color:#BDC3C7;">vs 55.1% base rate</div>
+          <div style="font-size:11px; color:#555B63;">vs 55.1% base rate</div>
         </div>
         <div style="background:#0d1f2d; border:1px solid #1e3a50; border-radius:6px; padding:12px 16px; min-width:140px;">
-          <div style="font-size:11px; color:#7F8C8D; text-transform:uppercase; letter-spacing:0.5px;">Post-2022 HR</div>
+          <div style="font-size:11px; color:#8A929B; text-transform:uppercase; letter-spacing:0.5px;">Post-2022 HR</div>
           <div style="font-size:22px; font-weight:700; color:#27AE60; margin:4px 0;">75.0%</div>
-          <div style="font-size:11px; color:#BDC3C7;">+17pp (N=20, stable)</div>
+          <div style="font-size:11px; color:#555B63;">+17pp (N=20, stable)</div>
         </div>
         <div style="background:#0d1f2d; border:1px solid #1e3a50; border-radius:6px; padding:12px 16px; min-width:140px;">
-          <div style="font-size:11px; color:#7F8C8D; text-transform:uppercase; letter-spacing:0.5px;">No signal (BEAR)</div>
+          <div style="font-size:11px; color:#8A929B; text-transform:uppercase; letter-spacing:0.5px;">No signal (BEAR)</div>
           <div style="font-size:22px; font-weight:700; color:#C0392B; margin:4px 0;">52.0%</div>
-          <div style="font-size:11px; color:#BDC3C7;">−3.1pp when cold</div>
+          <div style="font-size:11px; color:#555B63;">−3.1pp when cold</div>
         </div>
       </div>
 
       <!-- Chart A: CLI timeline with S2 zones + gold -->
       <div style="margin-bottom:16px;">
-        <div style="font-size:13px; font-weight:600; color:#E0E0E0; margin-bottom:4px;">OECD CLI Level vs Gold Price — Trough/Recovery Zones (S2 = below 100 &amp; rising)</div>
-        <div style="font-size:11px; color:#7F8C8D; margin-bottom:6px;">Green shaded regions = months where CLI was below 100 and rising 6M (trough/recovery). Gold typically rallies 5 months after these zones fire. Current: CLI above 100 — no signal.</div>
+        <div style="font-size:13px; font-weight:600; color:#1A1A1A; margin-bottom:4px;">OECD CLI Level vs Gold Price — Trough/Recovery Zones (S2 = below 100 &amp; rising)</div>
+        <div style="font-size:11px; color:#8A929B; margin-bottom:6px;">Green shaded regions = months where CLI was below 100 and rising 6M (trough/recovery). Gold typically rallies 5 months after these zones fire. Current: CLI above 100 — no signal.</div>
         <div class="chart-wrap tall"><canvas id="chart-f5-cli"></canvas></div>
       </div>
 
       <!-- Chart B: Three-bucket bar chart -->
       <div style="margin-bottom:16px;">
-        <div style="font-size:13px; font-weight:600; color:#E0E0E0; margin-bottom:4px;">Gold 1M Hit Rate by CLI Zone (5M forward, vs 55.1% null)</div>
-        <div style="font-size:11px; color:#7F8C8D; margin-bottom:6px;">Each bar shows how often gold was up 1M, measured 5 months after the CLI was in each zone. The trough/recovery bucket is +15pp above base rate — strongest differentiation in F5.</div>
+        <div style="font-size:13px; font-weight:600; color:#1A1A1A; margin-bottom:4px;">Gold 1M Hit Rate by CLI Zone (5M forward, vs 55.1% null)</div>
+        <div style="font-size:11px; color:#8A929B; margin-bottom:6px;">Each bar shows how often gold was up 1M, measured 5 months after the CLI was in each zone. The trough/recovery bucket is +15pp above base rate — strongest differentiation in F5.</div>
         <div class="chart-wrap" style="height:220px;"><canvas id="chart-f5-buckets"></canvas></div>
       </div>
 
       <!-- Thesis box -->
-      <div style="background:#0d1f2d; border:1px solid #1e3a50; border-radius:6px; padding:14px; font-size:12px; color:#BDC3C7; line-height:1.7;">
-        <strong style="color:#E0E0E0;">Why trough/recovery and not just "below trend"?</strong><br>
+      <div style="background:#0d1f2d; border:1px solid #1e3a50; border-radius:6px; padding:14px; font-size:12px; color:#555B63; line-height:1.7;">
+        <strong style="color:#1A1A1A;">Why trough/recovery and not just "below trend"?</strong><br>
         CLI below 100 but still falling means the Fed hasn't pivoted yet — too early. CLI below 100 and rising means the trough is behind us and the Fed has either already cut or markets are pricing it in. The 5-month lag reflects the full chain: weak data → Fed pivot signal → real yields fall → gold reprices. Using just the level (below 100 alone) gives +9.8pp alpha; adding the recovery direction boosts it to +15pp because it filters out the false positives during the deterioration phase.
       </div>
     </div>
@@ -1402,16 +1423,24 @@
   const { data, backtest, regime, current, meta } = PAYLOAD;
 
   // ── Chart.js defaults ────────────────────────────────────────────
-  Chart.defaults.color = '#BDC3C7';
-  Chart.defaults.borderColor = '#2C3E50';
+  Chart.defaults.color = '#555B63';
+  Chart.defaults.borderColor = '#E1E4E8';
   Chart.defaults.font.family = '-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif';
   Chart.defaults.font.size = 10.5;
+  // Light-theme tooltip defaults
+  Chart.defaults.plugins.tooltip.backgroundColor = '#FFFFFF';
+  Chart.defaults.plugins.tooltip.titleColor     = '#1A1A1A';
+  Chart.defaults.plugins.tooltip.bodyColor      = '#1A1A1A';
+  Chart.defaults.plugins.tooltip.footerColor    = '#555B63';
+  Chart.defaults.plugins.tooltip.borderColor    = '#E1E4E8';
+  Chart.defaults.plugins.tooltip.borderWidth    = 1;
+  Chart.defaults.plugins.tooltip.boxPadding     = 6;
 
   const COLORS = {
     gold: '#D4AF37',
     red: '#C0392B', green: '#27AE60', amber: '#F39C12',
     blue: '#3498DB', purple: '#8E44AD', orange: '#E67E22',
-    gray: '#7F8C8D', dark: '#1E3A5F',
+    gray: '#7F8C8D', dark: '#5D7FA3',
   };
 
   // ── Header sub-line ───────────────────────────────────────────────
@@ -1514,14 +1543,14 @@
       `<td><strong>${(hr * 100).toFixed(1)}%</strong></td>` +
       `<td>${n}</td>` +
       `<td class="${edgeClass}"><strong>${edgeText}</strong></td>` +
-      `<td style="font-size:11.5px;color:#BDC3C7;font-style:italic;">${note}</td>`;
+      `<td style="font-size:11.5px;color:#555B63;font-style:italic;">${note}</td>`;
     pboc_body.appendChild(tr);
   });
 
   // ── Helper: color a HR cell on a red→green gradient ───────────────
   function hrCell(hr, lo, hi, good) {
     // good='high' → high is green; good='low' → low is green
-    if (hr === null || isNaN(hr)) return { text: 'n/a', bg: '#1A222C' };
+    if (hr === null || isNaN(hr)) return { text: 'n/a', bg: '#F0F2F5' };
     let t = Math.max(0, Math.min(1, (hr - lo) / (hi - lo)));
     if (good === 'low') t = 1 - t;
     const r = Math.round(192 + (39  - 192) * t);
@@ -1553,14 +1582,14 @@
       const tr = document.createElement('tr');
       const cell = hrCell(hr, 0.50, 0.80, lag >= 0 ? 'low' : 'high');
       const lagStr = lag > 0 ? `+${lag}` : lag.toString();
-      const highlight = lag === 2 ? 'background:rgba(212,175,55,0.08);' : '';
+      const highlight = lag === 2 ? 'background:rgba(212,175,55,0.18);' : '';
       tr.style = highlight;
       tr.innerHTML =
         `<td><strong>${lagStr}</strong></td>` +
         `<td style="font-size:10.5px;">${dir}</td>` +
-        `<td style="background:${cell.bg}; color:white;"><strong>${cell.text}</strong></td>` +
+        `<td style="background:${cell.bg}; color:#1A1A1A;"><strong>${cell.text}</strong></td>` +
         `<td>${n}</td>` +
-        `<td style="font-size:10.5px; color:#BDC3C7; font-style:italic;">${note}</td>`;
+        `<td style="font-size:10.5px; color:#555B63; font-style:italic;">${note}</td>`;
       revBody.appendChild(tr);
     });
   }
@@ -1589,14 +1618,14 @@
       // Color: for this test, HIGH HR at forward lags = good, HIGH HR at negative lags = bad (leakage)
       const cell = hrCell(hr, 0.50, 0.72, lag >= 0 ? 'high' : 'low');
       const lagStr = lag > 0 ? `+${lag}` : lag.toString();
-      const highlight = lag === 2 ? 'background:rgba(212,175,55,0.08);' : '';
+      const highlight = lag === 2 ? 'background:rgba(212,175,55,0.18);' : '';
       tr.style = highlight;
       tr.innerHTML =
         `<td><strong>${lagStr}M</strong></td>` +
         `<td style="font-size:10.5px;">${dir}</td>` +
-        `<td style="background:${cell.bg}; color:white;"><strong>${cell.text}</strong></td>` +
+        `<td style="background:${cell.bg}; color:#1A1A1A;"><strong>${cell.text}</strong></td>` +
         `<td>${n}</td>` +
-        `<td style="font-size:10.5px; color:#BDC3C7; font-style:italic;">${note}</td>`;
+        `<td style="font-size:10.5px; color:#555B63; font-style:italic;">${note}</td>`;
       leakBody.appendChild(tr);
     });
   }
@@ -1617,8 +1646,8 @@
       const tr = document.createElement('tr');
       tr.innerHTML =
         `<td><strong>${period}</strong></td>` +
-        `<td style="background:${c0.bg}; color:white;">${c0.text}</td>` +
-        `<td style="background:${c2.bg}; color:white;"><strong>${c2.text}</strong></td>` +
+        `<td style="background:${c0.bg}; color:#1A1A1A;">${c0.text}</td>` +
+        `<td style="background:${c2.bg}; color:#1A1A1A;"><strong>${c2.text}</strong></td>` +
         `<td class="${deltaCls}"><strong>${delta > 0 ? '+' : ''}${delta.toFixed(1)}pp</strong></td>` +
         `<td>${n}</td>`;
       coinBody.appendChild(tr);
@@ -1666,10 +1695,10 @@
       tr.innerHTML =
         `<td><strong>${src}</strong></td>` +
         `<td>` +
-          `<div style="font-size:10.5px;font-family:monospace;color:#BDC3C7;">${code}</div>` +
-          `<div style="font-size:11px;color:#7F8C8D;margin-top:4px;font-style:italic;line-height:1.5;">${explainer}</div>` +
+          `<div style="font-size:10.5px;font-family:monospace;color:#555B63;">${code}</div>` +
+          `<div style="font-size:11px;color:#8A929B;margin-top:4px;font-style:italic;line-height:1.5;">${explainer}</div>` +
         `</td>` +
-        `<td style="background:${c2.bg}; color:white;"><strong>${c2.text}</strong></td>` +
+        `<td style="background:${c2.bg}; color:#1A1A1A;"><strong>${c2.text}</strong></td>` +
         `<td>${(hrPre * 100).toFixed(1)}%</td>` +
         `<td>${(hrPost * 100).toFixed(1)}%</td>`;
       momBody.appendChild(tr);
@@ -1690,7 +1719,7 @@
       tr.innerHTML =
         `<td><strong>${period}</strong></td>` +
         `<td style="font-size:10.5px;">${ctx}</td>` +
-        `<td style="background:${c.bg}; color:white;"><strong>${c.text}</strong></td>` +
+        `<td style="background:${c.bg}; color:#1A1A1A;"><strong>${c.text}</strong></td>` +
         `<td>${(base * 100).toFixed(1)}%</td>` +
         `<td class="${alphaCls}"><strong>+${alpha.toFixed(1)}pp</strong></td>` +
         `<td><strong>${events}</strong></td>` +
@@ -1714,10 +1743,10 @@
       tr.innerHTML =
         `<td><strong>${year}</strong></td>` +
         `<td>${n}</td>` +
-        `<td style="background:${c.bg}; color:white;"><strong>${c.text}</strong></td>` +
+        `<td style="background:${c.bg}; color:#1A1A1A;"><strong>${c.text}</strong></td>` +
         `<td>+${ret.toFixed(2)}%</td>` +
         `<td>+${flow.toFixed(1)}t</td>` +
-        `<td style="font-size:10.5px; color:#BDC3C7; font-style:italic;">${note}</td>`;
+        `<td style="font-size:10.5px; color:#555B63; font-style:italic;">${note}</td>`;
       ybpBody.appendChild(tr);
     });
   }
@@ -1736,7 +1765,7 @@
     ];
     // Color scale: green at 0.72, red at 0.50
     function cellColor(hr) {
-      if (hr === null) return '#1A222C';
+      if (hr === null) return '#F0F2F5';
       const t = Math.max(0, Math.min(1, (hr - 0.50) / (0.72 - 0.50)));
       // Interpolate red → amber → green
       const r = Math.round(192 + (39  - 192) * t);
@@ -1746,7 +1775,7 @@
     }
     sensRows.forEach(row => {
       const tr = document.createElement('tr');
-      let cells = `<td style="text-align:left; font-weight:600; color:#E0E0E0;">${row.streak}</td>`;
+      let cells = `<td style="text-align:left; font-weight:600; color:#1A1A1A;">${row.streak}</td>`;
       row.hrs.forEach((hr, i) => {
         const bg = cellColor(hr);
         const text = hr === null ? 'n/a' : (hr * 100).toFixed(1) + '%';
@@ -1757,9 +1786,9 @@
           tag = '<div style="font-size:9px; color:#D4AF37; margin-top:2px;">LOCKED</div>';
         } else if (row.tuned === i) {
           borders = 'border:2px dashed #7F8C8D;';
-          tag = '<div style="font-size:9px; color:#7F8C8D; margin-top:2px;">tuned (dropped)</div>';
+          tag = '<div style="font-size:9px; color:#8A929B; margin-top:2px;">tuned (dropped)</div>';
         }
-        cells += `<td style="background:${bg}; color:white; font-weight:${row.locked===i?700:500}; ${borders}">${text}${tag}</td>`;
+        cells += `<td style="background:${bg}; color:#1A1A1A; font-weight:${row.locked===i?700:500}; ${borders}">${text}${tag}</td>`;
       });
       tr.innerHTML = cells;
       sensBody.appendChild(tr);
@@ -1806,12 +1835,12 @@
         ? `diff(${row.n}) <span style="color:#D4AF37; font-size:9px; margin-left:4px;">LOCKED</span>`
         : `diff(${row.n})`;
       tr.innerHTML =
-        `<td style="text-align:left; font-weight:600; color:#E0E0E0;">${label}</td>` +
-        `<td style="background:${hrBg}; color:white; ${locked}">${(row.hr*100).toFixed(1)}%</td>` +
+        `<td style="text-align:left; font-weight:600; color:#1A1A1A;">${label}</td>` +
+        `<td style="background:${hrBg}; color:#1A1A1A; ${locked}">${(row.hr*100).toFixed(1)}%</td>` +
         `<td>${row.count}</td>` +
-        `<td style="color:${alpha >= 10 ? '#27AE60' : alpha >= 5 ? '#F39C12' : '#BDC3C7'};">${alpha >= 0 ? '+' : ''}${alpha.toFixed(1)}pp</td>` +
-        `<td style="background:${preBg}; color:white;">${(row.pre*100).toFixed(1)}%</td>` +
-        `<td style="background:${postBg}; color:white;">${(row.post*100).toFixed(1)}%</td>`;
+        `<td style="color:${alpha >= 10 ? '#27AE60' : alpha >= 5 ? '#F39C12' : '#8A929B'};">${alpha >= 0 ? '+' : ''}${alpha.toFixed(1)}pp</td>` +
+        `<td style="background:${preBg}; color:#1A1A1A;">${(row.pre*100).toFixed(1)}%</td>` +
+        `<td style="background:${postBg}; color:#1A1A1A;">${(row.post*100).toFixed(1)}%</td>`;
       diffSensBody.appendChild(tr);
     });
   }
@@ -1850,7 +1879,7 @@
         plugins: {
           legend: { display: false },
           tooltip: {
-            backgroundColor: '#0F1923', borderColor: '#2C3E50', borderWidth: 1,
+            backgroundColor: '#FFFFFF', borderColor: '#E1E4E8', borderWidth: 1,
             callbacks: {
               label: (ctx) => {
                 const row = pboc_rows[ctx.dataIndex];
@@ -1866,13 +1895,13 @@
         scales: {
           x: {
             min: 50, max: 75,
-            grid: { color: '#1F2A3A' },
-            ticks: { color: '#BDC3C7', callback: (v) => v + '%' },
-            title: { display: true, text: 'Hit Rate — probability gold is up 2 months later', color: '#BDC3C7', font: { size: 11 } }
+            grid: { color: '#ECEEF1' },
+            ticks: { color: '#555B63', callback: (v) => v + '%' },
+            title: { display: true, text: 'Hit Rate — probability gold is up 2 months later', color: '#555B63', font: { size: 11 } }
           },
           y: {
             grid: { display: false },
-            ticks: { color: '#E0E0E0', font: { size: 11 } }
+            ticks: { color: '#1A1A1A', font: { size: 11 } }
           }
         }
       },
@@ -1938,8 +1967,8 @@
           } }
         },
         scales: {
-          x: { type: 'time', time: { unit: 'year' }, grid: { color: '#1F2A3A' }, stacked: true },
-          y: { position: 'left', grid: { color: '#1F2A3A' }, stacked: true,
+          x: { type: 'time', time: { unit: 'year' }, grid: { color: '#ECEEF1' }, stacked: true },
+          y: { position: 'left', grid: { color: '#ECEEF1' }, stacked: true,
                title: { display: true, text: 'Monthly net purchase (tonnes)' } },
           y1: { position: 'right', grid: { display: false }, stacked: false,
                 title: { display: true, text: 'Gold $/oz', color: COLORS.gold } }
@@ -1987,8 +2016,8 @@
           } }
         },
         scales: {
-          x: { type: 'time', time: { unit: 'year' }, grid: { color: '#1F2A3A' }, stacked: true },
-          y: { position: 'left', grid: { color: '#1F2A3A' }, stacked: true,
+          x: { type: 'time', time: { unit: 'year' }, grid: { color: '#ECEEF1' }, stacked: true },
+          y: { position: 'left', grid: { color: '#ECEEF1' }, stacked: true,
                title: { display: true, text: 'Net China CB accumulation (tonnes/qtr)' } },
           y1: { position: 'right', grid: { display: false }, stacked: false,
                 title: { display: true, text: 'Gold $/oz', color: COLORS.gold } }
@@ -2009,16 +2038,16 @@
         plugins: {
           legend: { labels: { usePointStyle: true, pointStyle: 'line', boxWidth: 20, font: { size: 10.5 } } },
           tooltip: {
-            backgroundColor: '#0F1923',
-            borderColor: '#2C3E50', borderWidth: 1,
+            backgroundColor: '#FFFFFF',
+            borderColor: '#E1E4E8', borderWidth: 1,
             callbacks: {
               title: (items) => items[0].parsed.x ? new Date(items[0].parsed.x).toISOString().slice(0,10) : ''
             }
           },
         },
         scales: {
-          x: { type: 'time', time: { unit: 'year' }, grid: { color: '#1F2A3A' } },
-          y: { grid: { color: '#1F2A3A' }, ...yOpts },
+          x: { type: 'time', time: { unit: 'year' }, grid: { color: '#ECEEF1' } },
+          y: { grid: { color: '#ECEEF1' }, ...yOpts },
         },
       }
     });
@@ -2041,8 +2070,8 @@
         tooltip: { callbacks: { title: (items) => items[0].parsed.x ? new Date(items[0].parsed.x).toISOString().slice(0,10) : '' } }
       },
       scales: {
-        x: { type: 'time', time: { unit: 'year' }, grid: { color: '#1F2A3A' } },
-        y: { position: 'left', grid: { color: '#1F2A3A' }, title: { display: true, text: 'Gold $/oz', color: COLORS.gold } },
+        x: { type: 'time', time: { unit: 'year' }, grid: { color: '#ECEEF1' } },
+        y: { position: 'left', grid: { color: '#ECEEF1' }, title: { display: true, text: 'Gold $/oz', color: COLORS.gold } },
         y1: { position: 'right', grid: { display: false }, title: { display: true, text: 'GPR Index', color: COLORS.orange } },
       },
     }
@@ -2095,8 +2124,8 @@
           tooltip: { callbacks: { title: items => items[0].label ? items[0].label.slice(0,7) : '' } },
         },
         scales: {
-          x: { type: 'time', time: { unit: 'year' }, grid: { color: '#1F2A3A' } },
-          y:  { position: 'left',  grid: { color: '#1F2A3A' }, title: { display: true, text: 'Gold $/oz', color: COLORS.gold } },
+          x: { type: 'time', time: { unit: 'year' }, grid: { color: '#ECEEF1' } },
+          y:  { position: 'left',  grid: { color: '#ECEEF1' }, title: { display: true, text: 'Gold $/oz', color: COLORS.gold } },
           y1: { position: 'right', grid: { display: false }, title: { display: true, text: 'GPR Index', color: COLORS.orange } },
         },
       }
@@ -2109,7 +2138,7 @@
     const decileColors = decileAlpha.map(a =>
       a >= 8  ? '#27AE60' :
       a >= 2  ? '#2ECC71AA' :
-      a >= -2 ? '#7F8C8D' :
+      a >= -2 ? '#8A929B' :
                 '#C0392B'
     );
 
@@ -2138,10 +2167,10 @@
           annotation: { annotations: {} },
         },
         scales: {
-          x: { grid: { color: '#1F2A3A' }, ticks: { font: { size: 9.5 } } },
+          x: { grid: { color: '#ECEEF1' }, ticks: { font: { size: 9.5 } } },
           y: {
-            grid: { color: '#1F2A3A' },
-            title: { display: true, text: 'Alpha (pp vs null)', color: '#BDC3C7' },
+            grid: { color: '#ECEEF1' },
+            title: { display: true, text: 'Alpha (pp vs null)', color: '#555B63' },
             ticks: { callback: v => (v >= 0 ? '+' : '') + v + 'pp' },
           },
         },
@@ -2149,7 +2178,7 @@
           beforeDraw(chart) {
             const { ctx, chartArea, scales } = chart;
             ctx.save();
-            ctx.strokeStyle = '#7F8C8D';
+            ctx.strokeStyle = '#B0B6BC';
             ctx.setLineDash([4, 4]);
             ctx.lineWidth = 1;
             const y0 = scales.y.getPixelForValue(0);
@@ -2166,7 +2195,7 @@
         afterDraw(chart) {
           const { ctx, chartArea, scales } = chart;
           ctx.save();
-          ctx.strokeStyle = '#BDC3C7';
+          ctx.strokeStyle = '#4A4F55';
           ctx.setLineDash([4, 4]);
           ctx.lineWidth = 1;
           const y0 = scales.y.getPixelForValue(0);
@@ -2195,8 +2224,8 @@
       plugins: { legend: { labels: { usePointStyle: true, pointStyle: 'line', boxWidth: 20 } },
         tooltip: { callbacks: { title: (items) => items[0].parsed.x ? new Date(items[0].parsed.x).toISOString().slice(0,10) : '' } } },
       scales: {
-        x: { type: 'time', time: { unit: 'year' }, grid: { color: '#1F2A3A' } },
-        y: { position: 'left', grid: { color: '#1F2A3A' }, title: { display: true, text: 'Gold $/oz', color: COLORS.gold } },
+        x: { type: 'time', time: { unit: 'year' }, grid: { color: '#ECEEF1' } },
+        y: { position: 'left', grid: { color: '#ECEEF1' }, title: { display: true, text: 'Gold $/oz', color: COLORS.gold } },
         y1: { position: 'right', min: -5, max: 5, grid: { display: false }, title: { display: true, text: 'Composite', color: COLORS.green } },
       },
     }
@@ -2246,8 +2275,8 @@
       plugins: { legend: { display: true, labels: { usePointStyle: true, boxWidth: 14 } },
         tooltip: { callbacks: { title: (items) => items[0].parsed.x ? new Date(items[0].parsed.x).toISOString().slice(0,7) : '' } } },
       scales: {
-        x: { type: 'time', time: { unit: 'year' }, grid: { color: '#1F2A3A' } },
-        y: { position: 'left', grid: { color: '#1F2A3A' }, title: { display: true, text: 'Tonnes/qtr' } },
+        x: { type: 'time', time: { unit: 'year' }, grid: { color: '#ECEEF1' } },
+        y: { position: 'left', grid: { color: '#ECEEF1' }, title: { display: true, text: 'Tonnes/qtr' } },
         y1: { position: 'right', grid: { display: false }, title: { display: true, text: 'Gold $/oz', color: COLORS.gold } },
       },
     }
@@ -2278,8 +2307,8 @@
           label: (ctx) => ctx.dataset.label + ': ' + (ctx.dataset.yAxisID === 'y1' ? '$' + ctx.parsed.y.toFixed(0) + '/oz' : '$' + ctx.parsed.y.toFixed(1) + 'B'),
         } } },
       scales: {
-        x: { type: 'time', time: { unit: 'year' }, grid: { color: '#1F2A3A' } },
-        y: { position: 'left', grid: { color: '#1F2A3A' }, title: { display: true, text: '$B / qtr' } },
+        x: { type: 'time', time: { unit: 'year' }, grid: { color: '#ECEEF1' } },
+        y: { position: 'left', grid: { color: '#ECEEF1' }, title: { display: true, text: '$B / qtr' } },
         y1: { position: 'right', grid: { display: false }, title: { display: true, text: 'Gold $/oz', color: COLORS.gold } },
       },
     }
@@ -2308,8 +2337,8 @@
       responsive: true, maintainAspectRatio: false,
       plugins: { legend: { labels: { usePointStyle: true, pointStyle: 'rect', boxWidth: 14 } } },
       scales: {
-        x: { grid: { color: '#1F2A3A' }, stacked: true },
-        y: { position: 'left', grid: { color: '#1F2A3A' }, stacked: true, title: { display: true, text: 'Tonnes' } },
+        x: { grid: { color: '#ECEEF1' }, stacked: true },
+        y: { position: 'left', grid: { color: '#ECEEF1' }, stacked: true, title: { display: true, text: 'Tonnes' } },
         y1: { position: 'right', grid: { display: false }, stacked: false, title: { display: true, text: 'Gold $/oz', color: COLORS.gold } },
       },
     }
@@ -2337,8 +2366,8 @@
           label: (ctx) => ctx.dataset.label + ': ' + (ctx.dataset.yAxisID === 'y1' ? '$' + ctx.parsed.y.toFixed(0) + '/oz' : '$' + ctx.parsed.y.toFixed(1) + 'B'),
         } } },
       scales: {
-        x: { grid: { color: '#1F2A3A' }, stacked: true },
-        y: { position: 'left', grid: { color: '#1F2A3A' }, stacked: true, title: { display: true, text: '$B / year' } },
+        x: { grid: { color: '#ECEEF1' }, stacked: true },
+        y: { position: 'left', grid: { color: '#ECEEF1' }, stacked: true, title: { display: true, text: '$B / year' } },
         y1: { position: 'right', grid: { display: false }, stacked: false, title: { display: true, text: 'Gold $/oz', color: COLORS.gold } },
       },
     }
@@ -2410,8 +2439,8 @@
           } }
         },
         scales: {
-          x: { type: 'time', time: { unit: 'year' }, grid: { color: '#1F2A3A' }, stacked: true },
-          y: { position: 'left', grid: { color: '#1F2A3A' }, stacked: true,
+          x: { type: 'time', time: { unit: 'year' }, grid: { color: '#ECEEF1' }, stacked: true },
+          y: { position: 'left', grid: { color: '#ECEEF1' }, stacked: true,
                title: { display: true, text: yLabel } },
           y1: { position: 'right', grid: { display: false }, stacked: false,
                 title: { display: true, text: 'Gold $/oz', color: COLORS.gold } }
@@ -2470,8 +2499,8 @@
         }
       },
       scales: {
-        x: { type: 'time', time: { unit: 'year' }, grid: { color: '#1F2A3A' } },
-        y:  { position: 'left', reverse: true, grid: { color: '#1F2A3A' },
+        x: { type: 'time', time: { unit: 'year' }, grid: { color: '#ECEEF1' } },
+        y:  { position: 'left', reverse: true, grid: { color: '#ECEEF1' },
               title: { display: true, text: '10Y Real Yield (%, inverted ↓)', color: COLORS.purple } },
         y1: { position: 'right', grid: { drawOnChartArea: false },
               title: { display: true, text: 'Gold $/oz', color: COLORS.gold } }
@@ -2547,7 +2576,7 @@
           maintainAspectRatio: false,
           interaction: { mode: 'index', intersect: false },
           plugins: {
-            legend: { labels: { color: '#BDC3C7', font: { size: 11 } } },
+            legend: { labels: { color: '#555B63', font: { size: 11 } } },
             annotation: {
               annotations: {
                 pivot: {
@@ -2561,7 +2590,7 @@
           },
           scales: {
             x: { type: 'time', time: { unit: 'year', tooltipFormat: 'yyyy-MM' },
-              ticks: { color: '#BDC3C7', maxRotation: 0 },
+              ticks: { color: '#555B63', maxRotation: 0 },
               grid: { color: 'rgba(127,140,141,0.15)' } },
             y: { position: 'left',
               title: { display: true, text: 'ETF Flow (t/mo)', color: '#27AE60', font: { size: 10 } },
@@ -2612,7 +2641,7 @@
           responsive: true, maintainAspectRatio: false,
           interaction: { mode: 'index', intersect: false },
           plugins: {
-            legend: { labels: { color: '#BDC3C7', font: { size: 11 } } },
+            legend: { labels: { color: '#555B63', font: { size: 11 } } },
             annotation: {
               annotations: {
                 zero: { type: 'line', yMin: 0, yMax: 0,
@@ -2626,7 +2655,7 @@
           },
           scales: {
             x: { type: 'time', time: { unit: 'year', tooltipFormat: 'yyyy-MM' },
-              ticks: { color: '#BDC3C7', maxRotation: 0 },
+              ticks: { color: '#555B63', maxRotation: 0 },
               grid: { color: 'rgba(127,140,141,0.15)' } },
             y: { position: 'left',
               title: { display: true, text: 'Cumul. ETF Flow (tonnes)', color: '#27AE60', font: { size: 10 } },
@@ -2680,7 +2709,7 @@
           responsive: true, maintainAspectRatio: false,
           interaction: { mode: 'index', intersect: false },
           plugins: {
-            legend: { labels: { color: '#BDC3C7', font: { size: 11 } } },
+            legend: { labels: { color: '#555B63', font: { size: 11 } } },
             annotation: {
               annotations: {
                 pivot: { type: 'line', xMin: '2022-01-01', xMax: '2022-01-01',
@@ -2692,7 +2721,7 @@
           },
           scales: {
             x: { type: 'time', time: { unit: 'year', tooltipFormat: 'yyyy-QQQ' },
-              ticks: { color: '#BDC3C7', maxRotation: 0 },
+              ticks: { color: '#555B63', maxRotation: 0 },
               grid: { color: 'rgba(127,140,141,0.15)' }, stacked: true },
             y: { position: 'left', stacked: true,
               title: { display: true, text: 'Bar+Coin Demand (tonnes/qtr)', color: '#E74C3C', font: { size: 10 } },
@@ -2733,7 +2762,7 @@
           responsive: true, maintainAspectRatio: false,
           interaction: { mode: 'index', intersect: false },
           plugins: {
-            legend: { labels: { color: '#BDC3C7', font: { size: 11 } } },
+            legend: { labels: { color: '#555B63', font: { size: 11 } } },
             annotation: {
               annotations: {
                 pivot: { type: 'line', xMin: '2022-01-01', xMax: '2022-01-01',
@@ -2745,7 +2774,7 @@
           },
           scales: {
             x: { type: 'time', time: { unit: 'year', tooltipFormat: 'yyyy-QQQ' },
-              ticks: { color: '#BDC3C7', maxRotation: 0 },
+              ticks: { color: '#555B63', maxRotation: 0 },
               grid: { color: 'rgba(127,140,141,0.15)' }, stacked: true },
             y: { position: 'left', stacked: true,
               title: { display: true, text: 'Bar+Coin ($B / qtr, stacked)', color: '#E74C3C', font: { size: 10 } },
@@ -2785,7 +2814,7 @@
           responsive: true, maintainAspectRatio: false,
           interaction: { mode: 'index', intersect: false },
           plugins: {
-            legend: { labels: { color: '#BDC3C7', font: { size: 11 } } },
+            legend: { labels: { color: '#555B63', font: { size: 11 } } },
             annotation: {
               annotations: {
                 pivot: { type: 'line', xMin: '2022-01-01', xMax: '2022-01-01',
@@ -2797,7 +2826,7 @@
           },
           scales: {
             x: { type: 'time', time: { unit: 'year', tooltipFormat: 'yyyy-QQQ' },
-              ticks: { color: '#BDC3C7', maxRotation: 0 },
+              ticks: { color: '#555B63', maxRotation: 0 },
               grid: { color: 'rgba(127,140,141,0.15)' } },
             y: { position: 'left',
               title: { display: true, text: 'Cumul. Bar+Coin Demand (tonnes)', color: '#E74C3C', font: { size: 10 } },
@@ -2840,7 +2869,7 @@
           responsive: true, maintainAspectRatio: false,
           interaction: { mode: 'index', intersect: false },
           plugins: {
-            legend: { labels: { color: '#BDC3C7', font: { size: 11 } } },
+            legend: { labels: { color: '#555B63', font: { size: 11 } } },
             annotation: {
               annotations: {
                 pivot: { type: 'line', xMin: '2022-01-01', xMax: '2022-01-01',
@@ -2853,7 +2882,7 @@
           },
           scales: {
             x: { type: 'time', time: { unit: 'year', tooltipFormat: 'yyyy-MM' },
-              ticks: { color: '#BDC3C7', maxRotation: 0 },
+              ticks: { color: '#555B63', maxRotation: 0 },
               grid: { color: 'rgba(127,140,141,0.15)' } },
             y: { position: 'left',
               title: { display: true, text: 'Housing Index (BIS)', color: '#E74C3C', font: { size: 10 } },
@@ -2935,7 +2964,7 @@
           responsive: true, maintainAspectRatio: false,
           interaction: { mode: 'index', intersect: false },
           plugins: {
-            legend: { labels: { color: '#BDC3C7', font: { size: 10 }, boxWidth: 14 } },
+            legend: { labels: { color: '#555B63', font: { size: 10 }, boxWidth: 14 } },
             annotation: {
               annotations: {
                 pivot: {
@@ -2957,7 +2986,7 @@
           },
           scales: {
             x: { type: 'time', time: { unit: 'year' },
-              ticks: { color: '#7F8C8D', font: { size: 9 }, maxRotation: 0 },
+              ticks: { color: '#8A929B', font: { size: 9 }, maxRotation: 0 },
               grid: { color: 'rgba(127,140,141,0.10)' } },
             y: { position: 'left', min: 0, max: goldMax,
               ticks: { color: '#D4AF37', font: { size: 9 } },
@@ -3054,14 +3083,14 @@
         responsive: true, maintainAspectRatio: false,
         interaction: { mode: 'index', intersect: false },
         plugins: {
-          legend: { labels: { usePointStyle: true, pointStyle: 'line', boxWidth: 20, color: '#BDC3C7' } },
+          legend: { labels: { usePointStyle: true, pointStyle: 'line', boxWidth: 20, color: '#555B63' } },
           tooltip: { callbacks: { title: items => new Date(items[0].parsed.x).toISOString().slice(0,7) } },
           annotation: {},
         },
         scales: {
-          x: { type: 'time', time: { unit: 'year' }, grid: { color: '#1F2A3A' }, ticks: { color: '#7F8C8D' } },
+          x: { type: 'time', time: { unit: 'year' }, grid: { color: '#ECEEF1' }, ticks: { color: '#8A929B' } },
           y: {
-            position: 'left', grid: { color: '#1F2A3A' },
+            position: 'left', grid: { color: '#ECEEF1' },
             title: { display: true, text: 'OECD CLI', color: '#8E44AD' },
             ticks: { color: '#8E44AD' },
           },
@@ -3137,12 +3166,12 @@
           }
         },
         scales: {
-          x: { grid: { display: false }, ticks: { color: '#BDC3C7', font: { size: 11 } } },
+          x: { grid: { display: false }, ticks: { color: '#555B63', font: { size: 11 } } },
           y: {
             min: 0.35, max: 0.80,
-            grid: { color: '#1F2A3A' },
-            ticks: { color: '#7F8C8D', callback: v => (v * 100).toFixed(0) + '%' },
-            title: { display: true, text: 'P(gold up 1M, 5M forward)', color: '#7F8C8D' },
+            grid: { color: '#ECEEF1' },
+            ticks: { color: '#8A929B', callback: v => (v * 100).toFixed(0) + '%' },
+            title: { display: true, text: 'P(gold up 1M, 5M forward)', color: '#8A929B' },
           }
         },
       },
@@ -3152,14 +3181,14 @@
           const { ctx, chartArea, scales } = chart;
           const yNull = scales.y.getPixelForValue(0.551);
           ctx.save();
-          ctx.strokeStyle = '#BDC3C7';
+          ctx.strokeStyle = '#4A4F55';
           ctx.setLineDash([5, 4]);
           ctx.lineWidth = 1.2;
           ctx.beginPath();
           ctx.moveTo(chartArea.left, yNull);
           ctx.lineTo(chartArea.right, yNull);
           ctx.stroke();
-          ctx.fillStyle = '#BDC3C7';
+          ctx.fillStyle = '#8A929B';
           ctx.font = '10px sans-serif';
           ctx.fillText('null = 55.1%', chartArea.right - 75, yNull - 4);
           ctx.restore();
@@ -3198,7 +3227,7 @@
         responsive: true, maintainAspectRatio: false,
         interaction: { mode: 'index', intersect: false },
         plugins: {
-          legend: { labels: { color: '#BDC3C7', font: { size: 11 }, boxWidth: 14 } },
+          legend: { labels: { color: '#555B63', font: { size: 11 }, boxWidth: 14 } },
           tooltip: { callbacks: {
             label: (ctx) => {
               const v = ctx.parsed.y;
@@ -3208,10 +3237,10 @@
           } }
         },
         scales: {
-          x: { stacked: true, grid: { color: 'rgba(127,140,141,0.15)' }, ticks: { color: '#BDC3C7' } },
+          x: { stacked: true, grid: { color: 'rgba(127,140,141,0.15)' }, ticks: { color: '#555B63' } },
           y: { stacked: true, position: 'left',
-            title: { display: true, text: 'Tonnes', color: '#BDC3C7' },
-            ticks: { color: '#BDC3C7' }, grid: { color: 'rgba(127,140,141,0.15)' } },
+            title: { display: true, text: 'Tonnes', color: '#555B63' },
+            ticks: { color: '#555B63' }, grid: { color: 'rgba(127,140,141,0.15)' } },
           y1: { position: 'right',
             title: { display: true, text: 'Gold ($/oz)', color: '#F1C40F' },
             ticks: { color: '#F1C40F' }, grid: { drawOnChartArea: false } }
@@ -3252,7 +3281,7 @@
         responsive: true, maintainAspectRatio: false,
         interaction: { mode: 'index', intersect: false },
         plugins: {
-          legend: { labels: { color: '#BDC3C7', font: { size: 11 }, boxWidth: 14 } },
+          legend: { labels: { color: '#555B63', font: { size: 11 }, boxWidth: 14 } },
           annotation: {
             annotations: {
               regimeLine: { type: 'line', xMin: 11.5, xMax: 11.5,
@@ -3263,7 +3292,7 @@
               preBand: { type: 'box', xMin: -0.5, xMax: 11.5, yMin: 500, yMax: 500,
                 borderColor: 'rgba(127,140,141,0.6)', borderWidth: 1, borderDash: [3,3],
                 label: { content: 'Pre-2022 avg ≈ 500t', display: true,
-                  position: { x: 'center', y: 'center' }, color: '#7F8C8D',
+                  position: { x: 'center', y: 'center' }, color: '#8A929B',
                   backgroundColor: 'transparent', font: { size: 10, style: 'italic' } } },
               postBand: { type: 'box', xMin: 11.5, xMax: 15.5, yMin: 1021, yMax: 1021,
                 borderColor: 'rgba(212,175,55,0.8)', borderWidth: 1.2, borderDash: [3,3],
@@ -3279,10 +3308,10 @@
           } }
         },
         scales: {
-          x: { grid: { color: 'rgba(127,140,141,0.12)' }, ticks: { color: '#BDC3C7' } },
+          x: { grid: { color: 'rgba(127,140,141,0.12)' }, ticks: { color: '#555B63' } },
           y: { beginAtZero: true, position: 'left',
             title: { display: true, text: 'CB Demand (tonnes/yr)', color: '#D4AF37' },
-            ticks: { color: '#BDC3C7' }, grid: { color: 'rgba(127,140,141,0.15)' } },
+            ticks: { color: '#555B63' }, grid: { color: 'rgba(127,140,141,0.15)' } },
           y1: { position: 'right',
             title: { display: true, text: 'Gold ($/oz)', color: '#F1C40F' },
             ticks: { color: '#F1C40F' }, grid: { drawOnChartArea: false } }
@@ -3376,7 +3405,7 @@
             responsive: true, maintainAspectRatio: false,
             interaction: { mode: 'index', intersect: false },
             plugins: {
-              legend: { labels: { color: '#BDC3C7', font: { size: 11 }, boxWidth: 14 } },
+              legend: { labels: { color: '#555B63', font: { size: 11 }, boxWidth: 14 } },
               tooltip: { callbacks: {
                 label: (c) => `${c.dataset.label}: ${c.parsed.y >= 0 ? '+' : ''}${c.parsed.y.toFixed(1)}`,
                 footer: (items) => {
@@ -3389,10 +3418,10 @@
             },
             scales: {
               x: { stacked: true, grid: { color: 'rgba(127,140,141,0.12)' },
-                   ticks: { color: '#BDC3C7', font: { size: 11 } } },
+                   ticks: { color: '#555B63', font: { size: 11 } } },
               y: { stacked: true,
-                   title: { display: true, text: yTitle, color: '#BDC3C7' },
-                   ticks: { color: '#BDC3C7' }, grid: { color: 'rgba(127,140,141,0.15)' } }
+                   title: { display: true, text: yTitle, color: '#555B63' },
+                   ticks: { color: '#555B63' }, grid: { color: 'rgba(127,140,141,0.15)' } }
             }
           }
         });
@@ -3423,7 +3452,7 @@
           responsive: true, maintainAspectRatio: false,
           interaction: { mode: 'index', intersect: false },
           plugins: {
-            legend: { labels: { color: '#BDC3C7', font: { size: 11 }, boxWidth: 14 } },
+            legend: { labels: { color: '#555B63', font: { size: 11 }, boxWidth: 14 } },
             annotation: { annotations: {
               regimeLine: { type: 'line', xMin: pivotIdx - 0.5, xMax: pivotIdx - 0.5,
                 borderColor: '#E74C3C', borderWidth: 2, borderDash: [6,4],
@@ -3434,7 +3463,7 @@
                 xMin: 0, xMax: pivotIdx - 0.5,
                 borderColor: 'rgba(127,140,141,0.7)', borderWidth: 1.4, borderDash: [3,3],
                 label: { content: 'Pre-2022 avg ≈ 500t', display: true,
-                  position: 'center', color: '#7F8C8D',
+                  position: 'center', color: '#8A929B',
                   backgroundColor: 'transparent', font: { size: 10, style: 'italic' } } },
               postBand: { type: 'line', yMin: 1021, yMax: 1021,
                 xMin: pivotIdx - 0.5, xMax: years.length - 1,
@@ -3445,10 +3474,10 @@
             } }
           },
           scales: {
-            x: { grid: { color: 'rgba(127,140,141,0.12)' }, ticks: { color: '#BDC3C7' } },
+            x: { grid: { color: 'rgba(127,140,141,0.12)' }, ticks: { color: '#555B63' } },
             y: { beginAtZero: true, position: 'left',
               title: { display: true, text: 'CB Demand (tonnes/yr)', color: COLORS.gold },
-              ticks: { color: '#BDC3C7' }, grid: { color: 'rgba(127,140,141,0.15)' } },
+              ticks: { color: '#555B63' }, grid: { color: 'rgba(127,140,141,0.15)' } },
             y1: { position: 'right',
               title: { display: true, text: 'Gold ($/oz)', color: COLORS.gold },
               ticks: { color: COLORS.gold }, grid: { drawOnChartArea: false } }
@@ -3474,7 +3503,7 @@
         responsive: true, maintainAspectRatio: false,
         interaction: { mode: 'index', intersect: false },
         plugins: {
-          legend: { labels: { color: '#BDC3C7', font: { size: 10.5 }, boxWidth: 14 } },
+          legend: { labels: { color: '#555B63', font: { size: 10.5 }, boxWidth: 14 } },
           annotation: { annotations: { pivot: PIVOT } },
           tooltip: { callbacks: { label: (ctx) => {
             const v = ctx.parsed.y;
@@ -3484,10 +3513,10 @@
         },
         scales: {
           x: { type: 'time', time: { unit: 'year' }, stacked: true,
-               grid: { color: '#1F2A3A' }, ticks: { color: '#BDC3C7' } },
+               grid: { color: '#ECEEF1' }, ticks: { color: '#555B63' } },
           y: { stacked: true, position: 'left', beginAtZero: true,
-               title: { display: true, text: 'Tonnes / qtr', color: '#BDC3C7' },
-               grid: { color: '#1F2A3A' } },
+               title: { display: true, text: 'Tonnes / qtr', color: '#555B63' },
+               grid: { color: '#ECEEF1' } },
           y1: { position: 'right', grid: { drawOnChartArea: false },
                 title: { display: true, text: 'Gold $/oz', color: COLORS.gold },
                 ticks: { color: COLORS.gold } }
@@ -3540,10 +3569,10 @@
             } }
           },
           scales: {
-            x: { stacked: true, grid: { color: '#1F2A3A' } },
+            x: { stacked: true, grid: { color: '#ECEEF1' } },
             y: { stacked: true, beginAtZero: true,
-                 title: { display: true, text: 'Tonnes / month', color: '#BDC3C7' },
-                 grid: { color: '#1F2A3A' } }
+                 title: { display: true, text: 'Tonnes / month', color: '#555B63' },
+                 grid: { color: '#ECEEF1' } }
           }
         }
       });
@@ -3599,7 +3628,7 @@
           responsive: true, maintainAspectRatio: false,
           interaction: { mode: 'index', intersect: false },
           plugins: {
-            legend: { labels: { color: '#BDC3C7', font: { size: 10.5 }, boxWidth: 14 } },
+            legend: { labels: { color: '#555B63', font: { size: 10.5 }, boxWidth: 14 } },
             annotation: { annotations: { pivot: PIVOT } },
             tooltip: { callbacks: {
               title: (items) => items[0].parsed.x ? new Date(items[0].parsed.x).toISOString().slice(0,10) : '',
@@ -3614,7 +3643,7 @@
           },
           scales: {
             x: { type: 'time', time: { unit: 'year' },
-                 grid: { color: 'rgba(127,140,141,0.12)' }, ticks: { color: '#BDC3C7' } },
+                 grid: { color: 'rgba(127,140,141,0.12)' }, ticks: { color: '#555B63' } },
             y: { position: 'left',
                  title: { display: true, text: 'Housing Index (BIS)', color: '#E74C3C' },
                  ticks: { color: '#E74C3C' }, grid: { color: 'rgba(127,140,141,0.15)' } },
@@ -3659,8 +3688,8 @@
           } }
         },
         scales: {
-          x: { type: 'time', time: { unit: 'year' }, grid: { color: '#1F2A3A' } },
-          y: { position: 'left', reverse: true, grid: { color: '#1F2A3A' },
+          x: { type: 'time', time: { unit: 'year' }, grid: { color: '#ECEEF1' } },
+          y: { position: 'left', reverse: true, grid: { color: '#ECEEF1' },
                title: { display: true, text: 'Real Yield (%, ↓)', color: COLORS.purple } },
           y1: { position: 'right', grid: { drawOnChartArea: false },
                 title: { display: true, text: 'Gold $/oz', color: COLORS.gold },
@@ -3691,16 +3720,16 @@
           responsive: true, maintainAspectRatio: false,
           interaction: { mode: 'index', intersect: false },
           plugins: {
-            legend: { labels: { color: '#BDC3C7', font: { size: 10 }, boxWidth: 12 } },
+            legend: { labels: { color: '#555B63', font: { size: 10 }, boxWidth: 12 } },
             tooltip: { callbacks: {
               label: (ctx) => `${ctx.dataset.label}: ${ctx.parsed.y >= 0 ? '+' : ''}${ctx.parsed.y.toFixed(0)}t`
             } }
           },
           scales: {
-            x: { stacked: true, grid: { color: 'rgba(127,140,141,0.15)' }, ticks: { color: '#BDC3C7' } },
+            x: { stacked: true, grid: { color: 'rgba(127,140,141,0.15)' }, ticks: { color: '#555B63' } },
             y: { stacked: true, position: 'left',
-                 title: { display: true, text: 'Tonnes', color: '#BDC3C7' },
-                 ticks: { color: '#BDC3C7' }, grid: { color: 'rgba(127,140,141,0.15)' } }
+                 title: { display: true, text: 'Tonnes', color: '#555B63' },
+                 ticks: { color: '#555B63' }, grid: { color: 'rgba(127,140,141,0.15)' } }
           }
         }
       });
