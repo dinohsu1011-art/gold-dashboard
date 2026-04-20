@@ -164,16 +164,6 @@
       <h1>GOLD INVESTMENT THESIS</h1>
       <div class="sub" id="sub-line"></div>
     </div>
-    <div class="header-right">
-      <div class="gold-badge">
-        <div class="price" id="gold-price"></div>
-        <div class="ytd" id="gold-ytd"></div>
-      </div>
-      <div class="composite-box" id="composite-box">
-        <div class="score" id="composite-score"></div>
-        <div class="lbl">COMPOSITE</div>
-      </div>
-    </div>
   </div>
 
   <!-- Thesis summary -->
@@ -183,9 +173,6 @@
     In 2025 the bid broadened: ETFs swung from <strong>−3t to +801t</strong>, Asia ETFs nearly doubled (+97%), total demand hit a record <strong>4,999t</strong>.
     Model confirms: post-2022, GPR & ETF factors gained <strong>+10-12pp</strong> in predictive power; Western rate cycle lost <strong>-5pp</strong>.
   </div>
-
-  <!-- Traffic-light factor cards -->
-  <div class="factors" id="factor-grid"></div>
 
   <!-- Tabs -->
   <div class="tabs">
@@ -1427,95 +1414,9 @@
     gray: '#7F8C8D', dark: '#1E3A5F',
   };
 
-  // ── Header ────────────────────────────────────────────────────────
-  document.getElementById('gold-price').textContent = `XAU/USD  $${meta.gold_price.toLocaleString()}`;
-  document.getElementById('gold-ytd').textContent = `YTD: +${meta.gold_ytd_pct}%  •  All-time high`;
-  const cb = document.getElementById('composite-box');
-  document.getElementById('composite-score').textContent = (meta.composite >= 0 ? '+' : '') + meta.composite;
-  cb.className = 'composite-box ' + (meta.composite >= 2 ? '' : (meta.composite <= -2 ? 'bearish' : 'neutral'));
-  const bullCount = Object.values(meta.factors).filter(f => f.score > 0).length;
+  // ── Header sub-line ───────────────────────────────────────────────
   document.getElementById('sub-line').textContent =
-    `Composite Signal: ${meta.composite >= 0 ? '+' : ''}${meta.composite} / 4  •  ${bullCount} of 4 factors bullish  •  2025 demand: 4,999t record  •  Updated Apr 2026`;
-
-  // ── Factor cards ──────────────────────────────────────────────────
-  const FACTORS = [
-    {
-      key: 'F1 CB/PBoC', title: 'CB Bid (Global)', color: '#C0392B',
-      dataLabel: `2025 CB buying: ${meta.cb_2025}t (vs ${meta.cb_2024}t '24)`,
-      changeLabel: `Post-2022 avg 1,022t/yr vs pre-2022 473t/yr`,
-      sparkData: data.cb_quarterly, regimeKey: 'F1_PBoC',
-    },
-    {
-      key: 'F2 Retail Rotation', title: 'Retail Hard-Asset Rotation', color: '#1E3A5F',
-      dataLabel: `Asian ETF 3M avg: +20t/mo (2025) · Housing: −23% from peak`,
-      changeLabel: `Asian ETF HR 0.82 (α+6pp) · Western outflow HR 0.83 (α+8pp) · Housing r=−0.95 post-2022`,
-      sparkData: data.gli, regimeKey: 'F2_Liquidity',
-    },
-    {
-      key: 'F3 GPR', title: 'Geopolitical Risk', color: '#E67E22',
-      dataLabel: `GPR Index: ${meta.gpr_now}`,
-      changeLabel: `3M change: ${meta.gpr_3m_chg >= 0 ? '+' : ''}${meta.gpr_3m_chg} pts`,
-      sparkData: data.gpr, regimeKey: 'F3_GPR',
-    },
-    {
-      key: 'F5 Cycle', title: 'Econ. Cycle', color: '#8E44AD',
-      dataLabel: `Yield curve: ${meta.t10y2y_now}%`,
-      changeLabel: `Composite 3M change: negative`,
-      sparkData: data.t10y2y, regimeKey: 'F5_Cycle',
-    },
-  ];
-
-  const grid = document.getElementById('factor-grid');
-  FACTORS.forEach((f, i) => {
-    const score = meta.factors[f.key].score;
-    const status = score > 0 ? 'bullish' : (score < 0 ? 'bearish' : 'neutral');
-    const statusText = score > 0 ? 'BULLISH' : (score < 0 ? 'BEARISH' : 'NEUTRAL');
-    const regimeRow = regime.find(r => r.Factor === f.regimeKey);
-    const delta = regimeRow ? (regimeRow.hitrate_post2022 - regimeRow.hitrate_pre2022) : null;
-    const deltaClass = delta > 0.01 ? 'pos' : (delta < -0.01 ? 'neg' : 'flat');
-    const deltaText = delta === null || isNaN(delta) ? '' :
-      (delta === 0 ? '≈flat' : (delta > 0 ? '+' : '') + (delta * 100).toFixed(1) + 'pp');
-
-    const card = document.createElement('div');
-    card.className = 'card';
-    card.innerHTML = `
-      <div class="title">${f.title}</div>
-      <div class="lights">
-        <div class="light red ${score < 0 ? 'active' : ''}"></div>
-        <div class="light amber ${score === 0 ? 'active' : ''}"></div>
-        <div class="light green ${score > 0 ? 'active' : ''}"></div>
-      </div>
-      <div class="status ${status}">${statusText}</div>
-      <div class="spark"><canvas id="spark-${i}"></canvas></div>
-      <div class="data">${f.dataLabel}</div>
-      <div class="change">${f.changeLabel}</div>
-      ${delta !== null && !isNaN(delta) ? `<div class="regime ${deltaClass}">Post-2022 vs pre: ${deltaText}</div>` : ''}
-    `;
-    grid.appendChild(card);
-
-    // Sparkline
-    new Chart(document.getElementById(`spark-${i}`), {
-      type: 'line',
-      data: {
-        datasets: [{
-          data: f.sparkData,
-          borderColor: f.color, backgroundColor: f.color + '33',
-          borderWidth: 1.5, fill: true, pointRadius: 0, tension: 0.25,
-        }]
-      },
-      options: {
-        responsive: true, maintainAspectRatio: false,
-        plugins: { legend: { display: false }, tooltip: {
-          mode: 'nearest', intersect: false,
-          callbacks: { title: (items) => items[0].parsed.x ? new Date(items[0].parsed.x).toISOString().slice(0,7) : '' }
-        }},
-        scales: {
-          x: { type: 'time', display: false },
-          y: { display: false },
-        },
-      }
-    });
-  });
+    `2025 demand: 4,999t record  •  CB avg 1,022t/yr post-2022  •  Updated Apr 2026`;
 
   // ── Tab switching ─────────────────────────────────────────────────
   document.querySelectorAll('.tab').forEach(t => {
