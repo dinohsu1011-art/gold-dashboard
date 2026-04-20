@@ -1160,7 +1160,7 @@
       </div>
       <div class="chart-panel">
         <div class="panel-title">10Y Real Yield (TIPS) vs Gold</div>
-        <div class="panel-sub">FRED DFII10 &mdash; 10-year US TIPS yield (monthly mean). Classical inverse driver of gold for 20 years; relationship decoupled post-2022.</div>
+        <div class="panel-sub">FRED DFII10 &mdash; 10-year US TIPS yield (monthly mean, series starts 2003). <strong>Real-yield axis is inverted</strong> so lines move together when the classical relationship holds (lower real yield → higher gold). Pre-2022: tight co-movement. Post-2022: real yields surged from −1% to +2% while gold ripped to new highs — the decouple is the thesis.</div>
         <div class="chart-wrap tall"><canvas id="chart-t10y2y-full"></canvas></div>
         <!-- Real-rates breakdown tucked under the rates chart -->
         <div style="margin-top:14px; padding:12px; background:#0F1923; border:1px solid #2C3E50; border-radius:6px;">
@@ -2472,10 +2472,10 @@
     type: 'line',
     data: {
       datasets: [
-        { label: '10Y Real Yield (TIPS, %)', data: DFII10_MONTHLY, yAxisID: 'y',
+        { label: '10Y Real Yield (TIPS, %) — inverted axis', data: DFII10_MONTHLY, yAxisID: 'y',
           borderColor: COLORS.purple, backgroundColor: COLORS.purple + '22',
           fill: true, borderWidth: 1.5, pointRadius: 0, tension: 0.2 },
-        { label: 'Gold (USD/oz)', data: data.gold, yAxisID: 'y1',
+        { label: 'Gold (USD/oz)', data: data.gold_full, yAxisID: 'y1',
           borderColor: COLORS.gold, backgroundColor: 'transparent',
           borderWidth: 1.6, pointRadius: 0, tension: 0.2 }
       ]
@@ -2499,8 +2499,10 @@
       },
       scales: {
         x: { type: 'time', time: { unit: 'year' }, grid: { color: '#1F2A3A' } },
-        y:  { position: 'left',  grid: { color: '#1F2A3A' }, title: { display: true, text: '10Y Real Yield (%)',  color: COLORS.purple } },
-        y1: { position: 'right', grid: { drawOnChartArea: false },  title: { display: true, text: 'Gold $/oz', color: COLORS.gold } }
+        y:  { position: 'left', reverse: true, grid: { color: '#1F2A3A' },
+              title: { display: true, text: '10Y Real Yield (%, inverted ↓)', color: COLORS.purple } },
+        y1: { position: 'right', grid: { drawOnChartArea: false },
+              title: { display: true, text: 'Gold $/oz', color: COLORS.gold } }
       }
     }
   });
