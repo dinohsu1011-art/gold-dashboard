@@ -847,13 +847,21 @@
               <td style="text-align:center;">45</td>
               <td style="text-align:center; color:#7F8C8D;">+0.001</td>
             </tr>
-            <tr>
+            <tr style="border-bottom:1px solid #1a2a3a;">
               <td style="padding:6px 8px;">Western ETF outflow</td>
               <td style="text-align:center;">0.650</td>
               <td style="text-align:center;">0.592</td>
               <td style="text-align:center; color:#27AE60; font-weight:600;">0.833</td>
               <td style="text-align:center;">24</td>
               <td style="text-align:center; color:#27AE60;">+0.078</td>
+            </tr>
+            <tr>
+              <td style="padding:6px 8px;">Asia bar+coin QoQ &gt; 0 <span style="font-size:10px; color:#7F8C8D;">(qtly→monthly)</span></td>
+              <td style="text-align:center;">0.722</td>
+              <td style="text-align:center;">0.595</td>
+              <td style="text-align:center; color:#27AE60; font-weight:600;">0.900</td>
+              <td style="text-align:center;">30</td>
+              <td style="text-align:center; color:#27AE60;">+0.129</td>
             </tr>
           </tbody>
         </table>
@@ -876,6 +884,10 @@
           <div>
             <div style="font-size:12px; font-weight:600; color:#BDC3C7; margin-bottom:4px;">Housing QoQ declining &nbsp;·&nbsp; <span style="color:#7F8C8D;">Post-2022 HR 0.756 (≈ base, regime marker)</span></div>
             <div style="height:140px;"><canvas id="chart-f2-active-housing"></canvas></div>
+          </div>
+          <div>
+            <div style="font-size:12px; font-weight:600; color:#BDC3C7; margin-bottom:4px;">Asia bar+coin QoQ &gt; 0 (China + India qtly→monthly) &nbsp;·&nbsp; <span style="color:#27AE60;">Post-2022 HR 0.900 (α +12.9pp)</span></div>
+            <div style="height:140px;"><canvas id="chart-f2-active-barcoin"></canvas></div>
           </div>
         </div>
       </div>
@@ -3003,6 +3015,39 @@
       'rgba(39,174,96,0.20)');
     renderOne('chart-f2-active-housing',
       buildActiveBars(d => housingActiveOnDate(d)),
+      'rgba(39,174,96,0.20)');
+
+    // Bar+coin signal: Asia (China + India) QoQ > 0 per quarter → propagated to each month
+    const bcChina = BARCOIN.china_q;
+    const bcIndia = BARCOIN.india_q;
+    // Merge to Asia quarterly total
+    const bcAsiaMap = {};
+    bcChina.forEach(p => { bcAsiaMap[p.x] = (bcAsiaMap[p.x] || 0) + p.y; });
+    bcIndia.forEach(p => { bcAsiaMap[p.x] = (bcAsiaMap[p.x] || 0) + p.y; });
+    const bcDates = Object.keys(bcAsiaMap).sort();
+    // QoQ change per quarter
+    const bcQoQ = {};
+    for (let i = 1; i < bcDates.length; i++) {
+      bcQoQ[bcDates[i]] = bcAsiaMap[bcDates[i]] - bcAsiaMap[bcDates[i-1]];
+    }
+    // Map quarter-end → each month in that quarter
+    function monthsInQtr(qend) {
+      const [y, mo] = [+qend.slice(0,4), +qend.slice(5,7)];
+      const out = [];
+      for (let dm = -2; dm <= 0; dm++) {
+        let m2 = mo + dm, yr = y;
+        if (m2 <= 0) { m2 += 12; yr--; }
+        const last = new Date(yr, m2, 0).getDate();
+        out.push(`${yr}-${String(m2).padStart(2,'0')}-${String(last).padStart(2,'0')}`);
+      }
+      return out;
+    }
+    const bcMonthSignal = {};
+    Object.entries(bcQoQ).forEach(([qend, qoq]) => {
+      monthsInQtr(qend).forEach(md => { bcMonthSignal[md] = qoq > 0; });
+    });
+    renderOne('chart-f2-active-barcoin',
+      buildActiveBars(d => bcMonthSignal[d] === true),
       'rgba(39,174,96,0.20)');
   })();
   // ── F2 ASIAN ROTATION CHARTS :: END ───────────────────────────────────
