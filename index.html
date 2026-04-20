@@ -189,36 +189,77 @@
 
   <!-- Tabs -->
   <div class="tabs">
-    <div class="tab active" data-tab="charts">Thesis Charts</div>
+    <div class="tab active" data-tab="charts">Summary</div>
     <div class="tab" data-tab="model">Model &amp; Backtest</div>
     <div class="tab" data-tab="flows">Post-2022</div>
     <div class="tab" data-tab="history">Historical</div>
   </div>
 
-  <!-- Charts tab -->
+  <!-- Summary tab -->
   <div class="tab-content active" id="tab-charts">
-    <div class="chart-grid">
-      <div class="chart-panel">
-        <div class="panel-title">Gold Price vs GPR Index (geopolitical)</div>
-        <div class="panel-sub">Dual axis • monthly • 2015–present</div>
-        <div class="chart-wrap tall"><canvas id="chart-gpr-gold"></canvas></div>
-      </div>
-      <div class="chart-panel">
-        <div class="panel-title">Gold vs Composite Score (monthly)</div>
-        <div class="panel-sub">5-factor directional signal (-5 to +5)</div>
-        <div class="chart-wrap tall"><canvas id="chart-gold-composite"></canvas></div>
+
+    <!-- Thesis preamble -->
+    <div class="chart-panel" style="background:linear-gradient(135deg,#1A2332 0%,#0F1923 100%); border-left:4px solid #D4AF37; margin-bottom:16px;">
+      <div style="font-size:15px; font-weight:700; color:white; margin-bottom:8px;">The Thesis in Six Charts</div>
+      <div style="font-size:12.5px; color:#BDC3C7; line-height:1.75;">
+        Since <strong style="color:#D4AF37;">Feb 2022</strong> (G7 freezes $300B of Russian FX reserves), gold's price-setting mechanism changed. The classical driver — <strong>real yields / DXY</strong> — decoupled. A new regime of <strong style="color:#E74C3C;">sovereign accumulation</strong> (F1 · PBoC + non-aligned CBs) and <strong style="color:#27AE60;">Chinese retail rotation</strong> (F2 · housing / equity refugees into bar+coin) took over. The six charts below tell that story; each links to its deep-dive tab.
       </div>
     </div>
 
-    <div class="chart-grid" style="margin-top:16px;">
-      <div class="chart-panel" style="grid-column: 1 / -1;">
-        <div class="panel-title">Global Gold Supply vs Demand — Annual (2010–2025)</div>
+    <!-- 1 · HERO: Gold vs Composite (full width) -->
+    <div class="chart-panel" style="margin-bottom:16px;">
+      <div class="panel-title">1 · Our 4-Factor Model vs Gold</div>
+      <div class="panel-sub">
+        Composite of F1 (PBoC) + F2 (retail rotation) + F3 (GPR) + F5 (cycle), ranges −5 to +5. Model has remained bullish since mid-2023; price confirmed the signal. <a href="#" onclick="document.querySelector('.tab[data-tab=model]').click(); return false;" style="color:#D4AF37;">→ Model &amp; Backtest</a>
+      </div>
+      <div class="chart-wrap tall" style="height:320px;"><canvas id="summary-composite"></canvas></div>
+    </div>
+
+    <!-- 2 · THE REGIME BREAK (full width) -->
+    <div class="chart-panel" style="margin-bottom:16px;">
+      <div class="panel-title">2 · The Regime Break — Central-Bank Gold Demand (Annual)</div>
+      <div class="panel-sub">
+        Pre-2022 baseline ~500t/yr (range 254–656). Post-2022: four consecutive years &gt; 850t (2022: 1,080 · 2023: 1,051 · 2024: 1,092 · 2025: 863). <strong style="color:#D4AF37;">2× step-change</strong> coinciding exactly with the Feb 2022 G7 freeze. <a href="#" onclick="document.querySelector('.tab[data-tab=flows]').click(); return false;" style="color:#D4AF37;">→ Post-2022</a>
+      </div>
+      <div class="chart-wrap tall" style="height:340px;"><canvas id="summary-regime-cb"></canvas></div>
+    </div>
+
+    <!-- 3+4 two-col: F1 evidence + F2 evidence -->
+    <div class="chart-grid">
+      <div class="chart-panel">
+        <div class="panel-title">3 · F1 — PBoC: Declared vs Implied Off-book</div>
         <div class="panel-sub">
-          <strong style="color:#D4AF37;">Stacked demand</strong> by component (Jewellery · Technology · Bar &amp; Coin · ETF · Central Banks · OTC) vs <strong style="color:#27AE60;">total supply line</strong> (Mine + Hedging + Recycled). Gold price (right axis). Supply = Demand by WGC accounting identity; the interesting story is the <em>mix shift</em>: CB demand stepped from ~400–600t/yr pre-2022 to ~1,000t/yr post-2022 while OTC swelled into the residual bucket. 2025 demand cracked 5,000t for the first time.
+          Declared buying 2022–25: <strong>358t</strong>. Customs-flow analysis (Nieuwenhuijs) implies China actually accumulated <strong style="color:#D4AF37;">~2,000t</strong> (5.7× declared). The "sovereign buyer" is ~3× larger than public data says. <a href="#" onclick="document.querySelector('.tab[data-tab=model]').click(); document.querySelector('.factor-pill[data-factor=f1]').click(); return false;" style="color:#D4AF37;">→ F1 detail</a>
         </div>
-        <div class="chart-wrap tall" style="height:400px;"><canvas id="chart-supply-demand"></canvas></div>
+        <div class="chart-wrap tall" style="height:300px;"><canvas id="summary-pboc-implied"></canvas></div>
+      </div>
+      <div class="chart-panel">
+        <div class="panel-title">4 · F2 — China Retail Gold Capture (Cumulative USD)</div>
+        <div class="panel-sub">
+          China bar+coin spend ran 1× baseline in 2020 → <strong style="color:#27AE60;">4.19× in 2025</strong>. Decomposition: 1.56× volume × 2.66× price — demand curve shifted <em>outward despite</em> a price headwind. Housing (−23%) + equities (−33%) broke; households rotated into gold. <a href="#" onclick="document.querySelector('.tab[data-tab=model]').click(); document.querySelector('.factor-pill[data-factor=f2]').click(); return false;" style="color:#D4AF37;">→ F2 detail</a>
+        </div>
+        <div class="chart-wrap tall" style="height:300px;"><canvas id="summary-barcoin"></canvas></div>
       </div>
     </div>
+
+    <!-- 5+6 two-col: real-rate decoupling + supply/demand -->
+    <div class="chart-grid" style="margin-top:16px;">
+      <div class="chart-panel">
+        <div class="panel-title">5 · The Old Driver Broke — Gold vs 10Y Real Yield</div>
+        <div class="panel-sub">
+          Pre-2022 correlation (log-gold vs −TIPS): <strong>+0.84</strong> — textbook. Post-2022: <strong style="color:#E74C3C;">−0.46</strong> — sign flipped. Real yields are at decade highs but gold is up 2.5×. The classical framework no longer clears price. <a href="#" onclick="document.querySelector('.tab[data-tab=history]').click(); return false;" style="color:#D4AF37;">→ Historical</a>
+        </div>
+        <div class="chart-wrap tall" style="height:300px;"><canvas id="summary-realrate"></canvas></div>
+      </div>
+      <div class="chart-panel">
+        <div class="panel-title">6 · Where the Flow Goes — Annual Supply vs Demand</div>
+        <div class="panel-sub">
+          Supply = Demand by WGC accounting identity; the story is the <em>mix shift</em>. CB bar grew from ~500t to ~1,000t/yr; OTC swelled into the residual bucket. 2025 total demand cracked 5,000t for the first time. <a href="#" onclick="document.querySelector('.tab[data-tab=charts]').click(); return false;" style="color:#D4AF37;">(detail below)</a>
+        </div>
+        <div class="chart-wrap tall" style="height:300px;"><canvas id="summary-supply-demand"></canvas></div>
+      </div>
+    </div>
+
   </div>
 
   <!-- Model tab -->
@@ -3211,7 +3252,7 @@
 
   // ── Supply vs Demand (Thesis Charts tab) ────────────────────────────
   (() => {
-    const SD = {"years":[2010,2011,2012,2013,2014,2015,2016,2017,2018,2019,2020,2021,2022,2023,2024,2025],"mine":[2754.5,2876.9,2957.2,3164.7,3271.5,3369.2,3516.2,3580.6,3663.1,3606.8,3484.4,3579.3,3645.6,3640.8,3650.4,3671.6],"hedging":[-108.8,22.5,-45.3,-27.9,104.9,12.9,37.6,-25.5,-11.6,6.2,-36.6,-5.4,-6.5,69.4,-53.8,-73.6],"recycled":[1671.2,1626.3,1636.8,1195.3,1129.6,1067.1,1232.1,1112.4,1131.7,1275.7,1293.1,1135.8,1136.1,1233.6,1365.3,1404.3],"jewellery":[2088.6,2133.4,2162.2,2768.4,2543.8,2479.3,2023.2,2267.3,2297.5,2162.2,1331.8,2252.4,2208.4,2208.2,2026.6,1638.0],"technology":[467.0,437.8,390.4,362.7,355.1,338.0,329.4,339.4,341.7,332.7,309.0,337.2,314.8,305.2,326.2,322.8],"bar_coin":[1246.1,1537.8,1343.3,1733.0,1061.1,1087.1,1079.0,1051.2,1096.9,878.2,912.8,1195.4,1234.9,1195.1,1188.3,1374.1],"etf":[406.8,241.9,292.5,-929.2,-162.3,-123.6,543.1,270.7,70.2,403.6,892.5,-188.6,-109.1,-243.3,-2.9,801.2],"cb":[79.2,480.8,569.2,629.5,601.1,579.6,394.9,378.6,656.2,605.4,254.9,450.1,1080.0,1050.8,1092.4,863.3],"otc":[29.1,-306.0,-209.1,-232.3,107.2,88.8,416.5,360.2,320.6,506.6,1039.8,663.2,46.2,427.9,331.3,2.9],"price":[1224.5,1571.5,1669.0,1411.2,1266.4,1160.1,1250.8,1257.1,1268.5,1392.6,1769.6,1798.6,1800.1,1940.5,2386.2,3431.5]};
+    const SD = window.SD = {"years":[2010,2011,2012,2013,2014,2015,2016,2017,2018,2019,2020,2021,2022,2023,2024,2025],"mine":[2754.5,2876.9,2957.2,3164.7,3271.5,3369.2,3516.2,3580.6,3663.1,3606.8,3484.4,3579.3,3645.6,3640.8,3650.4,3671.6],"hedging":[-108.8,22.5,-45.3,-27.9,104.9,12.9,37.6,-25.5,-11.6,6.2,-36.6,-5.4,-6.5,69.4,-53.8,-73.6],"recycled":[1671.2,1626.3,1636.8,1195.3,1129.6,1067.1,1232.1,1112.4,1131.7,1275.7,1293.1,1135.8,1136.1,1233.6,1365.3,1404.3],"jewellery":[2088.6,2133.4,2162.2,2768.4,2543.8,2479.3,2023.2,2267.3,2297.5,2162.2,1331.8,2252.4,2208.4,2208.2,2026.6,1638.0],"technology":[467.0,437.8,390.4,362.7,355.1,338.0,329.4,339.4,341.7,332.7,309.0,337.2,314.8,305.2,326.2,322.8],"bar_coin":[1246.1,1537.8,1343.3,1733.0,1061.1,1087.1,1079.0,1051.2,1096.9,878.2,912.8,1195.4,1234.9,1195.1,1188.3,1374.1],"etf":[406.8,241.9,292.5,-929.2,-162.3,-123.6,543.1,270.7,70.2,403.6,892.5,-188.6,-109.1,-243.3,-2.9,801.2],"cb":[79.2,480.8,569.2,629.5,601.1,579.6,394.9,378.6,656.2,605.4,254.9,450.1,1080.0,1050.8,1092.4,863.3],"otc":[29.1,-306.0,-209.1,-232.3,107.2,88.8,416.5,360.2,320.6,506.6,1039.8,663.2,46.2,427.9,331.3,2.9],"price":[1224.5,1571.5,1669.0,1411.2,1266.4,1160.1,1250.8,1257.1,1268.5,1392.6,1769.6,1798.6,1800.1,1940.5,2386.2,3431.5]};
     const totalSupply = SD.years.map((_,i) => SD.mine[i] + SD.hedging[i] + SD.recycled[i]);
     const ctx = document.getElementById('chart-supply-demand');
     if (!ctx) return;
@@ -3329,6 +3370,266 @@
         }
       }
     });
+  })();
+
+  // ══════════════════════════════════════════════════════════════════
+  // SUMMARY TAB — 6 thesis charts (rendered at end so all globals exist)
+  // ══════════════════════════════════════════════════════════════════
+  (() => {
+    const PIVOT = { type: 'line', xMin: '2022-02-01', xMax: '2022-02-01',
+      borderColor: '#E74C3C', borderWidth: 1.6, borderDash: [5,4],
+      label: { content: 'Feb 2022', display: true, position: 'start',
+        backgroundColor: 'rgba(231,76,60,0.85)', color: 'white',
+        font: { size: 9, weight: '600' }, padding: 3 } };
+
+    // 1 · Composite vs Gold ─────────────────────────────────────────
+    const c1 = document.getElementById('summary-composite');
+    if (c1) new Chart(c1, {
+      type: 'line',
+      data: { datasets: [
+        { label: 'Gold (USD/oz)', data: data.gold, yAxisID: 'y1',
+          borderColor: COLORS.gold, backgroundColor: COLORS.gold + '22',
+          fill: true, borderWidth: 1.6, pointRadius: 0, tension: 0.2, order: 2 },
+        { label: 'Composite (−5 to +5)', data: data.composite, yAxisID: 'y',
+          borderColor: COLORS.green, backgroundColor: 'transparent',
+          borderWidth: 1.6, pointRadius: 0, tension: 0.1, stepped: false, order: 1 },
+      ] },
+      options: {
+        responsive: true, maintainAspectRatio: false,
+        interaction: { mode: 'index', intersect: false },
+        plugins: {
+          legend: { labels: { usePointStyle: true, pointStyle: 'line', boxWidth: 20, font: { size: 10.5 } } },
+          annotation: { annotations: {
+            pivot: PIVOT,
+            zero: { type: 'line', yMin: 0, yMax: 0, yScaleID: 'y',
+              borderColor: 'rgba(189,195,199,0.35)', borderWidth: 1, borderDash: [4,4] }
+          } }
+        },
+        scales: {
+          x: { type: 'time', time: { unit: 'year' }, grid: { color: '#1F2A3A' } },
+          y: { position: 'left', min: -5, max: 5, grid: { color: '#1F2A3A' },
+               title: { display: true, text: 'Composite', color: COLORS.green } },
+          y1: { position: 'right', grid: { drawOnChartArea: false },
+                title: { display: true, text: 'Gold $/oz', color: COLORS.gold } }
+        }
+      }
+    });
+
+    // 2 · Regime break — annual CB demand bars + gold overlay ─────
+    const c2 = document.getElementById('summary-regime-cb');
+    if (c2) {
+      const years = data.cb_annual.map(d => d.x);
+      const vals  = data.cb_annual.map(d => d.y);
+      const priceYr = years.map(y => goldByYear[y] ?? null);
+      const barColors = years.map(y => (Number(y) >= 2022 ? COLORS.red : COLORS.gray));
+      const pivotIdx = years.findIndex(y => Number(y) === 2022);
+      new Chart(c2, {
+        type: 'bar',
+        data: { labels: years, datasets: [
+          { label: 'CB Demand (tonnes/yr)', data: vals, backgroundColor: barColors,
+            borderColor: 'white', borderWidth: 0.4, yAxisID: 'y', order: 2 },
+          { type: 'line', label: 'Gold ($/oz, annual avg)', data: priceYr, yAxisID: 'y1',
+            borderColor: COLORS.gold, backgroundColor: 'transparent',
+            borderWidth: 2, pointRadius: 2.5, tension: 0.25, order: 1 }
+        ] },
+        options: {
+          responsive: true, maintainAspectRatio: false,
+          interaction: { mode: 'index', intersect: false },
+          plugins: {
+            legend: { labels: { color: '#BDC3C7', font: { size: 11 }, boxWidth: 14 } },
+            annotation: { annotations: {
+              regimeLine: { type: 'line', xMin: pivotIdx - 0.5, xMax: pivotIdx - 0.5,
+                borderColor: '#E74C3C', borderWidth: 2, borderDash: [6,4],
+                label: { content: 'Feb 2022 — G7 freezes Russian FX', display: true,
+                  position: 'start', backgroundColor: 'rgba(231,76,60,0.85)',
+                  color: 'white', font: { size: 10, weight: '600' }, padding: 4 } },
+              preBand: { type: 'line', yMin: 500, yMax: 500,
+                xMin: 0, xMax: pivotIdx - 0.5,
+                borderColor: 'rgba(127,140,141,0.7)', borderWidth: 1.4, borderDash: [3,3],
+                label: { content: 'Pre-2022 avg ≈ 500t', display: true,
+                  position: 'center', color: '#7F8C8D',
+                  backgroundColor: 'transparent', font: { size: 10, style: 'italic' } } },
+              postBand: { type: 'line', yMin: 1021, yMax: 1021,
+                xMin: pivotIdx - 0.5, xMax: years.length - 1,
+                borderColor: 'rgba(212,175,55,0.8)', borderWidth: 1.4, borderDash: [3,3],
+                label: { content: 'Post-2022 avg ≈ 1,021t', display: true,
+                  position: 'center', color: COLORS.gold,
+                  backgroundColor: 'transparent', font: { size: 10, style: 'italic', weight: '600' } } }
+            } }
+          },
+          scales: {
+            x: { grid: { color: 'rgba(127,140,141,0.12)' }, ticks: { color: '#BDC3C7' } },
+            y: { beginAtZero: true, position: 'left',
+              title: { display: true, text: 'CB Demand (tonnes/yr)', color: COLORS.gold },
+              ticks: { color: '#BDC3C7' }, grid: { color: 'rgba(127,140,141,0.15)' } },
+            y1: { position: 'right',
+              title: { display: true, text: 'Gold ($/oz)', color: COLORS.gold },
+              ticks: { color: COLORS.gold }, grid: { drawOnChartArea: false } }
+          }
+        }
+      });
+    }
+
+    // 3 · F1 PBoC: declared vs implied (stacked bars) ───────────────
+    const c3 = document.getElementById('summary-pboc-implied');
+    if (c3) new Chart(c3, {
+      type: 'bar',
+      data: { datasets: [
+        { label: 'Declared PBoC',     data: PBOC_IMPLIED.declared,
+          backgroundColor: COLORS.gold, stack: 's', yAxisID: 'y', order: 3 },
+        { label: 'Implied off-book (@65%)', data: PBOC_IMPLIED.imp_mid,
+          backgroundColor: COLORS.red, stack: 's', yAxisID: 'y', order: 3 },
+        { type: 'line', label: 'Gold ($/oz, qtrly avg)', data: PBOC_IMPLIED.gold_q,
+          yAxisID: 'y1', borderColor: COLORS.gold, backgroundColor: 'transparent',
+          borderWidth: 1.6, pointRadius: 0, tension: 0.25, order: 1 }
+      ] },
+      options: {
+        responsive: true, maintainAspectRatio: false,
+        interaction: { mode: 'index', intersect: false },
+        plugins: {
+          legend: { labels: { color: '#BDC3C7', font: { size: 10.5 }, boxWidth: 14 } },
+          annotation: { annotations: { pivot: PIVOT } },
+          tooltip: { callbacks: { label: (ctx) => {
+            const v = ctx.parsed.y;
+            if (ctx.dataset.yAxisID === 'y1') return `Gold: $${v.toFixed(0)}`;
+            return `${ctx.dataset.label}: ${v >= 0 ? '+' : ''}${v.toFixed(0)}t`;
+          } } }
+        },
+        scales: {
+          x: { type: 'time', time: { unit: 'year' }, stacked: true,
+               grid: { color: '#1F2A3A' }, ticks: { color: '#BDC3C7' } },
+          y: { stacked: true, position: 'left', beginAtZero: true,
+               title: { display: true, text: 'Tonnes / qtr', color: '#BDC3C7' },
+               grid: { color: '#1F2A3A' } },
+          y1: { position: 'right', grid: { drawOnChartArea: false },
+                title: { display: true, text: 'Gold $/oz', color: COLORS.gold },
+                ticks: { color: COLORS.gold } }
+        }
+      }
+    });
+
+    // 4 · F2 China bar+coin cumulative USD ──────────────────────────
+    const c4 = document.getElementById('summary-barcoin');
+    if (c4 && window.BARCOIN) {
+      // Build cumulative USD for China starting 2020-Q1
+      const cuUSD = [];
+      let running = 0;
+      window.BARCOIN.china_usd.forEach(p => {
+        if (new Date(p.x) < new Date('2020-01-01')) return;
+        running += p.y;
+        cuUSD.push({ x: p.x, y: running });
+      });
+      new Chart(c4, {
+        type: 'line',
+        data: { datasets: [
+          { label: 'China bar+coin (cumulative $B since 2020)',
+            data: cuUSD, borderColor: COLORS.green, backgroundColor: COLORS.green + '33',
+            fill: true, borderWidth: 1.8, pointRadius: 0, tension: 0.2, yAxisID: 'y' },
+          { label: 'Gold ($/oz, qtrly avg)', data: PBOC_IMPLIED.gold_q,
+            borderColor: COLORS.gold, backgroundColor: 'transparent',
+            borderWidth: 1.6, pointRadius: 0, tension: 0.25, yAxisID: 'y1' }
+        ] },
+        options: {
+          responsive: true, maintainAspectRatio: false,
+          interaction: { mode: 'index', intersect: false },
+          plugins: {
+            legend: { labels: { usePointStyle: true, pointStyle: 'line', boxWidth: 20, font: { size: 10 } } },
+            annotation: { annotations: { pivot: PIVOT } },
+            tooltip: { callbacks: {
+              title: (items) => items[0].parsed.x ? new Date(items[0].parsed.x).toISOString().slice(0,10) : '',
+              label: (ctx) => {
+                const v = ctx.parsed.y;
+                if (ctx.dataset.yAxisID === 'y1') return `Gold: $${v.toFixed(0)}`;
+                return `Cumulative: $${v.toFixed(1)}B`;
+              }
+            } }
+          },
+          scales: {
+            x: { type: 'time', time: { unit: 'year' }, grid: { color: '#1F2A3A' } },
+            y: { position: 'left', beginAtZero: true,
+                 title: { display: true, text: 'Cumulative $B', color: COLORS.green },
+                 grid: { color: '#1F2A3A' } },
+            y1: { position: 'right', grid: { drawOnChartArea: false },
+                  title: { display: true, text: 'Gold $/oz', color: COLORS.gold },
+                  ticks: { color: COLORS.gold } }
+          }
+        }
+      });
+    }
+
+    // 5 · Real yield (inverted) vs gold ─────────────────────────────
+    const c5 = document.getElementById('summary-realrate');
+    if (c5) new Chart(c5, {
+      type: 'line',
+      data: { datasets: [
+        { label: '10Y Real Yield (TIPS, %) — inverted', data: DFII10_MONTHLY, yAxisID: 'y',
+          borderColor: COLORS.purple, backgroundColor: COLORS.purple + '22',
+          fill: true, borderWidth: 1.5, pointRadius: 0, tension: 0.2 },
+        { label: 'Gold ($/oz)', data: data.gold_full, yAxisID: 'y1',
+          borderColor: COLORS.gold, backgroundColor: 'transparent',
+          borderWidth: 1.6, pointRadius: 0, tension: 0.2 }
+      ] },
+      options: {
+        responsive: true, maintainAspectRatio: false,
+        interaction: { mode: 'index', intersect: false },
+        plugins: {
+          legend: { labels: { usePointStyle: true, pointStyle: 'line', boxWidth: 20, font: { size: 10 } } },
+          annotation: { annotations: {
+            pivot: PIVOT,
+            zero: { type: 'line', yMin: 0, yMax: 0, yScaleID: 'y',
+              borderColor: 'rgba(189,195,199,0.35)', borderWidth: 1, borderDash: [4,4] }
+          } },
+          tooltip: { callbacks: {
+            title: (items) => items[0].parsed.x ? new Date(items[0].parsed.x).toISOString().slice(0,10) : ''
+          } }
+        },
+        scales: {
+          x: { type: 'time', time: { unit: 'year' }, grid: { color: '#1F2A3A' } },
+          y: { position: 'left', reverse: true, grid: { color: '#1F2A3A' },
+               title: { display: true, text: 'Real Yield (%, ↓)', color: COLORS.purple } },
+          y1: { position: 'right', grid: { drawOnChartArea: false },
+                title: { display: true, text: 'Gold $/oz', color: COLORS.gold },
+                ticks: { color: COLORS.gold } }
+        }
+      }
+    });
+
+    // 6 · Annual supply vs demand ───────────────────────────────────
+    const c6 = document.getElementById('summary-supply-demand');
+    if (c6 && window.SD) {
+      const SD = window.SD;
+      const totalSupply = SD.years.map((_, i) => SD.mine[i] + SD.hedging[i] + SD.recycled[i]);
+      new Chart(c6, {
+        type: 'bar',
+        data: { labels: SD.years, datasets: [
+          { label: 'Jewellery',     data: SD.jewellery,  backgroundColor: '#C0392B', stack: 'd' },
+          { label: 'Technology',    data: SD.technology, backgroundColor: '#7F8C8D', stack: 'd' },
+          { label: 'Bar & Coin',    data: SD.bar_coin,   backgroundColor: '#E67E22', stack: 'd' },
+          { label: 'ETF',           data: SD.etf,        backgroundColor: '#3498DB', stack: 'd' },
+          { label: 'Central Banks', data: SD.cb,         backgroundColor: '#D4AF37', stack: 'd' },
+          { label: 'OTC / other',   data: SD.otc,        backgroundColor: '#8E44AD', stack: 'd' },
+          { type: 'line', label: 'Total Supply', data: totalSupply, yAxisID: 'y',
+            borderColor: '#27AE60', backgroundColor: 'transparent',
+            borderWidth: 2, pointRadius: 2.5, tension: 0.15, order: 0 }
+        ] },
+        options: {
+          responsive: true, maintainAspectRatio: false,
+          interaction: { mode: 'index', intersect: false },
+          plugins: {
+            legend: { labels: { color: '#BDC3C7', font: { size: 10 }, boxWidth: 12 } },
+            tooltip: { callbacks: {
+              label: (ctx) => `${ctx.dataset.label}: ${ctx.parsed.y >= 0 ? '+' : ''}${ctx.parsed.y.toFixed(0)}t`
+            } }
+          },
+          scales: {
+            x: { stacked: true, grid: { color: 'rgba(127,140,141,0.15)' }, ticks: { color: '#BDC3C7' } },
+            y: { stacked: true, position: 'left',
+                 title: { display: true, text: 'Tonnes', color: '#BDC3C7' },
+                 ticks: { color: '#BDC3C7' }, grid: { color: 'rgba(127,140,141,0.15)' } }
+          }
+        }
+      });
+    }
   })();
 
 </script>
