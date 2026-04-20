@@ -206,35 +206,44 @@
       </div>
     </div>
 
-    <!-- 1 · HERO: Gold vs Composite (full width) -->
+    <!-- 1 · HERO: Real-yield decouple (full width) -->
     <div class="chart-panel" style="margin-bottom:16px;">
-      <div class="panel-title">1 · Our 4-Factor Model vs Gold</div>
+      <div class="panel-title">1 · The Old Driver Broke — Gold vs 10Y Real Yield</div>
       <div class="panel-sub">
-        Composite of F1 (PBoC) + F2 (retail rotation) + F3 (GPR) + F5 (cycle), ranges −5 to +5. Model has remained bullish since mid-2023; price confirmed the signal. <a href="#" onclick="document.querySelector('.tab[data-tab=model]').click(); return false;" style="color:#D4AF37;">→ Model &amp; Backtest</a>
+        Pre-2022 correlation (log-gold vs −TIPS): <strong>+0.84</strong> — textbook. Post-2022: <strong style="color:#E74C3C;">−0.46</strong> — sign flipped. Real yields are at decade highs but gold is up 2.5×. The classical framework no longer clears price — a new marginal buyer is setting gold. <a href="#" onclick="document.querySelector('.tab[data-tab=history]').click(); return false;" style="color:#D4AF37;">→ Historical</a>
       </div>
-      <div class="chart-wrap tall" style="height:320px;"><canvas id="summary-composite"></canvas></div>
+      <div class="chart-wrap tall" style="height:340px;"><canvas id="summary-realrate"></canvas></div>
     </div>
 
-    <!-- 2 · THE REGIME BREAK (full width) -->
+    <!-- 2 · NEW: period-average CB + Asian physical (full width) -->
     <div class="chart-panel" style="margin-bottom:16px;">
-      <div class="panel-title">2 · The Regime Break — Central-Bank Gold Demand (Annual)</div>
+      <div class="panel-title">2 · Who's Buying — CB + Asian Physical Demand by Era (avg tonnes/yr)</div>
       <div class="panel-sub">
-        Pre-2022 baseline ~500t/yr (range 254–656). Post-2022: four consecutive years &gt; 850t (2022: 1,080 · 2023: 1,051 · 2024: 1,092 · 2025: 863). <strong style="color:#D4AF37;">2× step-change</strong> coinciding exactly with the Feb 2022 G7 freeze. <a href="#" onclick="document.querySelector('.tab[data-tab=flows]').click(); return false;" style="color:#D4AF37;">→ Post-2022</a>
+        Sovereign (central-bank) <em>plus</em> Asian retail (China + India bar+coin) demand, averaged across 5-year periods. The <strong style="color:#D4AF37;">2022–2025 step-change</strong> is the marginal buyer: CBs ~2× their pre-2022 norm, and Asian retail also ratcheted higher. These are the buyers that replaced Western ETF positioning. <a href="#" onclick="document.querySelector('.tab[data-tab=flows]').click(); return false;" style="color:#D4AF37;">→ Post-2022</a>
+      </div>
+      <div class="chart-wrap tall" style="height:320px;"><canvas id="summary-era-buyers"></canvas></div>
+    </div>
+
+    <!-- 3 · THE REGIME BREAK (full width) -->
+    <div class="chart-panel" style="margin-bottom:16px;">
+      <div class="panel-title">3 · The Regime Break — Central-Bank Gold Demand (Annual)</div>
+      <div class="panel-sub">
+        Pre-2022 baseline ~500t/yr (range 254–656). Post-2022: four consecutive years &gt; 850t (2022: 1,080 · 2023: 1,051 · 2024: 1,092 · 2025: 863). <strong style="color:#D4AF37;">2× step-change</strong> coinciding exactly with the Feb 2022 G7 freeze of Russian FX reserves. <a href="#" onclick="document.querySelector('.tab[data-tab=flows]').click(); return false;" style="color:#D4AF37;">→ Post-2022</a>
       </div>
       <div class="chart-wrap tall" style="height:340px;"><canvas id="summary-regime-cb"></canvas></div>
     </div>
 
-    <!-- 3+4 two-col: F1 evidence + F2 evidence -->
+    <!-- 4+5 two-col: F1 evidence + F2 evidence -->
     <div class="chart-grid">
       <div class="chart-panel">
-        <div class="panel-title">3 · F1 — PBoC: Declared vs Implied Off-book</div>
+        <div class="panel-title">4 · F1 — PBoC: Declared vs Implied Off-book</div>
         <div class="panel-sub">
           Declared buying 2022–25: <strong>358t</strong>. Customs-flow analysis (Nieuwenhuijs) implies China actually accumulated <strong style="color:#D4AF37;">~2,000t</strong> (5.7× declared). The "sovereign buyer" is ~3× larger than public data says. <a href="#" onclick="document.querySelector('.tab[data-tab=model]').click(); document.querySelector('.factor-pill[data-factor=f1]').click(); return false;" style="color:#D4AF37;">→ F1 detail</a>
         </div>
         <div class="chart-wrap tall" style="height:300px;"><canvas id="summary-pboc-implied"></canvas></div>
       </div>
       <div class="chart-panel">
-        <div class="panel-title">4 · F2 — China Retail Gold Capture (Cumulative USD)</div>
+        <div class="panel-title">5 · F2 — China Retail Gold Capture (Cumulative USD)</div>
         <div class="panel-sub">
           China bar+coin spend ran 1× baseline in 2020 → <strong style="color:#27AE60;">4.19× in 2025</strong>. Decomposition: 1.56× volume × 2.66× price — demand curve shifted <em>outward despite</em> a price headwind. Housing (−23%) + equities (−33%) broke; households rotated into gold. <a href="#" onclick="document.querySelector('.tab[data-tab=model]').click(); document.querySelector('.factor-pill[data-factor=f2]').click(); return false;" style="color:#D4AF37;">→ F2 detail</a>
         </div>
@@ -242,22 +251,13 @@
       </div>
     </div>
 
-    <!-- 5+6 two-col: real-rate decoupling + supply/demand -->
-    <div class="chart-grid" style="margin-top:16px;">
-      <div class="chart-panel">
-        <div class="panel-title">5 · The Old Driver Broke — Gold vs 10Y Real Yield</div>
-        <div class="panel-sub">
-          Pre-2022 correlation (log-gold vs −TIPS): <strong>+0.84</strong> — textbook. Post-2022: <strong style="color:#E74C3C;">−0.46</strong> — sign flipped. Real yields are at decade highs but gold is up 2.5×. The classical framework no longer clears price. <a href="#" onclick="document.querySelector('.tab[data-tab=history]').click(); return false;" style="color:#D4AF37;">→ Historical</a>
-        </div>
-        <div class="chart-wrap tall" style="height:300px;"><canvas id="summary-realrate"></canvas></div>
+    <!-- 6 supply/demand full width -->
+    <div class="chart-panel" style="margin-top:16px;">
+      <div class="panel-title">6 · Where the Flow Goes — Annual Supply vs Demand</div>
+      <div class="panel-sub">
+        Supply = Demand by WGC accounting identity; the story is the <em>mix shift</em>. CB bar grew from ~500t to ~1,000t/yr; OTC swelled into the residual bucket. 2025 total demand cracked 5,000t for the first time.
       </div>
-      <div class="chart-panel">
-        <div class="panel-title">6 · Where the Flow Goes — Annual Supply vs Demand</div>
-        <div class="panel-sub">
-          Supply = Demand by WGC accounting identity; the story is the <em>mix shift</em>. CB bar grew from ~500t to ~1,000t/yr; OTC swelled into the residual bucket. 2025 total demand cracked 5,000t for the first time. <a href="#" onclick="document.querySelector('.tab[data-tab=charts]').click(); return false;" style="color:#D4AF37;">(detail below)</a>
-        </div>
-        <div class="chart-wrap tall" style="height:300px;"><canvas id="summary-supply-demand"></canvas></div>
-      </div>
+      <div class="chart-wrap tall" style="height:320px;"><canvas id="summary-supply-demand"></canvas></div>
     </div>
 
   </div>
@@ -2106,7 +2106,7 @@
   }
 
   // Gold + GPR dual axis
-  new Chart(document.getElementById('chart-gpr-gold'), {
+  if (document.getElementById('chart-gpr-gold')) new Chart(document.getElementById('chart-gpr-gold'), {
     type: 'line',
     data: {
       datasets: [
@@ -2262,7 +2262,7 @@
   }
 
   // Gold + composite
-  new Chart(document.getElementById('chart-gold-composite'), {
+  if (document.getElementById('chart-gold-composite')) new Chart(document.getElementById('chart-gold-composite'), {
     type: 'line',
     data: {
       datasets: [
@@ -3382,38 +3382,75 @@
         backgroundColor: 'rgba(231,76,60,0.85)', color: 'white',
         font: { size: 9, weight: '600' }, padding: 3 } };
 
-    // 1 · Composite vs Gold ─────────────────────────────────────────
-    const c1 = document.getElementById('summary-composite');
-    if (c1) new Chart(c1, {
-      type: 'line',
-      data: { datasets: [
-        { label: 'Gold (USD/oz)', data: data.gold, yAxisID: 'y1',
-          borderColor: COLORS.gold, backgroundColor: COLORS.gold + '22',
-          fill: true, borderWidth: 1.6, pointRadius: 0, tension: 0.2, order: 2 },
-        { label: 'Composite (−5 to +5)', data: data.composite, yAxisID: 'y',
-          borderColor: COLORS.green, backgroundColor: 'transparent',
-          borderWidth: 1.6, pointRadius: 0, tension: 0.1, stepped: false, order: 1 },
-      ] },
-      options: {
-        responsive: true, maintainAspectRatio: false,
-        interaction: { mode: 'index', intersect: false },
-        plugins: {
-          legend: { labels: { usePointStyle: true, pointStyle: 'line', boxWidth: 20, font: { size: 10.5 } } },
-          annotation: { annotations: {
-            pivot: PIVOT,
-            zero: { type: 'line', yMin: 0, yMax: 0, yScaleID: 'y',
-              borderColor: 'rgba(189,195,199,0.35)', borderWidth: 1, borderDash: [4,4] }
-          } }
-        },
-        scales: {
-          x: { type: 'time', time: { unit: 'year' }, grid: { color: '#1F2A3A' } },
-          y: { position: 'left', min: -5, max: 5, grid: { color: '#1F2A3A' },
-               title: { display: true, text: 'Composite', color: COLORS.green } },
-          y1: { position: 'right', grid: { drawOnChartArea: false },
-                title: { display: true, text: 'Gold $/oz', color: COLORS.gold } }
+    // 2 · Era averages — CB + Asian physical (tonnes/yr) ─────────────
+    const cEra = document.getElementById('summary-era-buyers');
+    if (cEra && window.BARCOIN) {
+      // Build annual Asian physical = sum(china_q + india_q) grouped by year
+      const asianByYear = {};
+      const addQ = (arr) => arr.forEach(p => {
+        const yr = new Date(p.x).getUTCFullYear();
+        asianByYear[yr] = (asianByYear[yr] || 0) + p.y;
+      });
+      addQ(window.BARCOIN.china_q);
+      addQ(window.BARCOIN.india_q);
+      // CB annual from data.cb_annual
+      const cbByYear = {};
+      data.cb_annual.forEach(p => { cbByYear[Number(p.x)] = p.y; });
+      // Define blocks (data starts 2010)
+      const blocks = [
+        { label: '2010–2014',            years: [2010,2011,2012,2013,2014] },
+        { label: '2015–2019',            years: [2015,2016,2017,2018,2019] },
+        { label: '2020–2021 (pre-reg.)', years: [2020,2021] },
+        { label: '2022–2025 (post-reg.)',years: [2022,2023,2024,2025] },
+      ];
+      const avg = (vals) => vals.reduce((a,b)=>a+b,0) / vals.length;
+      const labels = blocks.map(b => b.label);
+      const cbAvg   = blocks.map(b => avg(b.years.map(y => cbByYear[y] ?? 0)));
+      const asiaAvg = blocks.map(b => avg(b.years.map(y => asianByYear[y] ?? 0)));
+      const totAvg  = cbAvg.map((v,i) => v + asiaAvg[i]);
+      // Colour: highlight current regime block
+      const cbColors   = blocks.map((b,i) => i === blocks.length - 1 ? COLORS.gold : 'rgba(212,175,55,0.45)');
+      const asiaColors = blocks.map((b,i) => i === blocks.length - 1 ? COLORS.green : 'rgba(39,174,96,0.45)');
+      new Chart(cEra, {
+        type: 'bar',
+        data: { labels, datasets: [
+          { label: 'Central Banks (avg t/yr)', data: cbAvg,
+            backgroundColor: cbColors, borderColor: 'white', borderWidth: 0.4,
+            stack: 's', order: 2 },
+          { label: 'Asian physical — China + India bar+coin (avg t/yr)', data: asiaAvg,
+            backgroundColor: asiaColors, borderColor: 'white', borderWidth: 0.4,
+            stack: 's', order: 2 },
+        ] },
+        options: {
+          responsive: true, maintainAspectRatio: false,
+          interaction: { mode: 'index', intersect: false },
+          plugins: {
+            legend: { labels: { color: '#BDC3C7', font: { size: 11 }, boxWidth: 14 } },
+            tooltip: { callbacks: {
+              label: (ctx) => `${ctx.dataset.label}: ${ctx.parsed.y.toFixed(0)} t/yr`,
+              footer: (items) => {
+                if (items.length < 2) return '';
+                const sum = items.reduce((s,i)=> s + i.parsed.y, 0);
+                return `Combined: ${sum.toFixed(0)} t/yr`;
+              }
+            } },
+            annotation: { annotations: Object.fromEntries(totAvg.map((v,i) => [
+              'tot'+i, { type: 'label', xValue: i, yValue: v + 40,
+                content: `${v.toFixed(0)}t`, color: '#ECF0F1',
+                font: { size: 11, weight: '700' },
+                backgroundColor: 'rgba(15,25,35,0.65)', padding: 4, borderRadius: 3 }
+            ])) }
+          },
+          scales: {
+            x: { stacked: true, grid: { color: 'rgba(127,140,141,0.12)' },
+                 ticks: { color: '#BDC3C7', font: { size: 11 } } },
+            y: { stacked: true, beginAtZero: true,
+                 title: { display: true, text: 'Avg tonnes / year', color: '#BDC3C7' },
+                 ticks: { color: '#BDC3C7' }, grid: { color: 'rgba(127,140,141,0.15)' } }
+          }
         }
-      }
-    });
+      });
+    }
 
     // 2 · Regime break — annual CB demand bars + gold overlay ─────
     const c2 = document.getElementById('summary-regime-cb');
