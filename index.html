@@ -216,73 +216,49 @@
 
     <!-- 1 · HERO: Real-yield decouple (full width) -->
     <div class="chart-panel" style="margin-bottom:16px;">
-      <div class="panel-title">1 · The Old Driver Broke — Gold vs 10Y Real Yield</div>
-      <div class="panel-sub">
-        Pre-2022 correlation (log-gold vs −TIPS): <strong>+0.84</strong> — textbook. Post-2022: <strong style="color:#E74C3C;">−0.46</strong> — sign flipped. Real yields are at decade highs but gold is up 2.5×. The classical framework no longer clears price — a new marginal buyer is setting gold. <a href="#" onclick="document.querySelector('.tab[data-tab=history]').click(); return false;" style="color:#D4AF37;">→ Historical</a>
-      </div>
+      <div class="panel-title">1 · Gold vs Real Yield</div>
       <div class="chart-wrap tall" style="height:340px;"><canvas id="summary-realrate"></canvas></div>
     </div>
 
     <!-- 2 · Period-average CB + Asian physical + ETF (tonnes) -->
     <div class="chart-panel" style="margin-bottom:16px;">
-      <div class="panel-title">2 · Who's Buying — CB + Asian Physical + ETF by Era (avg tonnes/yr)</div>
-      <div class="panel-sub">
-        Sovereign (CB) + Asian retail (China + India bar+coin) + global ETF, averaged across 5-year blocks. The <strong style="color:#D4AF37;">2022–2025 step-change</strong> is the marginal buyer: CBs ~2× pre-2022 norm, Asian retail ratcheted higher, and ETFs flipped from 2022–24 outflows back to net inflow in 2025. <a href="#" onclick="document.querySelector('.tab[data-tab=flows]').click(); return false;" style="color:#D4AF37;">→ Post-2022</a>
-      </div>
+      <div class="panel-title">2 · Buyers by Era</div>
       <div class="chart-wrap tall" style="height:320px;"><canvas id="summary-era-buyers"></canvas></div>
     </div>
 
     <!-- 2b · same buyers in USD equivalent -->
     <div class="chart-panel" style="margin-bottom:16px;">
-      <div class="panel-title">2b · Who's Buying — Same Buyers in USD ($B/yr, era average)</div>
-      <div class="panel-sub">
-        Same three buckets translated into dollars at each era's average gold price. Price-weighted, the 2022–25 bucket dwarfs everything prior: sovereign + retail + ETF ran ~<strong style="color:#D4AF37;">$137B/yr</strong> on average (vs ~$48B/yr in 2010–19) — this is the <em>capital</em> view of the regime break, not just ounces.
-      </div>
+      <div class="panel-title">2b · Buyers in USD</div>
       <div class="chart-wrap tall" style="height:320px;"><canvas id="summary-era-buyers-usd"></canvas></div>
     </div>
 
     <!-- 3 · THE REGIME BREAK (full width) -->
     <div class="chart-panel" style="margin-bottom:16px;">
-      <div class="panel-title">3 · The Regime Break — Central-Bank Gold Demand (Annual)</div>
-      <div class="panel-sub">
-        Pre-2022 baseline ~500t/yr (range 254–656). Post-2022: four consecutive years &gt; 850t (2022: 1,080 · 2023: 1,051 · 2024: 1,092 · 2025: 863). <strong style="color:#D4AF37;">2× step-change</strong> coinciding exactly with the Feb 2022 G7 freeze of Russian FX reserves. <a href="#" onclick="document.querySelector('.tab[data-tab=flows]').click(); return false;" style="color:#D4AF37;">→ Post-2022</a>
-      </div>
+      <div class="panel-title">3 · CB Regime Break</div>
       <div class="chart-wrap tall" style="height:340px;"><canvas id="summary-regime-cb"></canvas></div>
     </div>
 
     <!-- 4+5 two-col: F1 evidence + F2 evidence -->
     <div class="chart-grid">
       <div class="chart-panel">
-        <div class="panel-title">4 · F1 — PBoC: Declared vs Implied Off-book</div>
-        <div class="panel-sub">
-          Declared buying 2022–25: <strong>358t</strong>. Customs-flow analysis (Nieuwenhuijs) implies China actually accumulated <strong style="color:#D4AF37;">~2,000t</strong> (5.7× declared). The "sovereign buyer" is ~3× larger than public data says. <a href="#" onclick="document.querySelector('.tab[data-tab=model]').click(); document.querySelector('.factor-pill[data-factor=f1]').click(); return false;" style="color:#D4AF37;">→ F1 detail</a>
-        </div>
+        <div class="panel-title">4 · PBoC Declared vs Implied</div>
         <div class="chart-wrap tall" style="height:300px;"><canvas id="summary-pboc-implied"></canvas></div>
       </div>
       <div class="chart-panel">
-        <div class="panel-title">5 · Monthly Flow Pulse — CB + Physical + ETF (last 6 months)</div>
-        <div class="panel-sub">
-          Monthly tonnes into gold from the three demand legs: <strong style="color:#4AA3DF;">Central banks</strong> (IFS reporters, monthly), <strong style="color:#27AE60;">Bar &amp; coin</strong> (WGC quarterly /3, Q1'26 shown at Q4'25 run-rate), <strong style="color:#D4AF37;">ETFs</strong> (WGC monthly). Demand is running ~200–320t/month across all three legs combined.
-        </div>
+        <div class="panel-title">5 · Monthly Flow Pulse</div>
         <div class="chart-wrap tall" style="height:300px;"><canvas id="summary-monthly-flows"></canvas></div>
       </div>
     </div>
 
     <!-- 6 · China housing vs gold + China capital flow overlay -->
     <div class="chart-panel" style="margin-top:16px;">
-      <div class="panel-title">6 · The Rotation Source — China Housing &amp; Equities vs Gold + Capital Flow</div>
-      <div class="panel-sub">
-        China real housing price index (BIS) and <strong style="color:#8E44AD;">CSI 300 equity index</strong> vs gold. Housing ↔ gold correlation was <strong>+0.73</strong> pre-2022 and <strong style="color:#E74C3C;">−0.95</strong> post-2022; CSI 300 is ~−33% off its 2021 peak in real terms. Both domestic wealth stores broke — the bars show <strong style="color:#27AE60;">China physical + ETF capital flow ($B/qtr)</strong>, the household rotation <em>out of</em> broken alternatives <em>into</em> gold. <a href="#" onclick="document.querySelector('.tab[data-tab=flows]').click(); return false;" style="color:#D4AF37;">→ Post-2022</a>
-      </div>
+      <div class="panel-title">6 · China Rotation</div>
       <div class="chart-wrap tall" style="height:340px;"><canvas id="summary-housing-gold"></canvas></div>
     </div>
 
     <!-- 7 supply/demand full width -->
     <div class="chart-panel" style="margin-top:16px;">
-      <div class="panel-title">7 · Where the Flow Goes — Annual Supply vs Demand</div>
-      <div class="panel-sub">
-        Supply = Demand by WGC accounting identity; the story is the <em>mix shift</em>. CB bar grew from ~500t to ~1,000t/yr; OTC swelled into the residual bucket. 2025 total demand cracked 5,000t for the first time.
-      </div>
+      <div class="panel-title">7 · Supply vs Demand</div>
       <div class="chart-wrap tall" style="height:320px;"><canvas id="summary-supply-demand"></canvas></div>
     </div>
 
@@ -302,7 +278,7 @@
 
     <div class="chart-grid" data-factor="overview">
       <div class="chart-panel">
-        <div class="panel-title">Composite Backtest — P(Gold Up Next Month)</div>
+        <div class="panel-title">Composite Backtest</div>
         <div class="panel-sub">Null rate (overall): 56.3%</div>
         <table class="table" id="backtest-table">
           <thead><tr><th>Signal</th><th>N</th><th>P(gold↑)</th><th>Null</th><th>Edge</th></tr></thead>
@@ -313,7 +289,7 @@
         </div>
       </div>
       <div class="chart-panel">
-        <div class="panel-title">Regime Shift — Pre vs Post Feb 2022 (1M lag)</div>
+        <div class="panel-title">Pre/Post Regime Shift</div>
         <div class="panel-sub">Δ in hit-rate by factor</div>
         <table class="table" id="regime-table">
           <thead><tr><th>Factor</th><th>Pre-2022</th><th>Post-2022</th><th>Δ</th></tr></thead>
@@ -328,11 +304,7 @@
 
     <!-- F1 PBoC Signal Iteration / Lock-in -->
     <div class="chart-panel" style="margin-top:16px;" data-factor="f1">
-      <div class="panel-title">F1 PBoC Signal — How We Got Here</div>
-      <div class="panel-sub">
-        <strong>The question:</strong> when central-bank gold buying is trending, does gold go up 2 months later?<br>
-        <strong>Baseline to beat:</strong> gold is up 2 months later about <strong>56%</strong> of the time on its own — so anything above that is real edge.
-      </div>
+      <div class="panel-title">F1 PBoC Signal</div>
       <table class="table" id="pboc-iter-table">
         <thead>
           <tr>
@@ -370,10 +342,7 @@
 
     <!-- F1 — PBoC Monthly Declarations -->
     <div class="chart-panel" style="margin-top:16px;" data-factor="f1">
-      <div class="panel-title">PBoC — Monthly Declared vs Implied Off-book Purchases</div>
-      <div class="panel-sub">
-        <strong style="color:#E74C3C;">Solid red</strong> = monthly IFS/SAFE declared PBoC additions (Aug 2015 – Apr 2026). <strong style="color:#D4AF37;">Translucent gold</strong> = implied off-book China — the 65% Nieuwenhuijs central attribution of the quarterly WGC-minus-IFS residual, distributed evenly across each quarter's three months for visualization. <em>Jun–Jul 2015 excluded (604t one-shot catch-up announcement of 2009-15 accumulation; distorts scale).</em> Gold price on right axis.
-      </div>
+      <div class="panel-title">PBoC Monthly Purchases</div>
       <div class="chart-wrap tall" style="margin-top:10px; height:340px;"><canvas id="chart-pboc-monthly"></canvas></div>
       <div style="margin-top:10px; font-size:12px; color:#555B63; line-height:1.6;">
         <strong style="color:#1A1A1A;">Read:</strong>
@@ -383,12 +352,7 @@
 
     <!-- F1 — PBoC Declared vs Implied Off-book -->
     <div class="chart-panel" style="margin-top:16px;" data-factor="f1">
-      <div class="panel-title">PBoC — Declared vs Implied Off-book Accumulation</div>
-      <div class="panel-sub">
-        <strong style="color:#E74C3C;">Solid red</strong> = declared PBoC additions to IFS (monthly SAFE releases → quarterly sum). <strong style="color:#D4AF37;">Translucent gold</strong> = implied off-book China at the central estimate (65% of the WGC-IFS residual, per <a href="https://www.gainesvillecoins.com/blog/how-much-gold-has-china-really-bought" target="_blank" style="color:#D4AF37;">Nieuwenhuijs customs-flow analysis</a>). Gold price (right axis).
-        <br/><br/>
-        <strong>Why this matters:</strong> Declared PBoC buying 2022-25 totals <strong>358t</strong>, but customs data implies China actually accumulated <strong>~2,000t</strong> (5.7× declared). PBoC announces in installments when politically convenient; the actual buying is continuous and ~3× larger. Our F1 signal fires on the announcement series, not the actual flows — so it's a <em>disclosure-timing</em> indicator, not a true flow indicator.
-      </div>
+      <div class="panel-title">PBoC Accumulation</div>
       <div class="chart-wrap tall" style="margin-top:10px; height:360px;"><canvas id="chart-pboc-implied"></canvas></div>
       <div style="margin-top:10px; font-size:12px; color:#555B63; line-height:1.6;">
         <strong style="color:#1A1A1A;">Read:</strong>
@@ -399,10 +363,7 @@
 
     <!-- F1 — Bellwether vs Driver test (ex-PBoC backtest) -->
     <div class="chart-panel" style="margin-top:16px;" data-factor="f1">
-      <div class="panel-title">F1 Bellwether vs Driver Test — Does the Signal Work Without PBoC?</div>
-      <div class="panel-sub">
-        Re-applies the <strong>locked F1 rule</strong> (<code style="color:#e0e0e0;">sign(diff(3)), streak ≥ 3, +2M lag</code>) to four alternative "source" series. If ex-PBoC flows match PBoC's HR → PBoC is just a bellwether for a broader CB regime. If ex-PBoC collapses to base rate → PBoC carries unique information. Sample: 2015-01 → 2026-02 (matched to IFS data coverage). Base rate = 0.537.
-      </div>
+      <div class="panel-title">F1 Bellwether Test</div>
       <div style="margin-top:14px; overflow-x:auto;">
         <table class="table" style="font-size:12px;">
           <thead>
@@ -478,10 +439,7 @@
 
     <!-- Verification Testing — full diagnostic deep-dive -->
     <div class="chart-panel" style="margin-top:16px;" data-factor="f1">
-      <div class="panel-title">F1 PBoC Signal — Verification Testing</div>
-      <div class="panel-sub">
-        The locked rule has four design choices ("knobs") baked in. The verification tests below are organized around those knobs — first asking <em>does the signal exist at all?</em>, then <em>is it unique?</em>, then <em>is each knob robust?</em>, and finally <em>does it depend on the regime?</em>
-      </div>
+      <div class="panel-title">F1 Verification</div>
 
       <!-- The knobs -->
       <div style="margin-top:14px; padding:14px; background:#FFFFFF; border:1px solid #E1E4E8; border-radius:4px;">
@@ -811,10 +769,7 @@
     </div>
     <!-- F2 RETAIL ROTATION :: START -->
     <div class="chart-panel" style="margin-top:16px;" data-factor="f2">
-      <div class="panel-title">F2 — Retail Hard-Asset Rotation: Post-2022 Marginal Buyer Shift</div>
-      <div class="panel-sub" style="color:#555B63;">
-        Retail debasement hedge — complement to F1 (sovereign PBoC buying). Western ETF positioning drove gold 2003–2021. Post-2022 the marginal buyer flipped to Asian households rotating out of broken domestic alternatives (housing −23%, equities −33%) into physical gold — a supply sink with 10–30yr holding periods.
-      </div>
+      <div class="panel-title">F2 Retail Rotation</div>
 
       <!-- Stats row -->
       <div style="display:grid; grid-template-columns:repeat(4,1fr); gap:10px; margin-top:12px;">
@@ -983,10 +938,7 @@
 
     <!-- Killer chart #1: The structural break — annual CB buying with event markers -->
     <div class="chart-panel" style="margin-bottom:16px;">
-      <div class="panel-title">The Regime Shift — Annual Central-Bank Gold Demand (2010–2025)</div>
-      <div class="panel-sub">
-        <strong>Pre-2022 baseline:</strong> ~500t/yr (range 254–656). <strong>Post-2022:</strong> four consecutive years above <strong style="color:#D4AF37;">850t</strong> (2022: 1,080 · 2023: 1,051 · 2024: 1,092 · 2025: 863). The step-change coincides with the Feb 2022 G7/EU freeze of ~$300B of Russian FX reserves — a wake-up call for every non-aligned sovereign that <em>USD reserves can be switched off</em>. Gold is the only reserve asset with no counterparty risk.
-      </div>
+      <div class="panel-title">Annual CB Demand</div>
       <div class="chart-wrap tall" style="height:360px; margin-top:10px;"><canvas id="chart-regime-cb"></canvas></div>
       <div style="margin-top:12px; padding:12px; background:#FFFFFF; border-left:3px solid #D4AF37; border-radius:4px; font-size:12px; color:#555B63; line-height:1.7;">
         <strong style="color:#1A1A1A;">Event timeline driving the shift:</strong><br>
@@ -1018,10 +970,7 @@
           </div>
         </div>
         <div>
-          <div class="panel-title" style="margin-bottom:6px;">PBoC Monthly Announced Gold Purchases — SAFE / IFS Tape</div>
-          <div class="panel-sub" style="margin-bottom:10px;">
-            The cadence of declared additions, Jan 2022 → Apr 2026. Pre-streak silence (Feb&nbsp;2022 → Oct&nbsp;2022), the 18-month accumulation, the 5-month pause, and the steady-state resumption. This is the public-information surface area of F1 — what the F1 signal actually fires on.
-          </div>
+          <div class="panel-title" style="margin-bottom:6px;">PBoC Monthly Purchases</div>
           <div class="chart-wrap" style="height:300px;"><canvas id="chart-pboc-monthly-flows"></canvas></div>
           <div style="margin-top:10px; font-size:11px; color:#8A929B; line-height:1.55;">
             Bars in <span style="color:#D4AF37; font-weight:600;">gold</span> = months with declared additions. Light gray = zero / no announcement. Shaded streak band (Nov&nbsp;2022 → May&nbsp;2024) marks the original 18-month run. <strong>Caveat:</strong> declared only — Nieuwenhuijs customs-flow analysis implies ~5× more actual accumulation off-book (see F1 detail tab).
@@ -1032,10 +981,7 @@
 
     <!-- Policy Drivers panel -->
     <div class="chart-panel" style="margin-bottom:16px;">
-      <div class="panel-title">Policy Drivers — What's Actually Codified Post-2022</div>
-      <div class="panel-sub">
-        The regime shift isn't just revealed preference — it's been written into law, quotas, and institutional mandates across Asia and sanctioned sovereigns. Each lever below is <strong>sticky</strong>: insurance-asset mandates and import-duty cuts don't reverse quickly. This is the policy floor under F1 (sovereign) and F2 (retail).
-      </div>
+      <div class="panel-title">Policy Drivers</div>
 
       <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap:12px; margin-top:14px;">
 
@@ -1196,10 +1142,7 @@
 
     <!-- Killer chart #2: Housing vs Gold regime flip (moved from F2) -->
     <div class="chart-panel" style="margin-bottom:16px;">
-      <div class="panel-title">China Real Housing Prices vs Gold — The Retail Side of the Same Regime</div>
-      <div class="panel-sub">
-        <strong style="color:#E74C3C;">BIS China real housing index</strong> vs <strong style="color:#D4AF37;">gold</strong>. Pre-2022 correlation: <strong>+0.73</strong> (both tracked liquidity). Post-2022: <strong style="color:#C0392B;">−0.95</strong> — sign flipped. As Chinese households watched ~$11.8T of housing wealth destroyed and CSI 300 fall 33%, they rotated into gold (bar+coin up 4.19× baseline by 2025). Sovereign CBs de-dollarized; retail de-housinged. Same debasement regime, two channels.
-      </div>
+      <div class="panel-title">China Housing vs Gold</div>
       <div class="chart-wrap tall" style="height:360px; margin-top:10px;"><canvas id="chart-f2-housing"></canvas></div>
     </div>
 
@@ -1222,39 +1165,36 @@
     </div>
     <div class="chart-grid">
       <div class="chart-panel">
-        <div class="panel-title">Quarterly CB Buying (2010–2025) — Tonnes</div>
+        <div class="panel-title">Quarterly CB Buying</div>
         <div class="panel-sub">The 2022 step-change is visible · gold price overlay (right axis)</div>
         <div class="chart-wrap tall"><canvas id="chart-cb-quarterly"></canvas></div>
       </div>
       <div class="chart-panel">
-        <div class="panel-title">Annual Demand Components (2010–2025) — Tonnes</div>
+        <div class="panel-title">Demand Components</div>
         <div class="panel-sub">Stacked demand by category · gold price overlay (right axis)</div>
         <div class="chart-wrap tall"><canvas id="chart-demand-stack"></canvas></div>
       </div>
     </div>
     <div class="chart-grid" style="margin-top:16px;">
       <div class="chart-panel">
-        <div class="panel-title">Quarterly CB Buying — USD Equivalent</div>
-        <div class="panel-sub">Tonnes × avg gold price × 32,150.75 oz/t → $B · shows capital absorbed, not just volume</div>
+        <div class="panel-title">CB Buying in USD</div>
         <div class="chart-wrap tall"><canvas id="chart-cb-quarterly-usd"></canvas></div>
       </div>
       <div class="chart-panel">
-        <div class="panel-title">Annual Demand Components — USD Equivalent</div>
+        <div class="panel-title">Demand in USD</div>
         <div class="panel-sub">Same mix, priced at each year's avg gold · reveals the post-2022 $ re-rating</div>
         <div class="chart-wrap tall"><canvas id="chart-demand-stack-usd"></canvas></div>
       </div>
     </div>
     <div class="chart-grid" style="margin-top:16px;">
       <div class="chart-panel" style="grid-column: 1 / -1;">
-        <div class="panel-title">Quarterly CB Buying — By Country (2015–present, stacked tonnes)</div>
-        <div class="panel-sub">Top-8 individually tracked buyers (China PBoC, Poland, Turkey*, India, Russia, Singapore, Qatar, Czech) + <strong>Other Disclosed</strong> (all remaining IFS reporters, incl. net sellers) + <strong style="color:#D4AF37;">Unreported residual = WGC global CB total − Σ(IFS reporters)</strong>. IFS data is true monthly (not interpolated). The <strong>Unreported</strong> bucket has averaged ~650t/yr post-2022 (~62% of global CB demand) — widely believed to include off-book PBoC, Saudi, and sanctions-adjacent sovereigns. Turkey uses the WGC swap-adjusted series. Gold price overlay (right). <em style="color:#8A929B;">Q2'15 Unreported clipped to 0 — PBoC's 604t one-shot declaration created a −490t WGC-vs-IFS accounting artifact (reclassification, not real selling).</em></div>
+        <div class="panel-title">CB Buying by Country</div>
         <div class="chart-wrap tall"><canvas id="chart-cb-by-country"></canvas></div>
       </div>
     </div>
     <div class="chart-grid" style="margin-top:16px;">
       <div class="chart-panel" style="grid-column: 1 / -1;">
-        <div class="panel-title">Quarterly CB Buying — By Country (2015–present, stacked <strong>USD $B</strong>)</div>
-        <div class="panel-sub">Same decomposition as above, converted to USD equivalent (tonnes × 32,150.75 oz/t × LBMA quarterly average). Captures the <em>capital</em> flowing into CB reserves — in 2015 ~$5B/qtr sustained gold; by Q4 2025 it takes ~$30B/qtr at $4,147/oz. The Unreported bucket alone = ~$11–15B/qtr in 2024–2025, roughly the entire 2015 global figure, hidden.</div>
+        <div class="panel-title">CB Buying by Country USD</div>
         <div class="chart-wrap tall"><canvas id="chart-cb-by-country-usd"></canvas></div>
       </div>
     </div>
@@ -1264,13 +1204,12 @@
   <div class="tab-content" id="tab-history">
     <div class="chart-grid">
       <div class="chart-panel">
-        <div class="panel-title">Gold Price — Full History</div>
+        <div class="panel-title">Gold Price</div>
         <div class="panel-sub">2000–present, monthly</div>
         <div class="chart-wrap tall"><canvas id="chart-gold-full"></canvas></div>
       </div>
       <div class="chart-panel">
-        <div class="panel-title">10Y Real Yield (TIPS) vs Gold</div>
-        <div class="panel-sub">FRED DFII10 &mdash; 10-year US TIPS yield (monthly mean, series starts 2003). <strong>Real-yield axis is inverted</strong> so lines move together when the classical relationship holds (lower real yield → higher gold). Pre-2022: tight co-movement. Post-2022: real yields surged from −1% to +2% while gold ripped to new highs — the decouple is the thesis.</div>
+        <div class="panel-title">Real Yield vs Gold</div>
         <div class="chart-wrap tall"><canvas id="chart-t10y2y-full"></canvas></div>
         <!-- Real-rates breakdown tucked under the rates chart -->
         <div style="margin-top:14px; padding:12px; background:#FFFFFF; border:1px solid #E1E4E8; border-radius:6px;">
@@ -1296,13 +1235,12 @@
         </div>
       </div>
       <div class="chart-panel">
-        <div class="panel-title">GPR Index — Full History</div>
+        <div class="panel-title">GPR Index</div>
         <div class="panel-sub">Caldara-Iacoviello, 1985–present</div>
         <div class="chart-wrap tall"><canvas id="chart-gpr-full"></canvas></div>
       </div>
       <div class="chart-panel">
-        <div class="panel-title">Structural Backdrop — M2 & Net Liquidity</div>
-        <div class="panel-sub">Howell-style GLI + US Net Fed Liquidity (year-over-year growth) — backdrop context, not primary driver post-2022</div>
+        <div class="panel-title">M2 & Liquidity</div>
         <div class="chart-wrap tall"><canvas id="chart-m2-full"></canvas></div>
       </div>
     </div>
@@ -1314,10 +1252,7 @@
 
     <!-- F3 GPR :: START -->
     <div class="chart-panel" style="margin-top:16px;" data-factor="f3">
-      <div class="panel-title">F3 — Geopolitical Risk Premium: Non-Linear, Spikes Are Bearish</div>
-      <div class="panel-sub" style="color:#555B63;">
-        GPR rising ≠ gold up. Big spikes are sell-the-news events (−13 to −23pp alpha). The sweet spot is moderate sustained anxiety (GPR 85–96), not panic. Current level is at 98th pct — spike territory.
-      </div>
+      <div class="panel-title">F3 Geopolitical Risk</div>
 
       <!-- Stats row -->
       <div style="display:grid; grid-template-columns:repeat(4,1fr); gap:10px; margin-top:12px;">
